@@ -7,6 +7,7 @@ Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforce
 - When `lib/core` layout or cross-cutting boundaries change in reference apps.
 
 ## References
+- `rules/_index.md` (all rule areas)
 - Primary reference app: `flutter_base/lib/core/` (`core.dart`, `di/di.dart`).
 - Secondary variants: `vorma/lib/core/` (e.g. `base/`, `config/`, pagination, deep links).
 

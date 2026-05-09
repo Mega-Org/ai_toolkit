@@ -8,6 +8,7 @@ Clarifies what belongs under `setup/`, `patterns/`, and `workflows/` so agents l
 - When folder boundaries confuse contributors.
 
 ## References
+- `ai_toolkit/setup/_index.md` (Setup folder overview)
 - `ai_toolkit/README.md`
 - `ai_toolkit/INDEX.md`
 - `ai_toolkit/workflows/README.md`

@@ -1,13 +1,26 @@
-# Workflows layout
+# Workflows (`workflows/`)
 
 ## Purpose
-Explains how workflow files are grouped by intent (`session/`, `feature-delivery/`, `maintenance/`, `git/`). Use `INDEX.md` for task routing tables; this file only clarifies folder roles.
+
+**Ordered playbooks** for sessions, feature delivery, maintenance, and git-aligned commits. This folder uses **`workflows/`** (not `commands/`) so naming stays tool-neutral; intent matches command-style playbooks in some AI products. Task routing tables also appear in [`INDEX.md`](../INDEX.md).
+
+## Subfolders by intent
+
+| Subfolder | Role | Overview |
+|-----------|------|----------|
+| [`session/`](session/_index.md) | Start or resume a session; load context in a fixed order | [`session/_index.md`](session/_index.md) |
+| [`feature-delivery/`](feature-delivery/_index.md) | Spec-driven planning, phased implementation, verify / PR | [`feature-delivery/_index.md`](feature-delivery/_index.md) |
+| [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades | [`maintenance/_index.md`](maintenance/_index.md) |
+| [`git/`](git/_index.md) | Commits aligned with plan phases | [`git/_index.md`](git/_index.md) |
+
+Add new workflow files under the closest subfolder. If something spans categories, note it here and in [`INDEX.md`](../INDEX.md) task routing.
 
 ## Fill when
+
 - When you add a new workflow subfolder or rename workflow categories.
 
 ## References
-- `ai_toolkit/INDEX.md`
 
-## Content
-<!-- Fill in later. Leave empty if unknown. -->
+- Toolkit entrypoint: [`INDEX.md`](../INDEX.md)
+- Enforceable rules: [`rules/_index.md`](../rules/_index.md)
+- Patterns / examples: [`patterns/_index.md`](../patterns/_index.md)

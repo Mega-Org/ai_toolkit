@@ -7,6 +7,7 @@ Entry point for codegen, IDEs, and build tooling rules.
 - When you add tooling topics under `rules/tooling/`.
 
 ## References
+- `rules/_index.md` (all rule areas)
 - `rules/tooling/build-runner.md`
 
 ## Content

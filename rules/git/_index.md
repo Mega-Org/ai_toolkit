@@ -7,6 +7,7 @@ Entry point for branch, commit message, and review conventions aligned with `wor
 - When Git workflow or commit standards change.
 
 ## References
+- `rules/_index.md` (all rule areas)
 - `workflows/git/commit-after-phase.md`
 
 ## Content

@@ -7,6 +7,7 @@ Entry point for Flutter UI and framework enforceable rules.
 - When you add or rename Flutter rule topics under `rules/flutter/`.
 
 ## References
+- `rules/_index.md` (all rule areas)
 - `rules/flutter/widgets-and-performance.md`
 
 ## Content

@@ -7,6 +7,7 @@ Entry point for Firebase and FlutterFire-related enforceable rules.
 - When Firebase modules or security expectations change.
 
 ## References
+- `rules/_index.md` (all rule areas)
 - `rules/firebase/security-public-repos.md`
 - `alias/firebase.md`
 

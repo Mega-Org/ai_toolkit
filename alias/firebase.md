@@ -7,6 +7,7 @@ Shell aliases, CLI reminders, and FlutterFire-related commands for day-to-day wo
 - When Firebase modules or CLI workflows you use regularly change.
 
 ## References
+- `alias/_index.md`
 - `rules/firebase/_index.md`
 
 ## Content

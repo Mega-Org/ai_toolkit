@@ -7,6 +7,7 @@ Entry point for test conventions: unit, widget, integration, and golden policies
 - When you add or rename testing rule topics under `rules/testing/`.
 
 ## References
+- `rules/_index.md` (all rule areas)
 - Optional paths in **your app repos** (not copied here): e.g. `test/`
 
 ## Content

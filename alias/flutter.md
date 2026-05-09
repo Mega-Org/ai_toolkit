@@ -7,6 +7,7 @@ Document shell aliases and shortcuts for Flutter, `build_runner`, `flutter_gen`,
 - When you add, rename, or remove aliases or change pod / build_runner habits.
 
 ## References
+- `alias/_index.md`
 - `rules/tooling/build-runner.md`
 - `patterns/platform/ios-pods-and-build.md`
 

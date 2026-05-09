@@ -7,12 +7,12 @@ Per-app files such as `CLAUDE.md`, `AGENTS.md`, and `.cursor/rules` should stay 
 ## Layout
 
 - `INDEX.md`: the AI entrypoint. Read this first in every session.
-- `alias/`: shell aliases and command shortcuts, including Flutter, build_runner, iOS pods, and Firebase notes.
-- `setup/`: project setup checklists and one-time bootstrapping guidance.
-- `rules/`: short must / must-not guidance. Load these early and keep them enforceable.
-- `patterns/`: implementation examples and local conventions for common Flutter work.
-- `workflows/`: ordered playbooks for sessions, feature delivery, maintenance, and git steps.
-- `reference/`: supporting checklists and notes that do not belong in rules or workflows.
+- `alias/`: shell aliases and command shortcuts — overview [`alias/_index.md`](alias/_index.md).
+- `setup/`: project setup checklists and bootstrapping — overview [`setup/_index.md`](setup/_index.md).
+- `rules/`: short must / must-not guidance — overview [`rules/_index.md`](rules/_index.md).
+- `patterns/`: implementation examples and conventions — overview [`patterns/_index.md`](patterns/_index.md).
+- `workflows/`: ordered playbooks — layout [`workflows/README.md`](workflows/README.md).
+- `reference/`: supporting checklists and notes — overview [`reference/_index.md`](reference/_index.md).
 
 This toolkit uses `workflows/`, not `commands/`. The intent is the same as command-style playbooks in some AI tools, but "workflow" better matches phased, multi-step work and keeps the naming tool-neutral.
 
@@ -27,15 +27,17 @@ If a referenced file does not exist yet, continue with the closest available fil
 
 ## Task Routing
 
-- New Flutter app or repository setup: start in `setup/`, then load relevant `rules/` before creating code.
-- Feature implementation from a spec: use `workflows/feature-delivery/make-plan.md`, then load matching `rules/` and `patterns/`.
-- Bug fix: use `workflows/maintenance/bugfix.md`, then load rules for the touched domain.
-- Refactor: use `workflows/maintenance/refactor.md`, then load the current app architecture docs before editing.
-- Dependency upgrade: use `workflows/maintenance/dependency-upgrade.md` and relevant setup notes.
-- Commit or PR prep: use `workflows/git/commit-after-phase.md` and `workflows/feature-delivery/verify-and-pr.md`.
-- Dart import cleanup: use `patterns/dart/absolute-imports.md`.
-- Build runner, generated files, or json_serializable: load `rules/tooling/build-runner.md` and `patterns/data/json-models-json-serializable.md` when available.
-- Core architecture changes: load `rules/core/_index.md` and the specific `rules/core/*` file for the area being touched.
+Section overviews: [`setup/_index.md`](setup/_index.md), [`workflows/README.md`](workflows/README.md), [`rules/_index.md`](rules/_index.md), [`patterns/_index.md`](patterns/_index.md).
+
+- New Flutter app or repository setup: start in [`setup/`](setup/_index.md), then load relevant [`rules/`](rules/_index.md) before creating code.
+- Feature implementation from a spec: use [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md), then load matching rules and patterns (see indexes above).
+- Bug fix: use [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md), then load rules for the touched domain.
+- Refactor: use [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md), then load the current app architecture docs before editing.
+- Dependency upgrade: use [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) and relevant setup notes.
+- Commit or PR prep: use [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) and [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md).
+- Dart import cleanup: use [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md).
+- Build runner, generated files, or json_serializable: load [`rules/tooling/build-runner.md`](rules/tooling/build-runner.md) and [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) when available.
+- Core architecture changes: load [`rules/core/_index.md`](rules/core/_index.md) and the specific `rules/core/*` file for the area being touched.
 
 ## Flutter Defaults
 
