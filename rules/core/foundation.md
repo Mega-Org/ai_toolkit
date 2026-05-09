@@ -1,14 +1,16 @@
 # Core foundation
 
 ## Purpose
+
 Conventions for `IUseCase`, typedefs, async helpers, safe emit mixins, and other foundational types in core.
 
 ## Fill when
+
 - When foundation APIs or cross-cutting base types change.
 
 ## References
-- `flutter_base/lib/core/foundation/` (`i_use_case.dart`, `typedef.dart`, `async.dart`, `safe_emit_mixin.dart`)
-- `vorma/lib/core/base/` (same concepts: `i_use_case.dart`, `typedef.dart`, `async.dart`, `safe_emit_mixin.dart`)
+
+- `lib/core/base/` (`i_use_case.dart`, `typedef.dart`, `async.dart`, `safe_emit_mixin.dart`)
 
 ## Content
 
@@ -31,7 +33,7 @@ Conventions for `IUseCase`, typedefs, async helpers, safe emit mixins, and other
 ### `SafeEmitMixin<State>`
 
 - For **cubits** that override **`emit`**: only call **`super.emit`** when **`!isClosed`** to avoid emitting after dispose.
-- **Alternative**: inline `if (!isClosed) super.emit(...)` (see `AppLanguageCubit` in flutter_base). Prefer **one consistent approach per app**.
+- **Alternative**: inline `if (!isClosed) super.emit(...)` (see **`AppLanguageCubit`** in this repo). Prefer **one consistent approach** across new cubits.
 
 ### `part of core`
 

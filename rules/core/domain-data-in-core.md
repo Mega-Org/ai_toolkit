@@ -1,14 +1,16 @@
 # Domain and data in core
 
 ## Purpose
+
 Which cross-cutting repositories and use cases live under core versus feature folders.
 
 ## Fill when
+
 - When boundaries between core and features shift.
 
 ## References
-- flutter_base: `lib/core/domain/`, `lib/core/data/`, `lib/core/constants/`
-- vorma: same logical layout under `lib/core/domain/`, `lib/core/data/`
+
+- `lib/core/domain/`, `lib/core/data/`, `lib/core/constants/`
 
 ## Content
 
@@ -16,15 +18,15 @@ Which cross-cutting repositories and use cases live under core versus feature fo
 
 - **Authentication/session**: secure token read/write, cached user entity, “is user authenticated” aggregation, logout clearing secure cache — **`SecureStorageRepository`**, **`LanguageCacheRepository`**, **`ThemeRepository`** when theme persistence is global.
 - **Language**: get/set/clear cached language, device language fallback — language **use cases** and **data sources** tied to **`LocalizationContainer`**.
-- **Shared entities/models** used by auth or multiple features (e.g. **`Token`**, **`CachedUser`**, **`Phone`** in flutter_base) — keep **serializable models** in **`data/models/`**, **equatable/domain entities** in **`domain/entities/`**.
+- **Shared entities/models** used by auth or multiple features (e.g. **`Token`**, **`CachedUser`**, **`Phone`**) — keep **serializable models** in **`data/models/`**, **equatable/domain entities** in **`domain/entities/`**.
 
 ### Naming conventions
 
-- Repository **implementations**: flutter_base uses **`*_repository_impl.dart`**; vorma uses **`*_repository_imp.dart`** suffix — **follow the active repo’s spelling**.
+- Repository **implementations** in this repo use the **`*_repository_imp.dart`** suffix (not `*_repository_impl.dart`).
 
 ### Feature-specific domain/data
 
-- **Product flows** (orders, maps, chat): repositories, use cases, DTOs live under **`lib/features/<feature>/`** (or equivalent). Do not move feature-only repos into **`core`** “for convenience.”
+- **Product flows** (orders, maps, chat): repositories, use cases, DTOs live under **`lib/src/<feature>/`** (or equivalent). Do not move feature-only repos into **`core`** “for convenience.”
 
 ### Use cases
 
@@ -33,7 +35,7 @@ Which cross-cutting repositories and use cases live under core versus feature fo
 
 ### Data sources
 
-- **`SecureStorageDataSource`**, **`LanguageCacheDataSource`** (name varies slightly per app) — **thin IO**, no UI strings except through failures/localizer mapping upstream.
+- **`SecureStorageDataSource`**, language cache data sources (names may vary) — **thin IO**, no UI strings except through failures/localizer mapping upstream.
 
 ### Constants
 

@@ -1,27 +1,28 @@
 # Core services
 
 ## Purpose
+
 Thin wrappers for share, launcher, rate limiting, vibrator, and similar platform or infrastructure services.
 
 ## Fill when
+
 - When shared service interfaces or implementations move.
 
 ## References
-- flutter_base: `lib/core/services/` (`share/`, `launcher/`, `app_rate/`, `vibrator/`)
-- vorma: share/url_launch patterns under `lib/core/utils/share_and_url_launch/` (same role, different folder)
+
+- This app: share / URL launch helpers under `lib/core/utils/share_and_url_launch/` (`share_utils.dart`, `url_launcher_utils.dart`, etc.)
 
 ## Content
 
-### Pattern (flutter_base)
+### Typical capabilities (names vary)
 
-- **`ShareService`**: **`abstract base class`** with **static** methods — **`shareText`**, **`shareFile`**, **`shareFiles`**, **`shareUri`** using **`SharePlus`**, **`IoFileUtils`** for path/asset detection.
-- **`UrlLauncherService`**: centralizes **`launchUrl`** / **`canLaunchUrl`** with **`LaunchMode`** handling.
-- **`AppRateService`**: **`InAppReview`** wrapper for prompts.
-- **`VibratorService`**: vibration patterns via **`Vibration`** package.
+- **Share**: text, files, URIs via the project’s share helper (e.g. `SharePlus` + path/asset utilities where used).
+- **URL launch**: `launchUrl` / `canLaunchUrl` with `LaunchMode` handling centralized in launcher utils.
+- **In-app review / vibration**: small wrappers when present — **platform I/O only**.
 
-### vorma layout
+### Layout in this repo
 
-- Uses **`share_utils.dart`**, **`url_launcher_utils.dart`** under **`utils/share_and_url_launch/`** instead of a dedicated **`services/`** folder — **same rule**: **thin static or injectable APIs**, **no business rules**.
+- Prefer **`utils/share_and_url_launch/`** (or adjacent small files) instead of a separate top-level **`services/`** folder unless the team introduces one — **same rule**: **thin static or injectable APIs**, **no business rules**.
 
 ### Rules
 

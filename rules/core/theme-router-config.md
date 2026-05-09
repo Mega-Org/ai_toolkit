@@ -1,33 +1,35 @@
 # Theme, router, and config
 
 ## Purpose
-Theme manager, router, app values, and generated assets conventions in core configs.
+
+Theme notifier, router, app values, and generated assets conventions in core config.
 
 ## Fill when
+
 - When theming, routing, or global config patterns change.
 
 ## References
-- flutter_base: `lib/core/configs/` (`router/`, `theme/`, `values/`, `responsive/`)
-- vorma: `lib/core/config/router/`, `lib/core/config/theme/`, `lib/core/config/values/`
+
+- `lib/core/config/router/`, `lib/core/config/theme/`, `lib/core/config/values/`
 
 ## Content
 
 ### Router
 
-- **Global key**: **`appNavigatorKey`** (flutter_base) — **`GlobalKey<NavigatorState>`** for imperative navigation without context when needed.
-- **`AppRouter`**: static helpers **`push`**, **`pushNamed`**, **`pop`**, **`popUntil`**, **`getCurrentRoute`**. **vorma** may expose **`navigatorKey`** on **`AppRouter`** — use the static accessors provided by **that** app.
+- **Global key**: exposed on **`AppRouter`** (e.g. **`navigatorKey`**) — **`GlobalKey<NavigatorState>`** for imperative navigation without context when needed.
+- **`AppRouter`**: static helpers **`push`**, **`pushNamed`**, **`pop`**, **`popUntil`**, **`getCurrentRoute`** — use the accessors defined in **this** app’s router module.
 - **Animated routes**: shared transition helpers live next to **`app_router.dart`** (`animated_routes.dart`).
 
 ### Theme
 
-- **`AppTheme`** abstract type with **`LightTheme`** / **`DarkTheme`** concrete implementations under **`config(s)/theme/values/`** or sibling files.
-- **Persistence**: **`ThemeRepository`** + impl reads/writes preference; **`ThemeManager`** / **`ThemeNotifier`** loads on **`initialize()`** and persists on **`changeTheme()`**.
-- **Widgets**: **`ThemeBuilder`** / **`theme_checker_widget`** (varies) wrap subtree rebuilds when theme toggles.
+- **`AppTheme`** abstract type with **`LightTheme`** / **`DarkTheme`** concrete implementations under **`config/theme/`** / **`values/`** or sibling files.
+- **Persistence**: **`ThemeRepository`** + **`ThemeRepositoryImp`** reads/writes preference; **`ThemeNotifier`** loads on **`initialize()`** and persists on theme change.
+- **Widgets**: **`ThemeBuilder`** / **`theme_checker_widget`** (names vary) wrap subtree rebuilds when theme toggles.
 
 ### Values
 
 - **`colors.dart`**, **`text_styles.dart`**, **`dimensions.dart`**, **`fonts.dart`** — design tokens; **`assets_getters.dart`** wraps **`Assets`** from codegen.
-- **Responsive**: flutter_base includes **`AppScaledBox`** under **`configs/responsive/`** — use with **`responsive_framework`** at app root per existing setup.
+- **Responsive**: this app uses **`responsive_framework`** at the app root (e.g. **`ResponsiveBreakpoints.builder`**) per existing **`MaterialApp`** setup.
 
 ### Generated assets
 

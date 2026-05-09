@@ -1,20 +1,22 @@
 # Core utilities
 
 ## Purpose
+
 Extensions, validators, and helpers—without embedding business rules that belong in domain or features.
 
 ## Fill when
+
 - When utility boundaries or shared helper ownership changes.
 
 ## References
-- flutter_base: `lib/core/utils/` (`extensions/`, `validations/`, `files/`, `regular_exp/`, `popular_sites/`, `notifiers/`)
-- vorma: `lib/core/utils/` (extensions, picker, deep_link, pusher, etc.)
+
+- `lib/core/utils/` (extensions, picker, deep_link, pusher, share_and_url_launch, etc.)
 
 ## Content
 
 ### Extensions (`utils/extensions/`)
 
-- **`BuildContext`**, **`String`**, **`DateTime`**, **`List`**, **`Set`**, **`File`**, **`TimeOfDay`**, **`Color`** (vorma), **`Formatter`** helpers — **pure transformations** and UI-adjacent conveniences.
+- **`BuildContext`**, **`String`**, **`DateTime`**, **`List`**, **`Set`**, **`File`**, **`TimeOfDay`**, **`Color`**, **`Formatter`** helpers — **pure transformations** and UI-adjacent conveniences.
 - **Do not** import feature modules from core extensions; **keep dependencies upward-stable**.
 
 ### Validation (`utils/validations/validator.dart`)
@@ -23,13 +25,13 @@ Extensions, validators, and helpers—without embedding business rules that belo
 
 ### Files & media
 
-- **`IoFileUtils`**, **`MediaPickerUtils`** (names vary) — **path inspection**, temp files, picking — **no API calls**.
+- File / media picker utilities — **path inspection**, temp files, picking — **no API calls**.
 
 ### Notifiers / timers
 
 - **`TimerController`**, **`ResendTimerNotifier`**, etc. — **UI timing** helpers; keep free of domain rules.
 
-### vorma-specific clusters
+### Additional clusters in this repo
 
 - **`deep_link/`**, **`pusher/`**, **`distance_utils`** — treat as **infrastructure utilities**; they stay in **`utils/`** until promoted to a shared package. **Do not** move business workflows into these folders.
 

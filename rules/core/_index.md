@@ -1,46 +1,48 @@
 # Shared `lib/core` rules index
 
 ## Purpose
-Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforceable rules. Agents must follow **this app’s** `ai_docs/architecture.md` when folder names differ (e.g. `base/` vs `foundation/`, `config/` vs `configs/`).
+
+Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforceable rules. Agents must follow **`ai_docs/architecture.md`** when in doubt and resolve **paths from this repo’s** `lib/core/` tree (e.g. `base/` vs a hypothetical `foundation/`, `config/` vs `configs/`).
 
 ## Fill when
-- When `lib/core` layout or cross-cutting boundaries change in reference apps.
+
+- When `lib/core` layout or cross-cutting boundaries change in this app.
 
 ## References
+
 - `rules/_index.md` (all rule areas)
-- Primary reference app: `flutter_base/lib/core/` (`core.dart`, `di/di.dart`).
-- Secondary variants: `vorma/lib/core/` (e.g. `base/`, `config/`, pagination, deep links).
+- This app: `lib/core/` (`core.dart`, `di/di.dart`, `base/`, `config/`, …)
 
 ## Content
 
-### Layout naming (same ideas, different folders)
+### Layout naming (this repo)
 
-| Concern | flutter_base | vorma (example) |
-|--------|--------------|-----------------|
-| Barrel | `lib/core/core.dart` | `lib/core/core.dart` |
-| Foundation-style types | `foundation/` | `base/` |
-| Theme, router, dimensions | `configs/` | `config/` |
-| Network helper | `network/helper/dio_helper.dart` | `network/dio_helper.dart` |
+| Concern | Location |
+|--------|----------|
+| Barrel | `lib/core/core.dart` |
+| Foundation-style types | `lib/core/base/` |
+| Theme, router, dimensions | `lib/core/config/` |
+| Network helper | `lib/core/network/dio_helper.dart` |
 
-Always resolve **file paths from the app’s actual tree**; do not assume `foundation/` vs `base/` without checking.
+Always resolve **file paths from the actual tree**; do not assume folder names from other templates.
 
-### What lives under core (both apps)
+### What lives under core
 
-- **Foundation**: use-case contract (`IUseCase`), `DomainServiceType` → `Either<Failure, T>`, `Async` state wrapper, `SafeEmitMixin`, shared typedefs.
-- **Network**: Dio wiring, interceptors, HTTP/domain exceptions, `Failure` types, status codes, exception→response mapping helpers (`mapApiException` vs collection helpers).
-- **DI**: `GetIt` singleton `injector`, `@InjectableInit`, `@module` for third-party types (Dio, storage), `@injectable` / `@singleton` for app types.
-- **Domain & data (cross-cutting)**: secure storage and language theme flows — repositories, data sources, entities/models, use cases that **many features** need (auth/session, locale).
-- **Blocs/cubits (app-wide)**: authentication flow, language; optional theme as `ChangeNotifier` / notifier class.
-- **Configs**: router helpers, theme values, generated assets, responsive helpers, app constants.
+- **Foundation (`base/`)**: use-case contract (`IUseCase`), `DomainServiceType` → `Either<Failure, T>`, `Async` state wrapper, `SafeEmitMixin`, shared typedefs.
+- **Network**: Dio wiring, interceptors, HTTP/domain exceptions, `Failure` types, status codes, exception collection helpers (`apiExecptionCollecter` / related).
+- **DI**: `GetIt` singleton `injector`, `@InjectableInit`, `@module` for third-party types (Dio, storage), `@injectable` / `@lazySingleton` for app types.
+- **Domain & data (cross-cutting)**: secure storage and language flows — repositories, data sources, entities/models, use cases that **many features** need (auth/session, locale).
+- **Blocs/cubits (app-wide)**: authentication flow, language; theme as `ChangeNotifier` where used.
+- **Config**: router helpers, theme values, generated assets, responsive usage at app root, app constants.
 - **Localization**: generated l10n, language enum, container holding current locale/strings.
-- **Services**: thin static or injectable wrappers (share, launcher, rate, vibration) where used.
+- **Services / platform helpers**: thin static or injectable wrappers (share, launcher, etc.) under the paths this repo uses (e.g. `utils/share_and_url_launch/`).
 - **Utils**: extensions, validators, file helpers — **no** feature business rules.
 
-### Vorma-only patterns (when working in that codebase)
+### Patterns specific to this codebase
 
 - **Pagination** under `base/pagination/` (`PaginatedData`, `PaginatedInput`, controllers).
 - **Deep linking** under `utils/deep_link/`.
-- Theme may be **`ThemeNotifier`** instead of **`ThemeManager`**; behavior matches (singleton `ChangeNotifier`, `AppTheme`, persisted via repository).
+- **Theme**: `ThemeNotifier` (singleton `ChangeNotifier`, `AppTheme`, persisted via repository) alongside Bloc where wired in `MaterialApp`.
 
 ### Rules documents in this folder
 
