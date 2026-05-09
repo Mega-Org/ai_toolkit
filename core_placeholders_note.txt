@@ -1,0 +1,1 @@
+rules/core/*.md files are placeholders aligned to a typical lib/core layout (barrel, foundation, network, di, etc.). Fill them from your reference apps’ lib/core and ai_docs/architecture.md; keep patterns/* in sync so rules and examples do not contradict.

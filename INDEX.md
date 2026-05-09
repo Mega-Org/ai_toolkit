@@ -38,7 +38,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Work in a Melos repo | `setup/melos-monorepo.md` |
 | Configure CI | `setup/ci-github-gitlab.md` |
 | Use shell aliases | `alias/flutter.md`, `alias/firebase.md` |
-| Clean up imports | `patterns/dart/absolute-imports.md` or `patterns/absolute-imports.md` until migrated |
+| Clean up imports | `patterns/dart/absolute-imports.md` |
 
 ## Rule Routing
 

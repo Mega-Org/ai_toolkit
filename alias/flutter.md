@@ -1,3 +1,17 @@
+# Flutter shell aliases
+
+## Purpose
+Document shell aliases and shortcuts for Flutter, `build_runner`, `flutter_gen`, and iOS CocoaPods workflows shared across projects.
+
+## Fill when
+- When you add, rename, or remove aliases or change pod / build_runner habits.
+
+## References
+- `rules/tooling/build-runner.md`
+- `patterns/platform/ios-pods-and-build.md`
+
+## Content
+
 ## Aliases
 
 These aliases are already configured and can be used as needed:

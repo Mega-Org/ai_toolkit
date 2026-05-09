@@ -33,7 +33,7 @@ If a referenced file does not exist yet, continue with the closest available fil
 - Refactor: use `workflows/maintenance/refactor.md`, then load the current app architecture docs before editing.
 - Dependency upgrade: use `workflows/maintenance/dependency-upgrade.md` and relevant setup notes.
 - Commit or PR prep: use `workflows/git/commit-after-phase.md` and `workflows/feature-delivery/verify-and-pr.md`.
-- Dart import cleanup: use `patterns/dart/absolute-imports.md` once migrated, or `patterns/absolute-imports.md` until then.
+- Dart import cleanup: use `patterns/dart/absolute-imports.md`.
 - Build runner, generated files, or json_serializable: load `rules/tooling/build-runner.md` and `patterns/data/json-models-json-serializable.md` when available.
 - Core architecture changes: load `rules/core/_index.md` and the specific `rules/core/*` file for the area being touched.
 
