@@ -10,26 +10,28 @@ Dio client setup, interceptors, and mapping exceptions to failures for repositor
 
 ## References
 
-- `lib/core/network/dio_helper.dart`, `header_interceptor.dart`, `un_authenticated_interceptor.dart`, `network/errors/`
+- `lib/core/network/helper/dio_helper.dart`
+- `lib/core/network/interceptors/api_request_header_interceptor.dart`, `lib/core/network/interceptors/un_authenticated_interceptor.dart`
+- `lib/core/network/errors/` — `exceptions.dart`, `failures.dart`, `failure_collect.dart` (**`collectFailure`**), `exception_mapper.dart` (**`mapApiException`**), `status_code.dart`
 
 ## Content
 
 ### Dio instances
 
 - **`RegisterModule` / `@module`**: a raw **`Dio`** with `BaseOptions` (base URL from **`ApiConstants`**, JSON headers, timeouts) may be registered for injectable-generated code.
-- **`DioHelper`**: **`@Injectable()`** class that owns a **`Dio`** instance, applies interceptors in **`_init()`**, and exposes **`get` / `post` / `put` / `delete`** wrapping **`apiExecptionCollecter`** (and related helpers in **`network/errors/`**).
+- **`DioHelper`**: **`@Injectable()`** class that owns a **`Dio`** instance, applies interceptors in **`_init()`**, and exposes **`get` / `post` / `put` / `delete`** wrapping **`mapApiException`** from **`exception_mapper.dart`** (see **`network/errors/`** for related helpers).
 
-### Interceptors (typical stack order)
+### Interceptors (this app’s stack order)
 
-1. **Headers**: API key / auth / timezone — **`HeaderInterceptor`**.
-2. **Logging**: **`PrettyDioLogger`** — gated by **`ApiConstants.canLog`** when applicable.
+1. **Headers**: **`ApiRequestHeaderInterceptor`** — API key / auth / timezone as implemented in that file.
+2. **Logging**: **`PrettyDioLogger`**.
 3. **Auth/session**: **`UnAuthenticatedInterceptor.instance`** — central handling for 401-style flows.
 
 Do **not** add feature-specific interceptors in core unless they are truly global; prefer feature modules or named Dio instances if needed.
 
 ### Exception mapping
 
-- **`apiExecptionCollecter`** (and related **`failure_collect` / `execption_collect`**) map **`DioException`** / HTTP outcomes to typed domain exceptions and **`Failure`** — align new endpoints with the existing collector pattern in this app.
+- **`mapApiException`** and **`collectFailure`** (note the legacy spelling **`execption`** in some parameter names in **`failure_collect.dart`**) map **`DioException`** / HTTP outcomes to typed domain exceptions and **`Failure`** — align new endpoints with the existing patterns in this app.
 
 ### Repository layer
 

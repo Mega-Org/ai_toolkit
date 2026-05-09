@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Shared **non-router** presentation constants: spacing and radii (**`Dimensions`**), typography (**`TextStyles`**, **`AppFonts`**), **semantic colors via `AppColors`** (theme-backed), **flutter_gen** asset accessors, and **`AppConstants`**. **`ThemeData`** construction and **`ThemeNotifier`** are in [`theme.md`](theme.md).
+Shared **non-router** presentation constants: spacing and radii (**`Dimensions`**), typography (**`TextStyles`**, **`AppFonts`**), **semantic colors via `AppColors`** (theme-backed), **flutter_gen** asset accessors, and **`AppConstants`**. **`ThemeData`** construction and **`ThemeManager`** are in [`theme.md`](theme.md).
 
 ## Fill when
 
@@ -13,20 +13,20 @@ Shared **non-router** presentation constants: spacing and radii (**`Dimensions`*
 
 ## References (this repo)
 
-- `lib/core/config/values/dimensions.dart`
-- `lib/core/config/values/text_styles.dart`
-- `lib/core/config/values/fonts.dart` (`AppFonts`)
-- `lib/core/config/values/colors.dart` — **`AppColors`** getter (see [`theme.md`](theme.md) for meaning and when to use **`AppTheme`** helpers)
-- `lib/core/config/values/assets_getters.dart` — **`AppIcons`**, **`AppImages`**, **`AppIllustrations`**, etc., aliasing **`flutter_gen`** classes
-- `lib/core/config/values/assets.gen.dart` — **generated**; do not edit by hand
-- `pubspec.yaml` — **`flutter_gen:`** block (`output: lib/core/config/values/`)
+- `lib/core/configs/values/dimensions.dart`
+- `lib/core/configs/values/text_styles.dart`
+- `lib/core/configs/values/fonts.dart` (`AppFonts`)
+- `lib/core/configs/values/colors.dart` — **`AppColors`** getter (see [`theme.md`](theme.md) for meaning and when to use **`AppTheme`** helpers)
+- `lib/core/configs/values/assets_getters.dart` — **`AppIcons`**, **`AppImages`**, **`AppIllustrations`**, etc., aliasing **`flutter_gen`** classes
+- `lib/core/configs/values/assets.gen.dart` — **generated**; do not edit by hand
+- `pubspec.yaml` — **`flutter_gen:`** block (`output: lib/core/configs/values/`)
 - `lib/core/constants/app_constants.dart` — store URLs, defaults, timing, feature-ish literals that are not API models
 
 ## Content
 
 ### Importing from `core`
 
-These files are typically **`part of core`** or exported through **`lib/core/core.dart`**. Prefer **`import 'package:vorma/core/core.dart';`** (or the project’s barrel) so **`Dimensions`**, **`TextStyles`**, **`AppColors`**, **`AppIcons`**, and **`AppConstants`** resolve consistently.
+These files are typically **`part of core`** or exported through **`lib/core/core.dart`**. Prefer **`import 'package:flutter_base/core/core.dart';`** (or the project’s barrel) so **`Dimensions`**, **`TextStyles`**, **`AppColors`**, **`AppIcons`**, and **`AppConstants`** resolve consistently.
 
 ### `Dimensions` (spacing, radii, insets)
 
@@ -41,8 +41,8 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 
 ### `AppColors` (getter)
 
-- **`AppColors`** in **`colors.dart`** is **`ThemeNotifier.instance.theme`** — the live **`AppTheme`** token object for the current light/dark palette.
-- Use **`AppColors`** for **semantic UI color** (text, primary, surfaces, errors). Do not reimplement the same getters on random widgets; if a new token is needed, add it on **`AppTheme`** in **`config/theme/app_theme.dart`** (see [`theme.md`](theme.md)).
+- **`AppColors`** in **`colors.dart`** is **`ThemeManager.instance.theme`** — the live **`AppTheme`** token object for the current light/dark palette.
+- Use **`AppColors`** for **semantic UI color** (text, primary, surfaces, errors). Do not reimplement the same getters on random widgets; if a new token is needed, add it on **`AppTheme`** in **`configs/theme/values/app_theme.dart`** (see [`theme.md`](theme.md)).
 - **Do not** read colors by importing **`LightTheme` / `DarkTheme`** or raw **`ThemeData`** fields in feature widgets when **`AppColors`** already exposes the token — keep one indirection through the getter pattern this app uses.
 
 ### Asset getters (`AppIcons`, `AppImages`, …) — not generated classes
@@ -53,7 +53,7 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 
 ### flutter_gen (behind `assets_getters.dart`)
 
-- **Config** (this repo): **`pubspec.yaml`** → **`flutter_gen:`** with **`output: lib/core/config/values/`** so codegen writes **`assets.gen.dart`** next to **`assets_getters.dart`**.
+- **Config** (this repo): **`pubspec.yaml`** → **`flutter_gen:`** with **`output: lib/core/configs/values/`** so codegen writes **`assets.gen.dart`** next to **`assets_getters.dart`**.
 - **Adding an asset**: place the file under **`assets/`** (or the tree your **`pubspec` `flutter: assets:`** globs include), ensure the glob covers it, then **regenerate** — do not paste new classes into **`assets.gen.dart`**.
 - After codegen, **wire the new symbol only through `assets_getters.dart`** (new getter, const, or field on **`AppIcons` / `AppImages` / …**) so the rest of the app never imports **`assets.gen.dart`** directly.
 - **Regenerate after asset or `flutter_gen` config changes**:

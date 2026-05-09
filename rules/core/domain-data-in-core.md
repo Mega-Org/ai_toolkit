@@ -22,7 +22,7 @@ Which cross-cutting repositories and use cases live under core versus feature fo
 
 ### Naming conventions
 
-- Repository **implementations** in this repo use the **`*_repository_imp.dart`** suffix (not `*_repository_impl.dart`).
+- Repository **implementations** in this repo use the **`*_repository_impl.dart`** suffix (e.g. **`theme_repository_impl.dart`**, **`language_cache_repository_impl.dart`**).
 
 ### Feature-specific domain/data
 

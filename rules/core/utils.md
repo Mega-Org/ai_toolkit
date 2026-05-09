@@ -10,7 +10,7 @@ Extensions, validators, and helpers—without embedding business rules that belo
 
 ## References
 
-- `lib/core/utils/` (extensions, picker, deep_link, pusher, share_and_url_launch, etc.)
+- `lib/core/utils/` (extensions, validations, files, notifiers, popular_sites helpers, etc.)
 
 ## Content
 
@@ -31,9 +31,9 @@ Extensions, validators, and helpers—without embedding business rules that belo
 
 - **`TimerController`**, **`ResendTimerNotifier`**, etc. — **UI timing** helpers; keep free of domain rules.
 
-### Additional clusters in this repo
+### Additional clusters
 
-- **`deep_link/`**, **`pusher/`**, **`distance_utils`** — treat as **infrastructure utilities**; they stay in **`utils/`** until promoted to a shared package. **Do not** move business workflows into these folders.
+- If you add **`app_links`**, **Pusher**, or similar wrappers, keep them as **thin infrastructure** under **`utils/`** or **`services/`** and **do not** embed feature business rules there.
 
 ### Rule of thumb
 

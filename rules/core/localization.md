@@ -13,13 +13,13 @@ Define how this template app wires **Flutter gen-l10n**, a **DI-backed `Localiza
 
 | Area | Path |
 |------|------|
-| Container, top-level getters, `part of core` | `lib/core/base/localization/localization_container.dart` |
-| Language enum | `lib/core/base/localization/app_language_code_enum.dart` |
-| ARBs + generated l10n | `lib/core/base/localization/l10n/` (`app_en.arb`, `app_ar.arb`, generated `app_localizations*.dart`) |
+| Container, top-level getters, `part of core` | `lib/core/localization/localization_container.dart` |
+| Language enum | `lib/core/localization/app_language_enum.dart` |
+| ARBs + generated l10n | `lib/core/localization/l10n/` (`app_en.arb`, `app_ar.arb`, generated `app_localizations*.dart`) |
 | App-wide language cubit | `lib/core/blocs/language_cubit/` (`app_language_cubit.dart`) |
 | `MaterialApp`, `setLocalizer`, cubit wiring | `lib/my_app.dart` |
-| Change-language UI (optional API + restart) | `lib/material/change_language/` (`change_language_bottom_sheet.dart`, `change_language_cubit.dart`) |
-| Backend language use case (when enabled) | `lib/src/common/domain/use_cases/language/change_langauge_use_case.dart` |
+| Change-language UI (optional API + restart) | `lib/src/common/presentation/change_language/` (`change_language_bottom_sheet.dart`, `change_language_cubit.dart`) |
+| Backend language use case (when enabled) | `lib/src/common/domain/use_cases/language/change_langauge_use_case.dart` (file name retains the `langauge` typo; class: **`ChangeLanguageUseCase`**) |
 | DI before `runApp` | `lib/main.dart`, `lib/core/di/di.dart` |
 | Gen-l10n config | `l10n.yaml` (repo root) |
 | Language use cases (get/set/clear/device) | `lib/core/domain/use_cases/language/` |
@@ -93,7 +93,7 @@ Use cases may expose **`getInstance()`** factories for legacy or static entry po
 
 ## Change-language UI (`ChangeLanguageBottomSheet`)
 
-- **`ChangeLanguageBottomSheet.show(context, canSaveInBackend: …)`** hosts **`ChangeLanguageCubit`**. When **`canSaveInBackend`** is true, selecting a language runs **`ChangeLanguageUseCase`** (loading/success/failure). When false, the cubit completes immediately without a network call.
+- **`ChangeLanguageBottomSheet.show(context, canSaveInBackend: …)`** hosts **`ChangeLanguageCubit`**. When **`canSaveInBackend`** is true, selecting a language runs **`ChangeLanguageUseCase`** from **`change_langauge_use_case.dart`** (loading/success/failure). When false, the cubit completes immediately without a network call.
 - On successful completion, the sheet pops to the root route, calls **`AppLanguageCubit.of(context).changeLanguage(currentLang)`**, then **`AppAuthenticationBloc.of(context).add(const AuthRestartEvent())`** so session and scoped dependencies re-resolve — effectively a **controlled app restart** of the authenticated shell (see [`blocs-app-wide.md`](blocs-app-wide.md)).
 - Onboarding and other screens may open the sheet with **`canSaveInBackend: false`** for local-only preview flows; align call sites with product rules for when the backend must store locale.
 

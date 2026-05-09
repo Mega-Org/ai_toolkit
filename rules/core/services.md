@@ -10,7 +10,7 @@ Thin wrappers for share, launcher, rate limiting, vibrator, and similar platform
 
 ## References
 
-- This app: share / URL launch helpers under `lib/core/utils/share_and_url_launch/` (`share_utils.dart`, `url_launcher_utils.dart`, etc.)
+- This app: **`lib/core/services/share/share_service.dart`**, **`lib/core/services/launcher/url_launcher_service.dart`**, **`lib/core/services/app_rate/app_rate_service.dart`**, **`lib/core/services/vibrator/vibrator_service.dart`** (**`part of core`** where applicable)
 
 ## Content
 
@@ -22,7 +22,7 @@ Thin wrappers for share, launcher, rate limiting, vibrator, and similar platform
 
 ### Layout in this repo
 
-- Prefer **`utils/share_and_url_launch/`** (or adjacent small files) instead of a separate top-level **`services/`** folder unless the team introduces one — **same rule**: **thin static or injectable APIs**, **no business rules**.
+- Prefer **`lib/core/services/<capability>/`** — **thin static or injectable APIs**, **no business rules**. Add new capabilities as small files next to existing services.
 
 ### Rules
 

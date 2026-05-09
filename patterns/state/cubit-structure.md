@@ -14,8 +14,8 @@ management pattern for this app.
 
 ## References
 
-- `lib/core/base/safe_emit_mixin.dart`
-- `lib/core/base/async.dart`
+- `lib/core/foundation/safe_emit_mixin.dart`
+- `lib/core/foundation/async.dart`
 - `rules/core/async.md`
 - `patterns/state/cubit-vs-bloc.md`
 
@@ -139,7 +139,7 @@ Use a separate state file when the Cubit owns multiple page concerns.
 // temp_editor_cubit.dart
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vorma/core/core.dart';
+import 'package:flutter_base/core/core.dart';
 
 part 'temp_editor_state.dart';
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Overview rules for foundational `lib/core/base/` types. Keep detailed
+Overview rules for foundational `lib/core/foundation/` types. Keep detailed
 `Async<T>` usage in [`async.md`](async.md).
 
 ## Fill when
@@ -11,7 +11,7 @@ Overview rules for foundational `lib/core/base/` types. Keep detailed
 
 ## References
 
-- `lib/core/base/` (`i_use_case.dart`, `typedef.dart`, `async.dart`, `safe_emit_mixin.dart`)
+- `lib/core/foundation/` (`i_use_case.dart`, `typedef.dart`, `async.dart`, `safe_emit_mixin.dart`)
 - `rules/core/async.md`
 
 ## Content
@@ -28,7 +28,7 @@ Overview rules for foundational `lib/core/base/` types. Keep detailed
 
 ### `Async<T>` (Equatable)
 
-- Presentation-state helper from `lib/core/base/async.dart`.
+- Presentation-state helper from `lib/core/foundation/async.dart` (**`part of core`**).
 - Use [`async.md`](async.md) for constructor rules, reset rules, and examples.
 - Do not use `Async<T>` for repositories or use-case contracts; keep domain/data
   returns as `DomainServiceType<T>` / `Either<Failure, T>`.

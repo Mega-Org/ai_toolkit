@@ -2,39 +2,39 @@
 
 ## Purpose
 
-Scope for app-level **auth**, **language**, and similar blocs/cubits versus feature-local state. **Theme** is handled by **`ThemeNotifier`** — see [`theme.md`](theme.md).
+Scope for app-level **auth**, **language**, and similar blocs/cubits versus feature-local state. **Theme** is handled by **`ThemeManager`** + **`ThemeBuilder`** — see [`theme.md`](theme.md).
 
 ## Fill when
 
 - App-wide state ownership or registration changes.
-- **`MyApp`** / **`BuilderScreen`** root routing rules or **`AppAuthenticationBloc`** events change.
+- **`MyApp`** / **`_BuilderScreen`** root routing rules or **`AppAuthenticationBloc`** events change.
 
 ## References (this repo)
 
 - `lib/core/blocs/app_auth_bloc/` (`AppAuthenticationBloc`, events, states)
 - `lib/core/blocs/language_cubit/` (`app_language_cubit.dart`, …)
-- `lib/core/blocs/theme_notifier/` — documented under [`theme.md`](theme.md)
-- `lib/my_app.dart` (`MultiBlocProvider`, `BuilderScreen`)
+- `lib/core/configs/theme/manager/theme_manager.dart` — documented under [`theme.md`](theme.md)
+- `lib/my_app.dart` (`MultiBlocProvider`, `_BuilderScreen`)
 
 ## Content
 
-### Root shell (`MyApp` → `BuilderScreen`)
+### Root shell (`MyApp` → `_BuilderScreen`)
 
-- **`MyApp`** registers app-wide providers (**`AppLanguageCubit`**, **`AppAuthenticationBloc`**, …) and builds **`MaterialApp`** with **`home: BuilderScreen`** (see [`theme.md`](theme.md) for theme/locale keys on **`MaterialApp`**).
-- **`BuilderScreen`** is a **`BlocConsumer<AppAuthenticationBloc, AppAuthenticationState>`** that picks the **root page** (no named auth stack — state drives a single child):
+- **`MyApp`** wraps the tree with **`ResponsiveBreakpoints`**, then **`MultiBlocProvider`** (currently registers **`AppLanguageCubit`** — add **`AppAuthenticationBloc`** here if it is not provided higher in the tree). **`MaterialApp.home`** is **`_BuilderScreen`** (see [`theme.md`](theme.md) for theme/locale keys on **`MaterialApp`**).
+- **`_BuilderScreen`** is a **`BlocConsumer<AppAuthenticationBloc, AppAuthenticationState>`** that picks the **root page** (state drives a single child). **Ground truth today** in `my_app.dart` (commented placeholders may differ from your product shell):
 
-| State | Root widget | Notes |
-|--------|--------------|--------|
-| **`AuthUninitialized`** | **`SizedBox()`** | Startup / **`AuthRestartEvent`** path until **`_startMainApp`** finishes. |
-| **`AuthUnauthenticated`** | **`OnboardingPage`** | Walkthrough; completing or skipping fires **`OnFinishWalkThrowEvent`**. |
-| **`AuthLogInPageState`** or **`AuthLogOutState`** | **`LoginPage`** | Login/register/OTP flows live under navigation from here. |
-| **`AuthAuthenticatedState`** or **`GuestState`** (else branch) | **`MainPage`** | Logged-in or guest main shell. |
+| State | Root widget (current `my_app.dart`) | Typical product mapping |
+|--------|-------------------------------------|---------------------------|
+| **`AuthUninitialized`** | **`SizedBox()`** | Empty shell until startup finishes. |
+| **`AuthUnauthenticated`** | **`SizedBox()`** (onboarding route commented out) | **`OnboardingPage`**; finish/skip → **`OnFinishWalkthroughEvent`**. |
+| **`AuthLogInPageState`** or **`AuthLogOutState`** | **`SizedBox()`** (login route commented out) | Login/register shell. |
+| **`AuthAuthenticatedState`**, **`GuestState`**, or other authenticated branches | **`MainPage`** | Logged-in or guest main shell. |
 
-- **Listener**: on **`AuthLogOutState`**, **`AppStepsManager.getInstance.dispose()`** runs (cleanup when session ends from logout flow).
+- **`AppAuthenticationBloc`** must exist above **`_BuilderScreen`** in the widget tree wherever **`BlocConsumer`** is used.
 
 ### `AppAuthenticationBloc`
 
-- **Scope**: session lifecycle — **`AppStartedEvent`** restores auth from secure/cache use cases; **`AuthenticatedEvent`** reloads user from cache; **`LoggedOutEvent`** clears secure cache, clears FCM token helper, emits **`AuthLogOutState`**; **`AuthRestartEvent`** emits **`AuthUninitialized`** then re-runs the same startup path as app start; **`GuestEvent`** briefly uninitialized then **`GuestState`**; **`OnFinishWalkThrowEvent`** emits **`AuthLogInPageState`** (onboarding → login).
+- **Scope**: session lifecycle — **`AppStartedEvent`** restores auth from secure/cache use cases; **`AuthenticatedEvent`** reloads user from cache; **`LoggedOutEvent`** clears secure cache, emits **`AuthLogOutState`**; **`AuthRestartEvent`** emits **`AuthUninitialized`** (call **`AppStartedEvent`** again from splash/bootstrap when you need a full re-run); **`GuestEvent`** → **`GuestState`**; **`OnFinishWalkthroughEvent`** emits **`AuthLogInPageState`** (onboarding → login).
 - **Dependencies**: **`GetIsUserAuthenticatedUseCase`**, **`DeleteAllSecureCacheUseCase`**, **`GetCachedUserUseCase`** (see bloc implementation for static **`getInstance`** vs injector usage).
 - **Static helper**: **`AppAuthenticationBloc.of(context)`**.
 - **Feature blocs** do not replace this; they compose under global auth state.
@@ -43,9 +43,9 @@ Scope for app-level **auth**, **language**, and similar blocs/cubits versus feat
 
 - **`LoggedOutEvent`**: after successful logout API/cache clear — e.g. **`logout_bottom_sheet.dart`**, **`delete_account_bottom_sheet.dart`**, guest/unauthenticated sheets that sign out.
 - **`AuthenticatedEvent`**: after OTP/login/register flows persist user — e.g. **`otp_page.dart`**, completion paths in register flows.
-- **`OnFinishWalkThrowEvent`**: **`onboarding_page.dart`** (finish or skip).
+- **`OnFinishWalkthroughEvent`**: **`onboarding_page.dart`** (finish or skip).
 - **`AuthRestartEvent`**: full auth + DI refresh when the app must re-resolve session after a global change — e.g. **`change_language_bottom_sheet.dart`** after language save (with **`AppLanguageCubit.changeLanguage`**).
-- **`AppStartedEvent`**: from **`MyApp`** bloc creation and optionally **`splash_page.dart`** if used.
+- **`AppStartedEvent`**: typically from **`splash_page.dart`** or equivalent bootstrap — ensure something dispatches it after **`AuthRestartEvent`** if you rely on automatic re-init.
 
 ### `AppLanguageCubit`
 

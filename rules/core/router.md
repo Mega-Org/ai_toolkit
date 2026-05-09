@@ -12,15 +12,15 @@ Imperative and typed navigation: **`GlobalKey<NavigatorState>`**, **`AppRouter`*
 
 ## References (this repo)
 
-- `lib/core/config/router/app_router.dart`
-- `lib/core/config/router/animated_routes.dart`
-- `lib/my_app.dart` (`navigatorKey`, `navigatorObservers`, `home: BuilderScreen`)
+- `lib/core/configs/router/app_router.dart`
+- `lib/core/configs/router/animated_routes.dart`
+- `lib/my_app.dart` (`navigatorKey`, `navigatorObservers`, `home` → `_BuilderScreen`)
 
 ## Content
 
 ### Global navigator key
 
-- **`AppRouter.navigatorKey`** — use for **`MaterialApp.navigatorKey`** so **`AppRouter.appContext`** and static **`push` / `pop` / `popUntil`** work when no local **`BuildContext`** is available.
+- **`appNavigatorKey`** (from **`AppRouter`**) — use for **`MaterialApp.navigatorKey`** so **`AppRouter.appContext`** and static **`push` / `pop` / `popUntil`** work when no local **`BuildContext`** is available.
 - Prefer passing an explicit **`BuildContext`** into router helpers when the call site already has one; use **`appContext`** only when safe (mounted navigator).
 
 ### `AppRouter` helpers

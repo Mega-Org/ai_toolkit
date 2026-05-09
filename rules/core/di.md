@@ -214,7 +214,7 @@ class TempGlobalBannersCubit extends Cubit<TempBannersState> {
 
 - **`lib/core/di/di.dart`** — `injector`, `initializeDependencies`, scopes, **`RegisterModule`**.
 - **`lib/core/di/di.config.dart`** — generated registrations.
-- **`lib/core/network/dio_helper.dart`** — example of **`@Injectable()`** + **`@PostConstruct`** infrastructure.
+- **`lib/core/network/helper/dio_helper.dart`** — example of **`@Injectable()`** + **`@PostConstruct`** infrastructure.
 
 ## Related toolkit docs
 

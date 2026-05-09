@@ -28,7 +28,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | `Async<T>` presentation state | [`core/async.md`](core/async.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
-| Theme (notifier, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |
+| Theme (`ThemeManager`, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |
 | Router | [`core/router.md`](core/router.md) |
 | Values, dimensions, assets, constants | [`core/config.md`](core/config.md) |
 | Localization | [`core/localization.md`](core/localization.md) |

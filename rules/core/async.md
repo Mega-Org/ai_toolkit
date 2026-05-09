@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Rules for using `Async<T>` from `lib/core/base/async.dart` in presentation
+Rules for using `Async<T>` from `lib/core/foundation/async.dart` in presentation
 state.
 
 ## Fill when
@@ -13,7 +13,7 @@ state.
 
 ## References
 
-- `lib/core/base/async.dart`
+- `lib/core/foundation/async.dart`
 - `patterns/state/cubit-structure.md`
 - `patterns/state/cubit-vs-bloc.md`
 - `rules/core/foundation.md`

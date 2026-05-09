@@ -21,10 +21,10 @@ When `core.dart` uses `part` directives and exports; what belongs in the barrel 
 
 ### What is a `part of core`
 
-- **Foundation-style (`base/`)**: `async.dart`, `i_use_case.dart`, `safe_emit_mixin.dart`, `typedef.dart`.
+- **Foundation-style (`foundation/`)**: `async.dart`, `i_use_case.dart`, `safe_emit_mixin.dart`, `typedef.dart`.
 - **Network**: dio helper, interceptors, errors, mappers — all `part of core` so they share private imports from the library directive block.
 - **Blocs/cubits**: app auth, language — typically `part of core` for access to `injector`, `appLocalizer`, shared types.
-- **Config**: theme pieces, router, dimensions — often `part of core` when they reference navigator keys, theme classes, or core types inline.
+- **Configs**: theme pieces, router, dimensions — often `part of core` when they reference navigator keys, theme classes, or core types inline.
 
 ### What stays outside `part` (separate libraries)
 
