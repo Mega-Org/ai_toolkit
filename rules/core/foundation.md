@@ -2,7 +2,8 @@
 
 ## Purpose
 
-Conventions for `IUseCase`, typedefs, async helpers, safe emit mixins, and other foundational types in core.
+Overview rules for foundational `lib/core/base/` types. Keep detailed
+`Async<T>` usage in [`async.md`](async.md).
 
 ## Fill when
 
@@ -11,6 +12,7 @@ Conventions for `IUseCase`, typedefs, async helpers, safe emit mixins, and other
 ## References
 
 - `lib/core/base/` (`i_use_case.dart`, `typedef.dart`, `async.dart`, `safe_emit_mixin.dart`)
+- `rules/core/async.md`
 
 ## Content
 
@@ -26,14 +28,17 @@ Conventions for `IUseCase`, typedefs, async helpers, safe emit mixins, and other
 
 ### `Async<T>` (Equatable)
 
-- UI/state helper for **loading / success / failure / initial** with optional `data` and `Failure`.
-- Use **`Async.loading()`**, **`Async.success(data)`**, **`Async.failure(failure)`**, **`Async.initial()`**, **`Async.successWithoutData()`** as in existing cubits (e.g. language change flow).
-- Do not replace `Either` in domain layer with `Async` unless the team extends the pattern; **`Async` is for presentation-friendly state**, not repository contracts.
+- Presentation-state helper from `lib/core/base/async.dart`.
+- Use [`async.md`](async.md) for constructor rules, reset rules, and examples.
+- Do not use `Async<T>` for repositories or use-case contracts; keep domain/data
+  returns as `DomainServiceType<T>` / `Either<Failure, T>`.
 
 ### `SafeEmitMixin<State>`
 
-- For **cubits** that override **`emit`**: only call **`super.emit`** when **`!isClosed`** to avoid emitting after dispose.
-- **Alternative**: inline `if (!isClosed) super.emit(...)` (see **`AppLanguageCubit`** in this repo). Prefer **one consistent approach** across new cubits.
+- New feature Cubits should prefer **`with SafeEmitMixin`** to avoid emitting
+  after dispose.
+- Legacy Cubits may inline `if (!isClosed) super.emit(...)`; do not copy that
+  pattern into new Cubits unless the surrounding file already uses it.
 
 ### `part of core`
 

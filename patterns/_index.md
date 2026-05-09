@@ -2,14 +2,14 @@
 
 ## Purpose
 
-**Implementation examples and stack conventions** (Bloc files, Dio repositories, `json_serializable`, DI registration). Patterns are longer than rules; keep them **aligned** with [`rules/core/`](../rules/core/_index.md) and [`rules/dart/`](../rules/dart/_index.md) so they do not contradict enforceable guidance.
+**Implementation examples and stack conventions** (Cubit/Bloc files, Dio repositories, `json_serializable`, DI registration). Patterns are longer than rules; keep them **aligned** with [`rules/core/`](../rules/core/_index.md) and [`rules/dart/`](../rules/dart/_index.md) so they do not contradict enforceable guidance.
 
 ## Subfolders
 
 | Folder | Role | Index |
 |--------|------|--------|
 | `patterns/dart/` | Imports, analysis-related how-tos | [`dart/_index.md`](dart/_index.md) |
-| `patterns/state/` | Bloc/Cubit structure and when to choose which | [`state/_index.md`](state/_index.md) |
+| `patterns/state/` | Cubit-first state structure and when to choose Bloc | [`state/_index.md`](state/_index.md) |
 | `patterns/data/` | Models, Dio, `Either` / failures | [`data/_index.md`](data/_index.md) |
 | `patterns/di/` | `get_it` + injectable examples | [`di/_index.md`](di/_index.md) |
 | `patterns/flutter/` | Responsive layout, breakpoints | [`flutter/_index.md`](flutter/_index.md) |

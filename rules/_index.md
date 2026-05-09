@@ -25,6 +25,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
 | Firebase secrets in repos | [`firebase/security-public-repos.md`](firebase/security-public-repos.md) |
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |
+| `Async<T>` presentation state | [`core/async.md`](core/async.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
 | Theme (notifier, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |

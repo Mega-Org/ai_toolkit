@@ -75,6 +75,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Theme (notifier, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md) |
 | Router | [`rules/core/router.md`](rules/core/router.md) |
 | Values, dimensions, flutter_gen, constants | [`rules/core/config.md`](rules/core/config.md) |
+| `Async<T>` presentation state | [`rules/core/async.md`](rules/core/async.md) |
 | Localization | [`rules/core/localization.md`](rules/core/localization.md) |
 | Services and utilities | [`rules/core/services.md`](rules/core/services.md), [`rules/core/utils.md`](rules/core/utils.md) |
 
@@ -85,7 +86,8 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | Need | Load |
 |------|------|
 | Absolute Dart imports | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md) |
-| Bloc or Cubit structure | [`patterns/state/bloc-structure.md`](patterns/state/bloc-structure.md) |
+| Cubit structure | [`patterns/state/cubit-structure.md`](patterns/state/cubit-structure.md) |
+| Bloc structure | [`patterns/state/bloc-structure.md`](patterns/state/bloc-structure.md) |
 | Choosing Cubit vs Bloc | [`patterns/state/cubit-vs-bloc.md`](patterns/state/cubit-vs-bloc.md) |
 | json_serializable models | [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) |
 | Dio repositories | [`patterns/data/dio-and-repositories.md`](patterns/data/dio-and-repositories.md) |

@@ -20,7 +20,7 @@ Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforce
 | Concern | Location |
 |--------|----------|
 | Barrel | `lib/core/core.dart` |
-| Foundation-style types | `lib/core/base/` |
+| Foundation-style types | `lib/core/base/` (including `Async`, `SafeEmitMixin`, use-case typedefs) |
 | Router module | `lib/core/config/router/` (see [`router.md`](router.md)) |
 | Values, dimensions, fonts, generated assets, constants | `lib/core/config/values/`, `lib/core/constants/` (see [`config.md`](config.md)) |
 | Theme `ThemeData` classes | `lib/core/config/theme/` |
@@ -53,6 +53,7 @@ Always resolve **file paths from the actual tree**; do not assume folder names f
 |------|--------|
 | `barrel-and-parts.md` | `core.dart` library, `part` files, exports |
 | `foundation.md` | `IUseCase`, `Async`, mixins, typedefs |
+| `async.md` | `Async<T>` state rules and examples |
 | `network.md` | Dio, interceptors, errors |
 | `di.md` | injectable, `injector`, scopes |
 | `domain-data-in-core.md` | repos/use cases in core vs features |

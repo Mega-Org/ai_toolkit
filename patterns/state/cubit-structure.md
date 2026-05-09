@@ -1,0 +1,278 @@
+# Cubit structure
+
+## Purpose
+
+How to structure feature and page state with Cubit. This is the default state
+management pattern for this app.
+
+## Fill when
+
+- Cubit file layout changes.
+- Async state conventions change.
+- Composite page state conventions change.
+- `SafeEmitMixin` usage changes.
+
+## References
+
+- `lib/core/base/safe_emit_mixin.dart`
+- `lib/core/base/async.dart`
+- `rules/core/async.md`
+- `patterns/state/cubit-vs-bloc.md`
+
+## Content
+
+### Default Cubit shape
+
+New feature Cubits should use `SafeEmitMixin`.
+
+```dart
+class TempActionCubit extends Cubit<TempActionState> with SafeEmitMixin {
+  TempActionCubit() : super(const TempActionState.initial());
+}
+```
+
+Use Cubit methods for normal feature actions:
+
+- load;
+- refresh;
+- submit;
+- save;
+- delete;
+- update selected item;
+- move to the next page step.
+
+Do not create Bloc events for these simple feature actions.
+
+### Choose a state shape
+
+| Situation | Use |
+| --- | --- |
+| One async operation only | `typedef TempActionState = Async<T>;` in the Cubit file |
+| One async operation with no returned data | `typedef TempActionState = Async<void>;` and `Async.successWithoutData()` |
+| Multiple fields or page concerns | `TempPageState extends Equatable` in `temp_page_state.dart` |
+| One submit state plus page data | One composite state with `Async<void> submitState` plus the other fields |
+| Form that can stay local to widgets | Widget-local controllers/state, no Cubit required |
+
+Forms do not always need Cubit ownership. Use Cubit when the form state affects
+the page flow, must survive step changes, feeds a submit request, or is shared
+between widgets. Keep simple widget-only input local when Cubit adds no value.
+
+### Single async state
+
+Use this when one function only manages loading, success, and failure, and the
+screen does not need to keep the success data in state after the listener reacts.
+
+```dart
+typedef TempDeleteState = Async<void>;
+
+class TempDeleteCubit extends Cubit<TempDeleteState> with SafeEmitMixin {
+  TempDeleteCubit() : super(const TempDeleteState.initial());
+
+  final TempDeleteUseCase _deleteUseCase = injector();
+
+  Future<void> delete(final TempDeleteParams params) async {
+    emit(const Async.loading());
+
+    final result = await _deleteUseCase(params);
+    result.fold(
+      (failure) {
+        emit(Async.failure(failure));
+      },
+      (_) {
+        emit(const Async.successWithoutData());
+      },
+    );
+
+    emit(const Async.initial());
+  }
+}
+```
+
+Rules:
+
+- Keep the typedef in the same `xxx_cubit.dart` file.
+- Use the typedef name `XxxState`, matching `XxxCubit`.
+- Start with `const XxxState.initial()`.
+- Emit `Async.loading()`, then `Async.failure(...)` or success.
+- If the function only drives a one-shot loading/success/failure UI and does not
+  need to save data, emit `Async.initial()` at the end.
+- Do not use `Async.success(null)`. For no-data success, use
+  `Async.successWithoutData()`.
+
+### Single async state with data
+
+Use `Async.success(data)` only when real non-null data is returned and the UI
+needs that data.
+
+```dart
+typedef TempItemsState = Async<List<TempItem>>;
+
+class TempItemsCubit extends Cubit<TempItemsState> with SafeEmitMixin {
+  TempItemsCubit() : super(const TempItemsState.initial());
+
+  final TempGetItemsUseCase _getItemsUseCase = injector();
+
+  Future<void> getItems() async {
+    emit(const Async.loading());
+
+    final result = await _getItemsUseCase(NoParams());
+    result.fold(
+      (failure) {
+        emit(Async.failure(failure));
+      },
+      (items) {
+        emit(Async.success(items));
+      },
+    );
+  }
+}
+```
+
+Do not reset to initial if the page must keep showing the returned data from
+state. Reset only for one-shot flows where the success/failure should be cleared.
+
+### Composite page state
+
+Use a separate state file when the Cubit owns multiple page concerns.
+
+```dart
+// temp_editor_cubit.dart
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vorma/core/core.dart';
+
+part 'temp_editor_state.dart';
+
+class TempEditorCubit extends Cubit<TempEditorState> with SafeEmitMixin {
+  TempEditorCubit() : super(TempEditorState.initial());
+
+  final TempSaveUseCase _saveUseCase = injector();
+
+  void updateStep(final int step) {
+    emit(state.copyWith(currentStep: step.clamp(0, 2)));
+  }
+
+  void updateDraft(final TempDraft draft) {
+    emit(state.copyWith(draft: draft));
+  }
+
+  Future<void> save() async {
+    if (!state.draft.isValid) {
+      return;
+    }
+
+    emit(state.copyWith(saveState: const Async.loading()));
+
+    final result = await _saveUseCase(state.draft.toParams());
+    result.fold(
+      (failure) {
+        emit(state.copyWith(saveState: Async.failure(failure)));
+      },
+      (_) {
+        emit(state.copyWith(saveState: const Async.successWithoutData()));
+      },
+    );
+  }
+}
+```
+
+```dart
+// temp_editor_state.dart
+part of 'temp_editor_cubit.dart';
+
+class TempEditorState extends Equatable {
+  const TempEditorState({
+    required this.currentStep,
+    required this.saveState,
+    required this.draft,
+  });
+
+  final int currentStep;
+  final Async<void> saveState;
+  final TempDraft draft;
+
+  TempEditorState.initial()
+      : this(
+          currentStep: 0,
+          saveState: const Async.initial(),
+          draft: TempDraft.initial(),
+        );
+
+  TempEditorState copyWith({
+    final int? currentStep,
+    final Async<void>? saveState,
+    final TempDraft? draft,
+  }) {
+    return TempEditorState(
+      currentStep: currentStep ?? this.currentStep,
+      saveState: saveState ?? this.saveState,
+      draft: draft ?? this.draft,
+    );
+  }
+
+  @override
+  List<Object> get props => [
+        currentStep,
+        saveState,
+        draft,
+      ];
+}
+```
+
+Rules:
+
+- Cubit file has `part 'xxx_state.dart';`.
+- State file starts with `part of 'xxx_cubit.dart';`.
+- State extends `Equatable`.
+- Provide `initial()` and `copyWith`.
+- Include every state field in `props`.
+- Use clear async field names like `saveState`, `deleteState`, or
+  `uploadState`.
+- Keep page-global state in one state object unless there is a real reuse reason
+  to split it.
+
+### Page usage
+
+Use `BlocProvider` at the page boundary. Use `BlocConsumer` when the page needs
+listener side effects. Use `BlocSelector` for narrow rebuilds.
+
+```dart
+BlocProvider(
+  create: (context) => TempEditorCubit(),
+  child: BlocConsumer<TempEditorCubit, TempEditorState>(
+    listener: (context, state) {
+      final saveState = state.saveState;
+
+      if (saveState.isLoading) {
+        TempLoading.show();
+        return;
+      }
+
+      TempLoading.hide();
+
+      if (saveState.isSuccess) {
+        Navigator.of(context).pop();
+        TempToast.success(context, message: 'Saved');
+      } else if (saveState.isFailure) {
+        TempToast.error(context, message: saveState.errorMessage ?? '');
+      }
+    },
+    builder: (context, state) {
+      return BlocSelector<TempEditorCubit, TempEditorState, int>(
+        selector: (state) => state.currentStep,
+        builder: (context, currentStep) {
+          return TempStepView(currentStep: currentStep);
+        },
+      );
+    },
+  ),
+)
+```
+
+### Do not
+
+- Do not create a state file for pure `Async<T>`.
+- Do not use `Async.success(null)`.
+- Do not keep one-shot success/failure state forever when no data must be saved.
+- Do not force every form field into Cubit if widget-local state is enough.
+- Do not override `emit` manually in new Cubits; use `SafeEmitMixin`.
