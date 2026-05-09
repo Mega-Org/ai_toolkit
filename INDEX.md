@@ -73,7 +73,8 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Dependency injection | [`rules/core/di.md`](rules/core/di.md) |
 | App-wide blocs or cubits | [`rules/core/blocs-app-wide.md`](rules/core/blocs-app-wide.md) |
 | Theme (notifier, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md) |
-| Router, values, assets, constants | [`rules/core/theme-router-config.md`](rules/core/theme-router-config.md) |
+| Router | [`rules/core/router.md`](rules/core/router.md) |
+| Values, dimensions, flutter_gen, constants | [`rules/core/config.md`](rules/core/config.md) |
 | Localization | [`rules/core/localization.md`](rules/core/localization.md) |
 | Services and utilities | [`rules/core/services.md`](rules/core/services.md), [`rules/core/utils.md`](rules/core/utils.md) |
 

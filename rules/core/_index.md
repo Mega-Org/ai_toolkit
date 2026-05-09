@@ -21,7 +21,9 @@ Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforce
 |--------|----------|
 | Barrel | `lib/core/core.dart` |
 | Foundation-style types | `lib/core/base/` |
-| Router, dimensions, theme `ThemeData` classes | `lib/core/config/` |
+| Router module | `lib/core/config/router/` (see [`router.md`](router.md)) |
+| Values, dimensions, fonts, generated assets, constants | `lib/core/config/values/`, `lib/core/constants/` (see [`config.md`](config.md)) |
+| Theme `ThemeData` classes | `lib/core/config/theme/` |
 | Theme runtime (`ThemeNotifier`) | `lib/core/blocs/theme_notifier/` (see [`theme.md`](theme.md)) |
 | Network helper | `lib/core/network/dio_helper.dart` |
 
@@ -34,7 +36,7 @@ Always resolve **file paths from the actual tree**; do not assume folder names f
 - **DI**: `GetIt` singleton `injector`, `@InjectableInit`, `@module` for third-party types (Dio, storage), `@injectable` / `@lazySingleton` for app types.
 - **Domain & data (cross-cutting)**: secure storage and language flows — repositories, data sources, entities/models, use cases that **many features** need (auth/session, locale).
 - **Blocs/cubits (app-wide)**: authentication flow, language; theme as `ChangeNotifier` where used.
-- **Config**: router helpers, generated assets, responsive usage at app root, app constants; theme tokens in [`theme.md`](theme.md).
+- **Router**: [`router.md`](router.md). **Values / assets / constants**: [`config.md`](config.md). **Theme tokens + notifier**: [`theme.md`](theme.md).
 - **Localization**: generated l10n under `base/localization/`, language enum, container holding current locale/strings.
 - **Services / platform helpers**: thin static or injectable wrappers (share, launcher, etc.) under the paths this repo uses (e.g. `utils/share_and_url_launch/`).
 - **Utils**: extensions, validators, file helpers — **no** feature business rules.
@@ -56,7 +58,8 @@ Always resolve **file paths from the actual tree**; do not assume folder names f
 | `domain-data-in-core.md` | repos/use cases in core vs features |
 | `blocs-app-wide.md` | auth bloc, language cubit, `BuilderScreen` root routing |
 | `theme.md` | `ThemeNotifier`, `AppTheme`, `AppColors`, root theme wiring |
-| `theme-router-config.md` | router, values, assets, constants (not theme tokens) |
+| `router.md` | `AppRouter`, navigator key, animated routes |
+| `config.md` | `Dimensions`, `TextStyles`, `AppColors` import surface, flutter_gen / `Assets`, `AppConstants` |
 | `localization.md` | `LocalizationContainer`, l10n, change-language sheet |
 | `services.md` | share, launcher, app rate, vibrator |
 | `utils.md` | extensions, validators |

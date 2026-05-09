@@ -14,7 +14,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | `rules/git/` | Branches, commits, alignment with git workflows | [`git/_index.md`](git/_index.md) |
 | `rules/tooling/` | Codegen, IDE, `build_runner` | [`tooling/_index.md`](tooling/_index.md) |
 | `rules/firebase/` | FlutterFire, public-repo safety | [`firebase/_index.md`](firebase/_index.md) |
-| `rules/core/` | Barrel, foundation, network, DI, app-wide blocs, theme, l10n, services, utils | [`core/_index.md`](core/_index.md) |
+| `rules/core/` | Barrel, foundation, network, DI, app-wide blocs, theme, router, config values/assets, l10n, services, utils | [`core/_index.md`](core/_index.md) |
 
 ## Quick map (common tasks)
 
@@ -27,8 +27,9 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
-| Theme (notifier, `AppColors`, root) | [`core/theme.md`](core/theme.md) |
-| Router, values, assets, constants | [`core/theme-router-config.md`](core/theme-router-config.md) |
+| Theme (notifier, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |
+| Router | [`core/router.md`](core/router.md) |
+| Values, dimensions, assets, constants | [`core/config.md`](core/config.md) |
 | Localization | [`core/localization.md`](core/localization.md) |
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
 
