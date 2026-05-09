@@ -13,11 +13,13 @@ Define how this template app wires **Flutter gen-l10n**, a **DI-backed `Localiza
 
 | Area | Path |
 |------|------|
-| Container, top-level getters, `part of core` | `lib/core/localization/localization_container.dart` |
-| Language enum | `lib/core/localization/app_language_enum.dart` |
-| ARBs + generated l10n | `lib/core/localization/l10n/` (`app_en.arb`, `app_ar.arb`, generated `app_localizations*.dart`) |
-| App-wide language cubit | `lib/core/blocs/language_cubit/` (e.g. `app_language_cubit.dart`) |
+| Container, top-level getters, `part of core` | `lib/core/base/localization/localization_container.dart` |
+| Language enum | `lib/core/base/localization/app_language_code_enum.dart` |
+| ARBs + generated l10n | `lib/core/base/localization/l10n/` (`app_en.arb`, `app_ar.arb`, generated `app_localizations*.dart`) |
+| App-wide language cubit | `lib/core/blocs/language_cubit/` (`app_language_cubit.dart`) |
 | `MaterialApp`, `setLocalizer`, cubit wiring | `lib/my_app.dart` |
+| Change-language UI (optional API + restart) | `lib/material/change_language/` (`change_language_bottom_sheet.dart`, `change_language_cubit.dart`) |
+| Backend language use case (when enabled) | `lib/src/common/domain/use_cases/language/change_langauge_use_case.dart` |
 | DI before `runApp` | `lib/main.dart`, `lib/core/di/di.dart` |
 | Gen-l10n config | `l10n.yaml` (repo root) |
 | Language use cases (get/set/clear/device) | `lib/core/domain/use_cases/language/` |
@@ -25,11 +27,13 @@ Define how this template app wires **Flutter gen-l10n**, a **DI-backed `Localiza
 | Language cache repository (impl) | `lib/core/data/repository/language_cache_repository_impl.dart` |
 | Language cache data source (prefs + device) | `lib/core/data/data_source/language_cache_data_source.dart` |
 
+App-wide auth routing tied to restarts is documented in [`blocs-app-wide.md`](blocs-app-wide.md).
+
 ## Architecture (startup → UI)
 
-1. **`main`** calls **`initializeDependencies()`** so **`injector.init()`** runs and registers core services, including **`LocalizationContainer`** (`@singleton` / async registration with injectable). **`@PostConstruct init()`** on the container loads the cached language via **`GetCachedLanguageUseCase`**.
+1. **`main`** calls **`initializeDependencies()`** so **`injector.init()`** runs and registers core services, including **`LocalizationContainer`**. **`@PostConstruct init()`** on the container loads the cached language via **`GetCachedLanguageUseCase`**.
 2. **`MyApp`** provides **`AppLanguageCubit`** and calls **`init()`** so **`MaterialApp.locale`** matches **`LocalizationContainer.getLang`**.
-3. **`MaterialApp`** sets **`localizationsDelegates`**, **`supportedLocales`**, and **`locale`** from cubit state (`AppLanguageEnum` → `Locale` via **`local`** getter). **`navigatorKey`** should be the app’s global key (e.g. **`appNavigatorKey`**) so **`getLocale`** can resolve when a context exists.
+3. **`MaterialApp`** sets **`localizationsDelegates`**, **`supportedLocales`**, and **`locale`** from cubit state (`AppLanguageEnum` → `Locale` via **`local`**). **`navigatorKey`** is the app global key from **`AppRouter`** so **`getLocale`** can resolve when a context exists. A **`ValueKey`** on **`MaterialApp`** (combined with theme hash in this app) forces a clean rebuild when locale/theme change.
 4. **`MaterialApp.builder`** calls **`injector<LocalizationContainer>().setLocalizer(context)`** on every rebuild. That assigns **`AppLocalizations.of(context)`** into the container so **`appLocalizer`** stays aligned with the active locale (including after language changes). **Hot reload / hot restart** with **`flutter gen-l10n`** follow normal Flutter tooling behavior; fix ARBs if codegen or analysis fails after edits.
 
 ## How to access translations and locale
@@ -84,8 +88,14 @@ Use cases may expose **`getInstance()`** factories for legacy or static entry po
 
 ## `AppLanguageCubit`
 
-- **`changeLanguageLocally`** / language flows call **`LocalizationContainer.setLanguage`** then emit state — **single source of truth** for persisted language; avoid duplicate **`SharedPreferences`** (or other storage) writes from features.
+- **`changeLanguage`**: persists via **`LocalizationContainer.setLanguage`**, then **`resetDependenciesScope()`**, then emits — **single source of truth** for stored language and aligned **`GetIt`** scopes; avoid duplicate **`SharedPreferences`** (or other storage) writes from features.
 - **`AppLanguageEnum`** (`ar` / `en`, **`local`** for **`Locale`**) is the app’s language model; extend the enum and ARBs together when adding locales.
+
+## Change-language UI (`ChangeLanguageBottomSheet`)
+
+- **`ChangeLanguageBottomSheet.show(context, canSaveInBackend: …)`** hosts **`ChangeLanguageCubit`**. When **`canSaveInBackend`** is true, selecting a language runs **`ChangeLanguageUseCase`** (loading/success/failure). When false, the cubit completes immediately without a network call.
+- On successful completion, the sheet pops to the root route, calls **`AppLanguageCubit.of(context).changeLanguage(currentLang)`**, then **`AppAuthenticationBloc.of(context).add(const AuthRestartEvent())`** so session and scoped dependencies re-resolve — effectively a **controlled app restart** of the authenticated shell (see [`blocs-app-wide.md`](blocs-app-wide.md)).
+- Onboarding and other screens may open the sheet with **`canSaveInBackend: false`** for local-only preview flows; align call sites with product rules for when the backend must store locale.
 
 ## Official gen-l10n (`l10n.yaml`)
 

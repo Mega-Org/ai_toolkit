@@ -27,7 +27,8 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
-| Theme, router, config | [`core/theme-router-config.md`](core/theme-router-config.md) |
+| Theme (notifier, `AppColors`, root) | [`core/theme.md`](core/theme.md) |
+| Router, values, assets, constants | [`core/theme-router-config.md`](core/theme-router-config.md) |
 | Localization | [`core/localization.md`](core/localization.md) |
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
 

@@ -1,40 +1,39 @@
-# Theme, router, and config
+# Router and app config (non-theme)
 
 ## Purpose
 
-Theme notifier, router, app values, and generated assets conventions in core config.
+Router helpers, app values (non-theme tokens), generated assets, and responsive root conventions. **Theming** (notifier, `AppTheme`, `AppColors`, `MaterialApp` theme wiring) lives in [`theme.md`](theme.md) — read that file for theme-only work.
 
 ## Fill when
 
-- When theming, routing, or global config patterns change.
+- Routing APIs, `navigatorKey`, or transition helpers change.
+- Non-theme values, assets getters, or `AppConstants` change.
+- Responsive breakpoints at the app root change (see existing `MyApp` setup).
 
-## References
+## References (this repo)
 
-- `lib/core/config/router/`, `lib/core/config/theme/`, `lib/core/config/values/`
+- `lib/core/config/router/` (`app_router.dart`, `animated_routes.dart`, …)
+- `lib/core/config/values/` (`text_styles.dart`, `dimensions.dart`, `fonts.dart`, …) — **theme tokens and `AppColors`**: [`theme.md`](theme.md)
+- Generated assets / `flutter_gen` as used by this project
+- `lib/my_app.dart` (router key + responsive wrapper; theme details in [`theme.md`](theme.md))
 
 ## Content
 
 ### Router
 
-- **Global key**: exposed on **`AppRouter`** (e.g. **`navigatorKey`**) — **`GlobalKey<NavigatorState>`** for imperative navigation without context when needed.
-- **`AppRouter`**: static helpers **`push`**, **`pushNamed`**, **`pop`**, **`popUntil`**, **`getCurrentRoute`** — use the accessors defined in **this** app’s router module.
+- **Global key**: exposed on **`AppRouter`** (e.g. **`navigatorKey`**) — **`GlobalKey<NavigatorState>`** for navigation without a local **`BuildContext`** when needed.
+- **`AppRouter`**: static helpers **`push`**, **`pushNamed`**, **`pop`**, **`popUntil`**, **`getCurrentRoute`** — use the accessors defined in this app’s router module.
 - **Animated routes**: shared transition helpers live next to **`app_router.dart`** (`animated_routes.dart`).
 
-### Theme
+### Values (non-theme)
 
-- **`AppTheme`** abstract type with **`LightTheme`** / **`DarkTheme`** concrete implementations under **`config/theme/`** / **`values/`** or sibling files.
-- **Persistence**: **`ThemeRepository`** + **`ThemeRepositoryImp`** reads/writes preference; **`ThemeNotifier`** loads on **`initialize()`** and persists on theme change.
-- **Widgets**: **`ThemeBuilder`** / **`theme_checker_widget`** (names vary) wrap subtree rebuilds when theme toggles.
-
-### Values
-
-- **`colors.dart`**, **`text_styles.dart`**, **`dimensions.dart`**, **`fonts.dart`** — design tokens; **`assets_getters.dart`** wraps **`Assets`** from codegen.
-- **Responsive**: this app uses **`responsive_framework`** at the app root (e.g. **`ResponsiveBreakpoints.builder`**) per existing **`MaterialApp`** setup.
+- **`text_styles.dart`**, **`dimensions.dart`**, **`fonts.dart`**, etc. — shared layout and typography helpers; keep theme-dependent color usage aligned with **`AppColors`** / **`AppTheme`** per [`theme.md`](theme.md).
+- **Responsive**: **`responsive_framework`** at the app root (`ResponsiveBreakpoints.builder` in **`my_app.dart`**).
 
 ### Generated assets
 
-- **`flutter_gen`** output: **`assets.gen.dart`** — **import generated symbols** (`Assets.*`) instead of raw path strings where the project already uses codegen.
+- **`flutter_gen`** output (e.g. **`assets.gen.dart`**) — import generated symbols (`Assets.*`) instead of raw path strings where the project uses codegen.
 
 ### Constants
 
-- **`AppConstants`** for non-API app-wide constants (feature flags, timing, UX).
+- **`AppConstants`** (or equivalent) for non-API app-wide constants (feature flags, timing, UX).

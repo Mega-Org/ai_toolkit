@@ -72,7 +72,8 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Network, Dio, failures | [`rules/core/network.md`](rules/core/network.md) |
 | Dependency injection | [`rules/core/di.md`](rules/core/di.md) |
 | App-wide blocs or cubits | [`rules/core/blocs-app-wide.md`](rules/core/blocs-app-wide.md) |
-| Theme, router, and config | [`rules/core/theme-router-config.md`](rules/core/theme-router-config.md) |
+| Theme (notifier, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md) |
+| Router, values, assets, constants | [`rules/core/theme-router-config.md`](rules/core/theme-router-config.md) |
 | Localization | [`rules/core/localization.md`](rules/core/localization.md) |
 | Services and utilities | [`rules/core/services.md`](rules/core/services.md), [`rules/core/utils.md`](rules/core/utils.md) |
 

@@ -13,5 +13,5 @@
 ## References
 
 - Flutter rules: [`../../rules/flutter/_index.md`](../../rules/flutter/_index.md)
-- Theme and dimensions (core): [`../../rules/core/theme-router-config.md`](../../rules/core/theme-router-config.md)
+- Theme (core): [`../../rules/core/theme.md`](../../rules/core/theme.md); router and layout values: [`../../rules/core/theme-router-config.md`](../../rules/core/theme-router-config.md)
 - Patterns overview: [`../_index.md`](../_index.md)
