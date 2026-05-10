@@ -11,4 +11,5 @@ Entry point for Flutter UI and framework enforceable rules.
 - `rules/flutter/widgets-and-performance.md`
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+- Widget composition and provider/`context` ordering: [`widgets-and-performance.md`](widgets-and-performance.md) (page + `BlocProvider`: [`../patterns/flutter/page-bloc-provider.md`](../patterns/flutter/page-bloc-provider.md)).

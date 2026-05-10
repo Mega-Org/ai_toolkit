@@ -53,7 +53,8 @@ to read from state.
 ```dart
 typedef TempItemsState = Async<List<TempItem>>;
 
-class TempItemsCubit extends Cubit<TempItemsState> with SafeEmitMixin {
+class TempItemsCubit extends Cubit<TempItemsState>
+    with SafeEmitMixin<TempItemsState> {
   TempItemsCubit() : super(const TempItemsState.initial());
 
   final TempItemsUseCase _itemsUseCase = injector();
