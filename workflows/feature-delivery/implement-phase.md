@@ -32,7 +32,7 @@ Before the steps below, follow **`../git/commit-before-work.md`**: check `git st
 ## Steps
 
 1. **Confirm scope** — Which phase from `ai_specs/` (or the active plan); restate deliverables in one sentence. If the spec defines **current implementation scope** (stubs vs real API), confirm this phase matches that slice and any **Next session** / cutover items are not jumped ahead of unintentionally.
-2. **Implement** — Data/domain, state, presentation, wiring per the plan and app rules (`ai_toolkit` `INDEX.md` → Defaults, Rule Routing, Pattern Routing). When this phase touches network configuration or paths, keep **feature-scoped API path constants** under the feature `data/` folder (single source for remote services; not in cubits)—as called out in make-plan when the feature has network calls.
+2. **Implement** — Data/domain, state, presentation, wiring per the plan and app rules (`ai_toolkit` `INDEX.md` → Defaults, Rule Routing, Pattern Routing). When this phase touches network configuration or paths, keep **feature-scoped API path constants** under the feature `data/api/` folder (single source for remote datasources; not in cubits)—see [`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)—as called out in make-plan when the feature has network calls.
 3. **Verify** — Tests and checks listed for this phase in the plan; analyzer clean for touched files.
 4. **Document** — Update `ai_specs/` and/or `ai_docs/` as agreed for this phase.
 5. **Handoff** — Mark phase done in the spec; note follow-ups. Keep explicit pointers to which `rules/` and `patterns/` files mattered so the next phase stays consistent (mirror make-plan **Outputs**).

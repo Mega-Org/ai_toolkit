@@ -9,6 +9,7 @@
 | File | Topic |
 |------|--------|
 | [`use-case-and-domain-service-type.md`](use-case-and-domain-service-type.md) | `IUseCase`, param structure, sealed variants, query getters, `DomainServiceType` |
+| [`feature-data-layer.md`](feature-data-layer.md) | Feature `data/` layout: `api/`, flat `datasources/` vs `remote`/`local`, `models/`, `repository/` |
 
 **Planned leaf docs** (paths reserved; follow [`../../README.md`](../../README.md) until added): `json-models-json-serializable.md`, `dio-and-repositories.md`, `either-and-failures.md`. Task routing also lists them from [`../../INDEX.md`](../../INDEX.md) when present.
 

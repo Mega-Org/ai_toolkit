@@ -95,6 +95,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | json_serializable models | [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) |
 | Dio repositories | [`patterns/data/dio-and-repositories.md`](patterns/data/dio-and-repositories.md) |
 | Either and failures | [`patterns/data/either-and-failures.md`](patterns/data/either-and-failures.md) |
+| Feature `data/` folder (`api/`, `datasources/`, `models/`, `repository/`) | [`patterns/data/feature-data-layer.md`](patterns/data/feature-data-layer.md) |
 | get_it and injectable | [`patterns/di/injectable-get-it.md`](patterns/di/injectable-get-it.md) |
 | Responsive Flutter layout | [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
 | Page + `BlocProvider` + view (`context` under provider) | [`patterns/flutter/page-bloc-provider.md`](patterns/flutter/page-bloc-provider.md); rule [`rules/flutter/widgets-and-performance.md`](rules/flutter/widgets-and-performance.md) |
