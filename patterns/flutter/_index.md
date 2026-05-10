@@ -9,6 +9,8 @@
 | File | Topic |
 |------|--------|
 | [`responsive-and-layout.md`](responsive-and-layout.md) | `responsive_framework`: root breakpoints, `AppScaledBox`, `AppResponsiveLayout` constants |
+| [`core-bottom-sheets.md`](core-bottom-sheets.md) | Modal sheets: static `show`, `showAppModalBottomSheet`, sheet-scoped `BlocProvider`, Cubit alignment |
+| [`core-alerts-dialogs.md`](core-alerts-dialogs.md) | Centered dialogs/alerts: `showAppDialog`, static `show`, dialog-scoped Cubit, when to use raw `showDialog` |
 
 ## References
 

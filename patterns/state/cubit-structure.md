@@ -236,6 +236,11 @@ Rules:
 Use `BlocProvider` at the page boundary. Use `BlocConsumer` when the page needs
 listener side effects. Use `BlocSelector` for narrow rebuilds.
 
+For **modal bottom sheets** or **centered dialogs** (short-lived overlays with
+their own Cubit), put `BlocProvider` inside the widget’s static `show` method so
+scope matches the overlay — see [`patterns/flutter/core-bottom-sheets.md`](../flutter/core-bottom-sheets.md)
+and [`patterns/flutter/core-alerts-dialogs.md`](../flutter/core-alerts-dialogs.md).
+
 ```dart
 BlocProvider(
   create: (context) => TempEditorCubit(),

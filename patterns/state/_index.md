@@ -16,6 +16,8 @@ authentication.
 
 ## References
 
+- Modal bottom sheets + Cubit scope: [`../flutter/core-bottom-sheets.md`](../flutter/core-bottom-sheets.md)
+- Modal dialogs / alerts + Cubit scope: [`../flutter/core-alerts-dialogs.md`](../flutter/core-alerts-dialogs.md)
 - App-wide blocs rules: [`../../rules/core/blocs-app-wide.md`](../../rules/core/blocs-app-wide.md)
 - Async state rules: [`../../rules/core/async.md`](../../rules/core/async.md)
 - DI for blocs/cubits: [`../../rules/core/di.md`](../../rules/core/di.md)
