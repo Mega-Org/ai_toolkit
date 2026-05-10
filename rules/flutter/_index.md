@@ -13,3 +13,4 @@ Entry point for Flutter UI and framework enforceable rules.
 ## Content
 
 - Widget composition and provider/`context` ordering: [`widgets-and-performance.md`](widgets-and-performance.md) (page + `BlocProvider`: [`../patterns/flutter/page-bloc-provider.md`](../patterns/flutter/page-bloc-provider.md)).
+- Widget-local controllers and similar fields: [`../patterns/flutter/presentation-field-naming.md`](../patterns/flutter/presentation-field-naming.md).
