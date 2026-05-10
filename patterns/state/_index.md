@@ -11,6 +11,7 @@ authentication.
 | File | Topic |
 |------|--------|
 | [`cubit-structure.md`](cubit-structure.md) | Feature/page Cubit file layout and state conventions |
+| [`cubit-and-use-case.md`](cubit-and-use-case.md) | Cubit methods calling **`IUseCase`**: `await`, `fold`, **`SafeEmitMixin`**, `Async` vs composite state |
 | [`bloc-structure.md`](bloc-structure.md) | Full Bloc layout for app-wide event state |
 | [`cubit-vs-bloc.md`](cubit-vs-bloc.md) | When to prefer Cubit vs full Bloc |
 

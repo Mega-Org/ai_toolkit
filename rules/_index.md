@@ -21,11 +21,13 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Topic | Leaf file |
 |--------|-----------|
 | Dart analysis / imports | [`dart/imports-and-analysis.md`](dart/imports-and-analysis.md) |
+| Dart constructors / redundant `super()` | [`dart/constructors.md`](dart/constructors.md) |
 | Widgets / performance | [`flutter/widgets-and-performance.md`](flutter/widgets-and-performance.md) |
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
 | Firebase secrets in repos | [`firebase/security-public-repos.md`](firebase/security-public-repos.md) |
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |
 | `Async<T>` presentation state | [`core/async.md`](core/async.md) |
+| `IUseCase`, params, `DomainServiceType` | [`core/foundation.md`](core/foundation.md); pattern [`../patterns/data/use-case-and-domain-service-type.md`](../patterns/data/use-case-and-domain-service-type.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
 | Theme (`ThemeManager`, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |

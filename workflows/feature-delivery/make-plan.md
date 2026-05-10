@@ -36,12 +36,14 @@ Before step 1 below, follow **`../git/commit-before-work.md`**: check `git statu
 2. **`ai_docs/`** — When present, read `ai_docs/architecture.md` and `ai_docs/conventions.md` so the plan respects this app’s core vs feature layout and naming.
 3. **Toolkit** — Cross-check `ai_toolkit/INDEX.md` → `Defaults`, `Rule Routing`, and `Pattern Routing` for stack-wide constraints (Bloc/Cubit, Dio, injectable, json_serializable, Either/failures, etc.).
 
+If the spec defines **current implementation scope** (e.g. UI + logic first, **stub HTTP** / `Future.delayed`, connect real API later), **restate that ordering** in phased delivery and point to the spec’s **Next session** / API cutover checklist so Phase B–E do not assume live endpoints prematurely. When the feature has network calls, note **feature-scoped API path constants** under the feature `data/` folder (single source for remote services; not in cubits)—see e.g. `ai_specs/authentication/README.md` §1.
+
 ### Steps
 
 1. **Restate scope** — Summarize goals, non-goals, and acceptance criteria from the spec in your own words so gaps are visible early.
 2. **Map surfaces** — List UI entry points, state (Bloc/Cubit), data (repos, APIs), DI registrations, routing, l10n keys, and tests affected.
 3. **Align with core** — Decide what belongs in shared `lib/core` vs the feature folder using app `ai_docs/` when available; otherwise follow `rules/core/_index.md` and linked core rules.
-4. **Phase the work** — Break delivery into ordered phases (for example: models and API layer → repositories → domain/use cases → presentation → wiring → tests → docs). Each phase should be committable or reviewable on its own where possible.
+4. **Phase the work** — Break delivery into ordered phases (for example: models and API layer → repositories → domain/use cases → presentation → wiring → tests → docs). Each phase should be committable or reviewable on its own where possible. **Stub-first specs:** allow repository **stubs** early if the spec says so; reserve a later slice or explicit “next session” for **real Dio**, DTOs against production JSON, and base URL configuration—without inventing the checklist in chat when the spec already lists it.
 5. **Risks and dependencies** — Flag migrations, flag/env changes, breaking API contracts, and ordering constraints between phases.
 6. **Verification** — For each phase, note how you will verify it (unit/widget/integration tests, manual checks, affected platforms).
 

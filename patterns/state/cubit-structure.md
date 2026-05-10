@@ -26,7 +26,8 @@ management pattern for this app.
 New feature Cubits should use `SafeEmitMixin`.
 
 ```dart
-class TempActionCubit extends Cubit<TempActionState> with SafeEmitMixin {
+class TempActionCubit extends Cubit<TempActionState>
+    with SafeEmitMixin<TempActionState> {
   TempActionCubit() : super(const TempActionState.initial());
 }
 ```
@@ -49,7 +50,7 @@ Do not create Bloc events for these simple feature actions.
 | --- | --- |
 | One async operation only | `typedef TempActionState = Async<T>;` in the Cubit file |
 | One async operation with no returned data | `typedef TempActionState = Async<void>;` and `Async.successWithoutData()` |
-| Multiple fields or page concerns | `TempPageState extends Equatable` in `temp_page_state.dart` |
+| Multiple fields or page concerns | `XxxState extends Equatable` in `xxx_state.dart` (same stem as `xxx_cubit.dart`) |
 | One submit state plus page data | One composite state with `Async<void> submitState` plus the other fields |
 | Form that can stay local to widgets | Widget-local controllers/state, no Cubit required |
 
@@ -62,31 +63,61 @@ between widgets. Keep simple widget-only input local when Cubit adds no value.
 Use this when one function only manages loading, success, and failure, and the
 screen does not need to keep the success data in state after the listener reacts.
 
+For **use-case invocation** (`await`, `fold`, resetting `initial`), see
+[`cubit-and-use-case.md`](cubit-and-use-case.md).
+
+#### Presentation params
+
+For **several** screen fields, pass **one immutable params object** into the Cubit
+method (`final XxxSubmitParams`) — not long positional lists. Colocate the class
+with the Cubit or screen (`final` fields, `const` constructor when possible).
+
+For **two or three** stable arguments, **named parameters** on the Cubit method
+are fine (see `LoginCubit.submit` in `lib/src/authentication/presentation/login/`).
+Introduce a small params class when the bundle grows or is shared.
+
+#### Void vs `Future`
+
+Prefer **`void`** on Cubit actions when **call sites** do not need to **await**
+(typical for submit from `onPressed`). The method body may still be **`async`** and
+**`await`** the use case — see
+[`cubit-and-use-case.md`](cubit-and-use-case.md) for the standard **`fold`**
+sequence (**`SafeEmitMixin`** makes **`emit`** safe after dispose; see that doc).
+
+Use **`Future<void>`** only when tests or coordinators **must await** completion.
+
+#### Ephemeral submit: reset to `initial`
+
+After emitting terminal **`Async.failure`** / **`Async.successWithoutData`**,
+emit **`Async.initial()`** again in the **same completion callback** so the UI
+does not keep a stale success/failure flag across rebuilds (which can re-trigger
+`BlocListener` side effects or duplicate navigation).
+
 ```dart
 typedef TempDeleteState = Async<void>;
 
-class TempDeleteCubit extends Cubit<TempDeleteState> with SafeEmitMixin {
+class TempDeleteCubit extends Cubit<TempDeleteState>
+    with SafeEmitMixin<TempDeleteState> {
   TempDeleteCubit() : super(const TempDeleteState.initial());
 
   final TempDeleteUseCase _deleteUseCase = injector();
 
-  Future<void> delete(final TempDeleteParams params) async {
+  void delete(final TempDeleteParams params) async {
     emit(const Async.loading());
 
     final result = await _deleteUseCase(params);
     result.fold(
-      (failure) {
-        emit(Async.failure(failure));
-      },
-      (_) {
-        emit(const Async.successWithoutData());
-      },
+      (failure) => emit(Async.failure(failure)),
+      (_) => emit(const Async.successWithoutData()),
     );
-
     emit(const Async.initial());
   }
 }
 ```
+
+For **composite** state (e.g. `submit` inside `RegisterState`), reset only
+that field: `emit(state.copyWith(submit: const Async.initial()))` after the same
+terminal emits.
 
 Rules:
 
@@ -95,7 +126,8 @@ Rules:
 - Start with `const XxxState.initial()`.
 - Emit `Async.loading()`, then `Async.failure(...)` or success.
 - If the function only drives a one-shot loading/success/failure UI and does not
-  need to save data, emit `Async.initial()` at the end.
+  need to save data, emit `Async.initial()` (or reset the `Async` slice)
+  **after** the terminal emit in the same callback.
 - Do not use `Async.success(null)`. For no-data success, use
   `Async.successWithoutData()`.
 
@@ -107,7 +139,8 @@ needs that data.
 ```dart
 typedef TempItemsState = Async<List<TempItem>>;
 
-class TempItemsCubit extends Cubit<TempItemsState> with SafeEmitMixin {
+class TempItemsCubit extends Cubit<TempItemsState>
+    with SafeEmitMixin<TempItemsState> {
   TempItemsCubit() : super(const TempItemsState.initial());
 
   final TempGetItemsUseCase _getItemsUseCase = injector();
@@ -133,7 +166,17 @@ state. Reset only for one-shot flows where the success/failure should be cleared
 
 ### Composite page state
 
-Use a separate state file when the Cubit owns multiple page concerns.
+Use a separate state file when the Cubit owns multiple page concerns — **`part` /
+`part of`** so state stays in the same library as the Cubit (see `temp_editor_*`
+below).
+
+**Naming:** class **`XxxState`**, file **`xxx_state.dart`** — same feature prefix as
+**`xxx_cubit.dart`** / **`XxxCubit`** (e.g. `register_cubit.dart` +
+`register_state.dart`). Do **not** insert **`Page`** in the type or filename unless
+you must distinguish several state classes in one feature.
+
+In-repo example: `lib/src/authentication/presentation/register/manager/`
+(`register_cubit.dart` + `register_state.dart`).
 
 ```dart
 // temp_editor_cubit.dart
@@ -143,7 +186,8 @@ import 'package:flutter_base/core/core.dart';
 
 part 'temp_editor_state.dart';
 
-class TempEditorCubit extends Cubit<TempEditorState> with SafeEmitMixin {
+class TempEditorCubit extends Cubit<TempEditorState>
+    with SafeEmitMixin<TempEditorState> {
   TempEditorCubit() : super(TempEditorState.initial());
 
   final TempSaveUseCase _saveUseCase = injector();
@@ -156,22 +200,23 @@ class TempEditorCubit extends Cubit<TempEditorState> with SafeEmitMixin {
     emit(state.copyWith(draft: draft));
   }
 
-  Future<void> save() async {
+  void save() {
     if (!state.draft.isValid) {
       return;
     }
 
     emit(state.copyWith(saveState: const Async.loading()));
 
-    final result = await _saveUseCase(state.draft.toParams());
-    result.fold(
-      (failure) {
-        emit(state.copyWith(saveState: Async.failure(failure)));
-      },
-      (_) {
-        emit(state.copyWith(saveState: const Async.successWithoutData()));
-      },
-    );
+    _saveUseCase(state.draft.toParams()).then((result) {
+      result.fold(
+        (failure) =>
+            emit(state.copyWith(saveState: Async.failure(failure))),
+        (_) => emit(
+          state.copyWith(saveState: const Async.successWithoutData()),
+        ),
+      );
+      emit(state.copyWith(saveState: const Async.initial()));
+    });
   }
 }
 ```
@@ -224,7 +269,15 @@ Rules:
 - Cubit file has `part 'xxx_state.dart';`.
 - State file starts with `part of 'xxx_cubit.dart';`.
 - State extends `Equatable`.
-- Provide `initial()` and `copyWith`.
+- Provide **`initial()`** and **`copyWith`**.
+  - **`initial()`:** Prefer **`const XxxState.initial()`** that redirects to the main
+    constructor (**`… : this(…)`**) when **every** default can be **`const`** (for
+    example `submit: const Async.initial()`). If a field’s starting value cannot be
+    const (runtime identity, mutable holder, etc.), use a **non-const** named
+    constructor or factory and **omit** `const` where required — do not force
+    `const` incorrectly.
+  - **`copyWith`:** Prefer **`final`** on optional named parameters (`final Async<void>? submit`)
+    so overrides stay explicit and assignments stay single-shot.
 - Include every state field in `props`.
 - Use clear async field names like `saveState`, `deleteState`, or
   `uploadState`.

@@ -82,28 +82,32 @@ state.
 Use `Async.successWithoutData()` for submit/save/delete operations that only need
 to tell the UI that the operation succeeded.
 
+Prefer **`void submit(final TempSubmitParams params)`** when callers do not await,
+chain the use case with **`.then`**, and **always** end one-shot flows with
+`emit(const Async.initial())` after the terminal failure/success emit so listeners
+do not see stale outcomes — see `patterns/state/cubit-structure.md` (single async
+state + presentation params).
+
 ```dart
 typedef TempSubmitState = Async<void>;
 
-class TempSubmitCubit extends Cubit<TempSubmitState> with SafeEmitMixin {
+class TempSubmitCubit extends Cubit<TempSubmitState>
+    with SafeEmitMixin<TempSubmitState> {
   TempSubmitCubit() : super(const TempSubmitState.initial());
 
   final TempSubmitUseCase _submitUseCase = injector();
 
-  Future<void> submit(final TempSubmitParams params) async {
+  void submit(final TempSubmitParams params) {
     emit(const Async.loading());
 
-    final result = await _submitUseCase(params);
-    result.fold(
-      (failure) {
-        emit(Async.failure(failure));
-      },
-      (_) {
-        emit(const Async.successWithoutData());
-      },
-    );
-
-    emit(const Async.initial());
+    // SafeEmitMixin: no `if (isClosed) return` needed before emit-only paths.
+    _submitUseCase(params).then((result) {
+      result.fold(
+        (failure) => emit(Async.failure(failure)),
+        (_) => emit(const Async.successWithoutData()),
+      );
+      emit(const Async.initial());
+    });
   }
 }
 ```
@@ -176,11 +180,13 @@ class TempEditorState extends Equatable {
 }
 ```
 
-Emit partial updates:
+Emit partial updates (finish one-shot saves with a reset of that slice when the UI
+does not need to hold success/failure):
 
 ```dart
 emit(state.copyWith(saveState: const Async.loading()));
 emit(state.copyWith(saveState: const Async.successWithoutData()));
+emit(state.copyWith(saveState: const Async.initial()));
 ```
 
 ### UI listener pattern
@@ -210,3 +216,6 @@ void handleTempSubmitState(BuildContext context, Async<void> submitState) {
 - Never use `Async.success(null)`.
 - Reset one-shot states to `Async.initial()` when no data/result must be kept.
 - Do not reset data states that the UI still needs.
+- Prefer **`void`** Cubit actions chained with **`.then`** when nobody awaits them;
+  pass **immutable presentation param objects** (`final XxxParams`) — see
+  `patterns/state/cubit-structure.md`.

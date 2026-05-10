@@ -11,6 +11,7 @@
 | [`json-models-json-serializable.md`](json-models-json-serializable.md) | Models with `json_serializable`; run codegen after changes |
 | [`dio-and-repositories.md`](dio-and-repositories.md) | Dio-backed repositories |
 | [`either-and-failures.md`](either-and-failures.md) | `Either` and failure mapping |
+| [`use-case-and-domain-service-type.md`](use-case-and-domain-service-type.md) | `IUseCase`, param structure, sealed variants, query getters, `DomainServiceType` |
 
 ## References
 

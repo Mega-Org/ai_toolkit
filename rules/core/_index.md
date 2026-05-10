@@ -50,7 +50,7 @@ Always resolve **file paths from the actual tree**; do not assume folder names f
 | File | Topic |
 |------|--------|
 | `barrel-and-parts.md` | `core.dart` library, `part` files, exports |
-| `foundation.md` | `IUseCase`, `Async`, mixins, typedefs |
+| `foundation.md` | `IUseCase`, param/`NoParams` rules, `DomainServiceType`; pattern: [`../../patterns/data/use-case-and-domain-service-type.md`](../../patterns/data/use-case-and-domain-service-type.md) |
 | `async.md` | `Async<T>` state rules and examples |
 | `network.md` | Dio, interceptors, errors |
 | `di.md` | injectable, `injector`, scopes |

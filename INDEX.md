@@ -64,6 +64,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Area | Load |
 |------|------|
 | Dart analysis, generated files, imports | [`rules/dart/_index.md`](rules/dart/_index.md) |
+| Redundant `: super()` (zero-arg superclass ctor) | [`rules/dart/constructors.md`](rules/dart/constructors.md) |
 | Flutter widgets and performance | [`rules/flutter/_index.md`](rules/flutter/_index.md) |
 | Tests | [`rules/testing/_index.md`](rules/testing/_index.md) |
 | Git conventions | [`rules/git/_index.md`](rules/git/_index.md) |
@@ -88,6 +89,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 |------|------|
 | Absolute Dart imports | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md) |
 | Cubit structure | [`patterns/state/cubit-structure.md`](patterns/state/cubit-structure.md) |
+| Cubit + `IUseCase` (`await`, `fold`, `SafeEmitMixin`) | [`patterns/state/cubit-and-use-case.md`](patterns/state/cubit-and-use-case.md) |
 | Bloc structure | [`patterns/state/bloc-structure.md`](patterns/state/bloc-structure.md) |
 | Choosing Cubit vs Bloc | [`patterns/state/cubit-vs-bloc.md`](patterns/state/cubit-vs-bloc.md) |
 | json_serializable models | [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) |
