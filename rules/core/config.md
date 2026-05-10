@@ -21,6 +21,7 @@ Shared **non-router** presentation constants: spacing and radii (**`Dimensions`*
 - `lib/core/configs/values/assets.gen.dart` — **generated**; do not edit by hand
 - `pubspec.yaml` — **`flutter_gen:`** block (`output: lib/core/configs/values/`)
 - `lib/core/constants/app_constants.dart` — store URLs, defaults, timing, feature-ish literals that are not API models
+- `lib/core/constants/responsive_constants.dart` — **`AppResponsiveLayout`**: breakpoint widths and scaled-layout tiers for **`responsive_framework`** (see [Responsive layout](#responsive-layout-appresponsivelayout-responsive_framework))
 
 ## Content
 
@@ -32,7 +33,16 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 
 - **`Dimensions`** is a **`const` constructor–hidden** class with **`static const`** doubles and composed **`EdgeInsets`** (e.g. **`Dimensions.pageMargins`**).
 - Use **`Dimensions.p16`**, **`Dimensions.r12`**, **`Dimensions.ic24`**, etc., for **padding, corner radius, icon box sizes**, and fixed heights (e.g. **`buttonHeight`**) instead of scattering raw numbers in widgets.
-- When **`responsive_framework`** is used, prefer breakpoint-driven layout at the **widget** level; keep **`Dimensions`** for token values that stay stable across breakpoints unless you introduce responsive-specific tokens elsewhere.
+- Use **`Dimensions`** for **design tokens** (spacing, radii, icon boxes). Use **`AppResponsiveLayout`** for **viewport breakpoints and scaled “design width” tiers** — not duplicate breakpoint numbers inside **`Dimensions`** unless you deliberately add responsive tokens there.
+
+### Responsive layout (`AppResponsiveLayout`, `responsive_framework`)
+
+- **`AppResponsiveLayout`** lives in **`lib/core/constants/responsive_constants.dart`** and is exported from **`lib/core/core.dart`**. It holds:
+  - **`double`**s for **`Breakpoint`** ranges (mobile / tablet / desktop / 4K) wired in **`MyApp`** via **`ResponsiveBreakpoints.builder`**.
+  - **`int`** tier edges for **`Condition.between`** (`start` / `end` must be **`int`** in this package) plus portrait/landscape **scaled widths** for **`AppScaledBox`** (**`ResponsiveScaledBox`** + **`ResponsiveValue`**).
+- **Do not** paste raw breakpoint or scale literals into **`my_app.dart`** or **`app_scaled_box.dart`** — extend **`AppResponsiveLayout`** when tuning layout.
+- **`Breakpoint`** uses **`double`**; **`Condition.between`** uses **`int`** for edges. When a boundary is the same value (e.g. `450`), keep the matching **`double`** and **`int`** constants numerically aligned (see comments in **`responsive_constants.dart`**).
+- Feature UI should use **`ResponsiveBreakpoints.of(context)`** (and **`ResponsiveValue`** where appropriate) for adaptive layout; structure and file placement are described in [`patterns/flutter/responsive-and-layout.md`](../../patterns/flutter/responsive-and-layout.md).
 
 ### `TextStyles` and `AppFonts`
 
@@ -73,6 +83,15 @@ Run from the **app repo root** (where **`pubspec.yaml`** lives). Fix **`pubspec`
 ### `AppConstants`
 
 - Use **`AppConstants`** for **URLs**, shared **string defaults**, store links, and similar **non-theme** literals that many features need. Keep secrets and environment-specific values out of committed constants unless the repo already standardizes that elsewhere.
+
+### Splitting “magic numbers” across constant files
+
+| Kind of number | Where it belongs |
+|----------------|------------------|
+| Padding, radius, icon size, fixed control heights | **`Dimensions`** |
+| Semantic breakpoints + scaled layout tiers for **`responsive_framework`** | **`AppResponsiveLayout`** |
+| URLs, store IDs, non-UI shared literals | **`AppConstants`** |
+| API paths / keys | **`api_constants.dart`** (and related) |
 
 ### Rules
 

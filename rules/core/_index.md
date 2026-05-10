@@ -22,7 +22,7 @@ Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforce
 | Barrel | `lib/core/core.dart` |
 | Foundation-style types | `lib/core/foundation/` (`Async`, `SafeEmitMixin`, `IUseCase`, typedefs) |
 | Router module | `lib/core/configs/router/` (see [`router.md`](router.md)) |
-| Values, dimensions, fonts, generated assets, constants | `lib/core/configs/values/`, `lib/core/constants/` (see [`config.md`](config.md)) |
+| Values, dimensions, fonts, generated assets, constants | `lib/core/configs/values/`, `lib/core/constants/` (see [`config.md`](config.md)); responsive breakpoints / scaled tiers: [`responsive_constants.dart`](../../../lib/core/constants/responsive_constants.dart) (`AppResponsiveLayout`) |
 | Theme `ThemeData` classes | `lib/core/configs/theme/values/` (`app_theme.dart`, `light_theme.dart`, `dark_theme.dart`) |
 | Theme runtime | `lib/core/configs/theme/manager/theme_manager.dart` (see [`theme.md`](theme.md)); UI bridge: `configs/theme/widgets/theme_builder.dart` |
 | Network helper | `lib/core/network/helper/dio_helper.dart` |
@@ -58,7 +58,7 @@ Always resolve **file paths from the actual tree**; do not assume folder names f
 | `blocs-app-wide.md` | auth bloc, language cubit, `_BuilderScreen` root routing |
 | `theme.md` | `ThemeManager`, `ThemeBuilder`, `AppTheme`, `AppColors`, root theme wiring |
 | `router.md` | `AppRouter`, navigator key, animated routes |
-| `config.md` | `Dimensions`, `TextStyles`, `AppColors` import surface, flutter_gen / `Assets`, `AppConstants` |
+| `config.md` | `Dimensions`, `TextStyles`, `AppColors` import surface, flutter_gen / `Assets`, `AppConstants`, **`AppResponsiveLayout`** vs other constant files |
 | `localization.md` | `LocalizationContainer`, l10n, change-language sheet |
 | `services.md` | share, launcher, app rate, vibrator |
 | `utils.md` | extensions, validators |

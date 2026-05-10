@@ -8,7 +8,7 @@
 
 | File | Topic |
 |------|--------|
-| [`responsive-and-layout.md`](responsive-and-layout.md) | Responsive layout (e.g. `responsive_framework` usage patterns) |
+| [`responsive-and-layout.md`](responsive-and-layout.md) | `responsive_framework`: root breakpoints, `AppScaledBox`, `AppResponsiveLayout` constants |
 
 ## References
 
