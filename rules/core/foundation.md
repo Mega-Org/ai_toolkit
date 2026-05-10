@@ -59,6 +59,10 @@ objects, and `DomainServiceType` usage**, also load
 
 ### `SafeEmitMixin<State>`
 
+- The mixin is declared with a type parameter, but in Cubits write **`with SafeEmitMixin`**
+  **without** repeating the state type: Dart **infers** it from **`extends Cubit<…>`** (see
+  **`RegisterCubit`** under `lib/src/authentication/presentation/register/manager/`). Use
+  **`SafeEmitMixin<SomeState>`** only if the analyzer cannot infer (rare).
 - New feature Cubits should prefer **`with SafeEmitMixin`** so **`emit`** is a
   no-op when the cubit is closed (see `safe_emit_mixin.dart`).
 - Do **not** duplicate **`if (isClosed) return;`** before **`emit`** after **`await`**

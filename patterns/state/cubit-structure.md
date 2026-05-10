@@ -25,9 +25,11 @@ management pattern for this app.
 
 New feature Cubits should use `SafeEmitMixin`.
 
+Write **`with SafeEmitMixin`** without a type argument — it is inferred from **`Cubit<XxxState>`**
+(see `rules/core/foundation.md`).
+
 ```dart
-class TempActionCubit extends Cubit<TempActionState>
-    with SafeEmitMixin<TempActionState> {
+class TempActionCubit extends Cubit<TempActionState> with SafeEmitMixin {
   TempActionCubit() : super(const TempActionState.initial());
 }
 ```
@@ -97,8 +99,7 @@ does not keep a stale success/failure flag across rebuilds (which can re-trigger
 ```dart
 typedef TempDeleteState = Async<void>;
 
-class TempDeleteCubit extends Cubit<TempDeleteState>
-    with SafeEmitMixin<TempDeleteState> {
+class TempDeleteCubit extends Cubit<TempDeleteState> with SafeEmitMixin {
   TempDeleteCubit() : super(const TempDeleteState.initial());
 
   final TempDeleteUseCase _deleteUseCase = injector();
@@ -140,8 +141,7 @@ needs that data.
 ```dart
 typedef TempItemsState = Async<List<TempItem>>;
 
-class TempItemsCubit extends Cubit<TempItemsState>
-    with SafeEmitMixin<TempItemsState> {
+class TempItemsCubit extends Cubit<TempItemsState> with SafeEmitMixin {
   TempItemsCubit() : super(const TempItemsState.initial());
 
   final TempGetItemsUseCase _getItemsUseCase = injector();
@@ -187,8 +187,7 @@ import 'package:flutter_base/core/core.dart';
 
 part 'temp_editor_state.dart';
 
-class TempEditorCubit extends Cubit<TempEditorState>
-    with SafeEmitMixin<TempEditorState> {
+class TempEditorCubit extends Cubit<TempEditorState> with SafeEmitMixin {
   TempEditorCubit() : super(TempEditorState.initial());
 
   final TempSaveUseCase _saveUseCase = injector();

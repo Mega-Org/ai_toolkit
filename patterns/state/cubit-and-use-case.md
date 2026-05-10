@@ -31,7 +31,7 @@ Use when the screen only cares about **one** async operation and **`Async<void>`
 typedef LoginState = Async<void>;
 
 @Injectable()
-class LoginCubit extends Cubit<LoginState> with SafeEmitMixin<LoginState> {
+class LoginCubit extends Cubit<LoginState> with SafeEmitMixin {
   LoginCubit(this._loginUseCase) : super(const LoginState.initial());
 
   final LoginUseCase _loginUseCase;
