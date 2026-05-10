@@ -74,7 +74,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | App-wide blocs or cubits | [`rules/core/blocs-app-wide.md`](rules/core/blocs-app-wide.md) |
 | Theme (`ThemeManager`, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md) |
 | Router | [`rules/core/router.md`](rules/core/router.md) |
-| Values, dimensions, flutter_gen, constants, responsive numbers | [`rules/core/config.md`](rules/core/config.md); layout wiring: [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
+| Values, dimensions, flutter_gen, constants, responsive numbers, **`assets/icons/`** filenames (`*_ic.svg`) | [`rules/core/config.md`](rules/core/config.md); layout wiring: [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
 | `Async<T>` presentation state | [`rules/core/async.md`](rules/core/async.md) |
 | Localization | [`rules/core/localization.md`](rules/core/localization.md) |
 | Services and utilities | [`rules/core/services.md`](rules/core/services.md), [`rules/core/utils.md`](rules/core/utils.md) |

@@ -9,6 +9,7 @@ Shared **non-router** presentation constants: spacing and radii (**`Dimensions`*
 - `Dimensions`, `TextStyles`, `fonts.dart`, or token naming changes.
 - `pubspec.yaml` asset globs or **`flutter_gen:`** output settings change.
 - `assets_getters.dart` or generated **`assets.gen.dart`** conventions change.
+- **`assets/icons/`** file naming conventions change (see [Icon files under `assets/icons/`](#icon-files-under-assetsicons)).
 - `AppConstants` (or equivalent) entries change.
 
 ## References (this repo)
@@ -61,6 +62,22 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 - **Do not** use the **generated** API directly in app code: no **`$AssetsIconsGen`**, **`$AssetsImagesGen`**, or other **`$Assets…Gen`** types, and no direct **`Assets.…`** (or equivalent) paths from **`assets.gen.dart`** in widgets, cubits, or routes. If a new asset is needed, add it under **`assets/`**, run codegen, then **expose a named getter or const on `assets_getters.dart`** and use that everywhere.
 - **`assets.gen.dart`** exists for codegen and for **`assets_getters.dart`** to bind to — it is not an import target for features.
 
+### Icon files under `assets/icons/`
+
+These rules apply to **new** icons added under **`assets/icons/`** (vector or raster UI icons). Other trees (**`popular_sites_icons/`**, **`launcher_icon/`**, **`native_splash/`**, etc.) keep their own conventions unless this app standardizes them separately.
+
+| Format | Filename rule |
+|--------|----------------|
+| **SVG** | **Must** be **`<name>_ic.svg`**: **`name`** is **snake_case**, ASCII **`a-z`**, **`0-9`**, **`_`** only (no spaces). Examples: **`home_ic.svg`**, **`chevron_right_ic.svg`**. |
+| **PNG** | **Prefer** the same pattern: **`<name>_ic.png`** when the file is a **bitmap icon** (same role as an SVG icon). **May** use a different **snake_case** name only when it stays **clear and stable** (e.g. **`notification_badge_small.png`**) — avoid vague names like **`icon1.png`**. |
+
+**Must-not**
+
+- Do not omit the **`_ic`** suffix on **SVG** files in **`assets/icons/`**.
+- Do not use **PascalCase**, **camelCase**, or **mixed-case** in filenames (flutter_gen and imports stay predictable with **snake_case**).
+
+After adding or renaming files here, run codegen and expose symbols only through **`assets_getters.dart`** as usual.
+
 ### flutter_gen (behind `assets_getters.dart`)
 
 - **Config** (this repo): **`pubspec.yaml`** → **`flutter_gen:`** with **`output: lib/core/configs/values/`** so codegen writes **`assets.gen.dart`** next to **`assets_getters.dart`**.
@@ -98,4 +115,5 @@ Run from the **app repo root** (where **`pubspec.yaml`** lives). Fix **`pubspec`
 - **Do not** hand-edit **`assets.gen.dart`**.
 - **Do not** use raw asset path **strings** in UI when an **`assets_getters.dart`** entry exists or should be added for that file.
 - **Do not** import or reference **generated** asset classes from **`assets.gen.dart`** in feature code — only **`assets_getters.dart`** getters (**`AppIcons`**, **`AppImages`**, …).
+- **New SVG icons** under **`assets/icons/`** must follow **`<name>_ic.svg`** (see [Icon files under `assets/icons/`](#icon-files-under-assetsicons)).
 - Prefer **tokens** (**`Dimensions`**, **`TextStyles`**, **`AppColors`**) over magic numbers and inline **`TextStyle(...)`** duplicates.

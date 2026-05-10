@@ -30,7 +30,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
 | Theme (`ThemeManager`, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |
 | Router | [`core/router.md`](core/router.md) |
-| Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
+| Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md) (includes **`assets/icons/`** naming: **`*_ic.svg`** / prefer **`*_ic.png`**); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
 | Localization | [`core/localization.md`](core/localization.md) |
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
 
