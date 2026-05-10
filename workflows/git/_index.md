@@ -8,7 +8,8 @@
 
 | File | Topic |
 |------|--------|
-| [`commit-after-phase.md`](commit-after-phase.md) | Conventional commit after completing a plan phase |
+| [`commit-before-work.md`](commit-before-work.md) | **Before** `make-plan` or `implement-phase`: check git; default **commit first** with AI message; **`--no-commits`** to skip |
+| [`commit-after-phase.md`](commit-after-phase.md) | **After** completing a plan phase: conventional commit |
 
 ## References
 

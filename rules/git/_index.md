@@ -8,6 +8,7 @@ Entry point for branch, commit message, and review conventions aligned with `wor
 
 ## References
 - `rules/_index.md` (all rule areas)
+- `workflows/git/commit-before-work.md` — default commit-first before plan/phase; `--no-commits` opt-out
 - `workflows/git/commit-after-phase.md`
 
 ## Content

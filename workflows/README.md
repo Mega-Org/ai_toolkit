@@ -11,7 +11,7 @@
 | [`session/`](session/_index.md) | Start or resume a session; load context in a fixed order | [`session/_index.md`](session/_index.md) |
 | [`feature-delivery/`](feature-delivery/_index.md) | Spec-driven planning, phased implementation, verify / PR | [`feature-delivery/_index.md`](feature-delivery/_index.md) |
 | [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades | [`maintenance/_index.md`](maintenance/_index.md) |
-| [`git/`](git/_index.md) | Commits aligned with plan phases | [`git/_index.md`](git/_index.md) |
+| [`git/`](git/_index.md) | Commit before plan/phase work; commits after phases | [`git/_index.md`](git/_index.md) |
 
 Add new workflow files under the closest subfolder. If something spans categories, note it here and in [`INDEX.md`](../INDEX.md) task routing.
 

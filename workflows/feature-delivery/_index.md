@@ -12,6 +12,10 @@
 | [`implement-phase.md`](implement-phase.md) | Execute one checklist phase |
 | [`verify-and-pr.md`](verify-and-pr.md) | Tests, checks, PR description |
 
+## Git preflight
+
+Before planning or starting a phase, see [`../git/commit-before-work.md`](../git/commit-before-work.md) (`make-plan --no-commits`, `implement-phase --no-commits` to skip).
+
 ## References
 
 - App specs live under each repo’s `ai_specs/` (not in this toolkit).

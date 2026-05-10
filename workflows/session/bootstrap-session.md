@@ -19,7 +19,7 @@ Use **lite** or **full** bootstrap as described in `INDEX.md`. Full bootstrap is
 ### Steps (full bootstrap)
 
 1. **Entrypoint** — Read `ai_toolkit/INDEX.md` first (section overviews table points to each folder’s `_index.md` / `workflows/README.md`).
-2. **Task workflow** — If the task maps to a workflow in `INDEX.md` → `Task Routing`, open that workflow next (for example feature planning uses `workflows/feature-delivery/make-plan.md`). Subfolder maps: `workflows/feature-delivery/_index.md`, `workflows/maintenance/_index.md`, `workflows/git/_index.md`.
+2. **Task workflow** — If the task maps to a workflow in `INDEX.md` → `Task Routing`, open that workflow next (for example feature planning uses `workflows/feature-delivery/make-plan.md`). Subfolder maps: `workflows/feature-delivery/_index.md`, `workflows/maintenance/_index.md`, `workflows/git/_index.md`. For **`make-plan`** or **`implement-phase`**, the workflow includes Git preflight via [`../git/commit-before-work.md`](../git/commit-before-work.md) unless the user passes **`--no-commits`**.
 3. **Rules** — Load `rules/_index.md` for a full map, then `_index.md` under each rules subfolder you touch, then linked leaf files.
 4. **Patterns** — Load `patterns/_index.md`, then the subfolder `_index.md` (for example `patterns/data/_index.md`) and leaf files for the stack areas in play.
 5. **Aliases** — Read `alias/_index.md` and the linked alias files only when you will run shell commands that rely on those shortcuts.

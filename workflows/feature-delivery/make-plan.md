@@ -13,6 +13,23 @@ Phased planning from a feature spec; pulls in `ai_docs/` when present and aligns
 
 Use this workflow after you have (or will create) a written spec for the feature—typically under the app’s `ai_specs/`.
 
+### Usage
+
+**When to use** — You have (or will write) a feature idea and want a **phased plan**: scope, surfaces, core vs feature placement, ordered phases, risks, and per-phase verification—aligned with this app’s `ai_docs/` and the shared toolkit.
+
+**What you say** — Use natural language, for example: “Plan the feature from `ai_specs/checkout/README.md`,” or “Run make-plan for the payment flow we discussed.” You do **not** need a special command name; describing the goal is enough.
+
+**What happens by default**
+
+1. **Commit-first preflight (automatic)** — The agent follows [`../git/commit-before-work.md`](../git/commit-before-work.md) **without you asking**: checks `git status`, and if there are uncommitted changes, proposes a commit message and confirms before planning. **You do not need to say “do commit before work” every time**; it is the default for this workflow.
+2. **Planning** — The agent runs the **Steps** below (restate scope, map surfaces, align with core, phase the work, risks, verification) and outputs a plan you can execute with [`implement-phase.md`](implement-phase.md).
+
+**When you do need to say something extra** — Only if you want to **skip** the Git preflight (e.g. dirty tree on purpose). Then say **`make-plan --no-commits`** or plain language such as **“plan without committing first.”** Otherwise, stay silent; preflight still runs.
+
+### Preflight: commit before planning
+
+Before step 1 below, follow **`../git/commit-before-work.md`**: check `git status`; if there are uncommitted changes, **default to committing** with an AI-generated message after quick confirmation—unless the user used **`--no-commits`**. This is **default behavior**; the user does not need to request it explicitly each session.
+
 ### Inputs
 
 1. **Spec** — The feature brief or requirement document (markdown or equivalent in `ai_specs/` or agreed location).
@@ -35,6 +52,6 @@ Use this workflow after you have (or will create) a written spec for the feature
 
 ### After the plan
 
-- Run **`workflows/feature-delivery/implement-phase.md`** for each phase.
-- Use **`workflows/git/commit-after-phase.md`** if you commit per phase.
+- Run **`workflows/feature-delivery/implement-phase.md`** for each phase (each run starts with **`../git/commit-before-work.md`** unless `--no-commits`).
+- Use **`workflows/git/commit-after-phase.md`** if you commit per phase after completing work.
 - Finish with **`workflows/feature-delivery/verify-and-pr.md`** when the feature is complete.
