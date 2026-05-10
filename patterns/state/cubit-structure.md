@@ -68,13 +68,14 @@ For **use-case invocation** (`await`, `fold`, resetting `initial`), see
 
 #### Presentation params
 
-For **several** screen fields, pass **one immutable params object** into the Cubit
-method (`final XxxSubmitParams`) — not long positional lists. Colocate the class
-with the Cubit or screen (`final` fields, `const` constructor when possible).
-
-For **two or three** stable arguments, **named parameters** on the Cubit method
-are fine (see `LoginCubit.submit` in `lib/src/authentication/presentation/login/`).
-Introduce a small params class when the bundle grows or is shared.
+For **several** screen fields — or whenever you already have a domain/presentation
+**`*Params`** type — pass **one immutable params object** into the Cubit method
+with a **`final`** parameter: **`void submit(final XxxParams params)`** — not long
+positional lists. Colocate presentation-only param classes with the Cubit or
+screen (**`final` fields**, **`const` constructor** when possible). For **two or
+three** stable primitives only, **named parameters** on the Cubit method are still
+fine; prefer a params object once the bundle grows or is shared (see
+`LoginCubit.submit` + **`LoginParams`** under `lib/src/authentication/presentation/login/`).
 
 #### Void vs `Future`
 
@@ -123,7 +124,7 @@ Rules:
 
 - Keep the typedef in the same `xxx_cubit.dart` file.
 - Use the typedef name `XxxState`, matching `XxxCubit`.
-- Start with `const XxxState.initial()`.
+- Start with `const XxxState.initial()` — in the Cubit constructor use **`super(const XxxState.initial())`**, not `super(const Async.initial())`, so the typedef remains the state identity at construction.
 - Emit `Async.loading()`, then `Async.failure(...)` or success.
 - If the function only drives a one-shot loading/success/failure UI and does not
   need to save data, emit `Async.initial()` (or reset the `Async` slice)

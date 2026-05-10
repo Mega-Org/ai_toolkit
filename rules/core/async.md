@@ -20,6 +20,16 @@ state.
 
 ## Content
 
+### `final` on parameters and param types
+
+When a Cubit or Bloc method takes a params object (or any formal parameter that
+is never reassigned), mark it **`final`** — e.g. **`void submit(final LoginParams params)`**.
+Keep param/value types **immutable** with **`final` fields** (and **`const`**
+constructors when every field allows it). See
+[`patterns/state/cubit-structure.md`](../../patterns/state/cubit-structure.md)
+(presentation params) and
+[`patterns/data/use-case-and-domain-service-type.md`](../../patterns/data/use-case-and-domain-service-type.md).
+
 ### Definition
 
 `Async<T>` is a presentation-state wrapper for request lifecycle:

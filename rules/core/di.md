@@ -67,7 +67,7 @@ class TempOrdersCubit extends Cubit<TempOrdersState> {
 }
 ```
 
-**Runtime arguments (navigation / screen-specific):** use **`@factoryParam`** on constructor parameters that are **not** registered services (flags, sealed inputs, IDs). Codegen registers a **`factoryParam`** factory; resolve with **`injector<X>(param1: …)`** (then **`param2`** if you declare two factory params). Example in-repo: **`LoginCubit`** has none; **`RegisterCubit`** uses **`@factoryParam bool registerAsClient`**; **`VerifyOtpCubit`** uses **`@factoryParam VerifyOtpInput input`**. Do **not** add **`factory X.fromInjector()`** helpers on the Cubit — **`@Injectable()`** plus **`injector`** at **`BlocProvider`** creation is enough.
+**Runtime arguments (navigation / screen-specific):** use **`@factoryParam`** on constructor parameters that are **not** registered services (flags, sealed inputs, IDs). Codegen registers a **`factoryParam`** factory; resolve with **`injector<X>(param1: …)`** (then **`param2`** if you declare two factory params). Example in-repo: **`LoginCubit`** and **`RegisterCubit`** have none — register client vs provider is **`RegisterClientParams` / `RegisterProviderParams`** passed to **`submit`**. **`VerifyOtpCubit`** uses **`@factoryParam VerifyOtpInput input`**. Do **not** add **`factory X.fromInjector()`** helpers on the Cubit — **`@Injectable()`** plus **`injector`** at **`BlocProvider`** creation is enough.
 
 ### Long-lived infrastructure
 

@@ -25,7 +25,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
 | Firebase secrets in repos | [`README.md`](../README.md) (until `rules/firebase/security-public-repos.md` is added) |
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |
-| `Async<T>` presentation state | [`core/async.md`](core/async.md) |
+| `Async<T>` presentation state; **`final`** on Cubit submit params when not reassigned | [`core/async.md`](core/async.md) |
 | `IUseCase`, params, `DomainServiceType` | [`core/foundation.md`](core/foundation.md); pattern [`../patterns/data/use-case-and-domain-service-type.md`](../patterns/data/use-case-and-domain-service-type.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |

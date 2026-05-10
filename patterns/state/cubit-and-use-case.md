@@ -32,23 +32,21 @@ typedef LoginState = Async<void>;
 
 @Injectable()
 class LoginCubit extends Cubit<LoginState> with SafeEmitMixin<LoginState> {
-  LoginCubit(this._loginUseCase) : super(const Async.initial());
+  LoginCubit(this._loginUseCase) : super(const LoginState.initial());
 
   final LoginUseCase _loginUseCase;
 
-  void submit({
-    required String nationalNumber,
-    required String password,
-  }) async {
+  void submit(final LoginParams params) async {
     emit(const Async.loading());
-    final phone = PhoneEntity(
-      phone: nationalNumber.trim(),
-      code: '+966',
-      isoCode: 'SA',
+    final normalized = LoginParams(
+      phone: PhoneEntity(
+        phone: params.phone.phone.trim(),
+        code: params.phone.code,
+        isoCode: params.phone.isoCode,
+      ),
+      password: params.password,
     );
-    final result = await _loginUseCase(
-      LoginParams(phone: phone, password: password),
-    );
+    final result = await _loginUseCase(normalized);
     result.fold(
       (failure) => emit(Async.failure(failure)),
       (_) => emit(const Async.successWithoutData()),
@@ -69,17 +67,9 @@ class LoginCubit extends Cubit<LoginState> with SafeEmitMixin<LoginState> {
 Use when the page keeps **other fields** (tabs, variant, form draft) and only **`submit`** should go through loading/success/failure.
 
 ```dart
-void submit({
-  required String name,
-  required String nationalNumber,
-}) async {
+void submit(final RegisterParams params) async {
   emit(state.copyWith(submit: const Async.loading()));
-  final phone = PhoneEntity(/* … */);
-  // Role comes from @factoryParam when resolving RegisterCubit (separate page per role).
-  final RegisterParams registerParams = _registerAsClient
-      ? RegisterClientParams(/* … */)
-      : RegisterProviderParams(/* … */);
-  final result = await _registerUseCase(registerParams);
+  final result = await _registerUseCase(params);
   result.fold(
     (failure) => emit(state.copyWith(submit: Async.failure(failure))),
     (_) => emit(state.copyWith(submit: const Async.successWithoutData())),
@@ -87,6 +77,8 @@ void submit({
   emit(state.copyWith(submit: const Async.initial()));
 }
 ```
+
+Each register screen builds **`RegisterClientParams`** or **`RegisterProviderParams`** and passes them into **`submit`** (trim field strings at the call site when needed) — no **`@factoryParam`** role flag on the Cubit.
 
 Reset **only** the async slice with `copyWith(submit: …)`, not the whole page state.
 
