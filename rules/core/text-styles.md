@@ -11,7 +11,7 @@ Define how this app uses **`TextStyles`** in **`lib/core/configs/values/text_sty
 | Area | Path |
 |------|------|
 | Typography tokens | `lib/core/configs/values/text_styles.dart` — **`abstract class TextStyles`** |
-| Barrel import | `lib/core/core.dart` — prefer **`import 'package:flutter_base/core/core.dart';`** (or this repo’s package name) |
+| Barrel import | `lib/core/core.dart` — prefer **`import 'package:tariq_alsamo/core/core.dart';`** (or this repo’s package name) |
 | Font family constant | `AppFonts` (typically `fonts.dart`, **`part of core`**) |
 | Theme wiring | `lib/core/configs/theme/values/light_theme.dart`, `dark_theme.dart` — **`InputDecorationTheme`**, **`AppBarTheme.titleTextStyle`**, **`TooltipTheme`**, etc. |
 

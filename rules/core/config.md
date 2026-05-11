@@ -28,7 +28,7 @@ Shared **non-router** presentation constants: spacing and radii (**`Dimensions`*
 
 ### Importing from `core`
 
-These files are typically **`part of core`** or exported through **`lib/core/core.dart`**. Prefer **`import 'package:flutter_base/core/core.dart';`** (or the project’s barrel) so **`Dimensions`**, **`TextStyles`**, **`AppColors`**, **`AppIcons`**, and **`AppConstants`** resolve consistently.
+These files are typically **`part of core`** or exported through **`lib/core/core.dart`**. Prefer **`import 'package:tariq_alsamo/core/core.dart';`** (or the project’s barrel) so **`Dimensions`**, **`TextStyles`**, **`AppColors`**, **`AppIcons`**, and **`AppConstants`** resolve consistently.
 
 ### `Dimensions` (spacing, radii, insets)
 

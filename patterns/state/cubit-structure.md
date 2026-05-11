@@ -183,7 +183,7 @@ In-repo example: `lib/src/authentication/presentation/register/manager/`
 // temp_editor_cubit.dart
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_base/core/core.dart';
+import 'package:tariq_alsamo/core/core.dart';
 
 part 'temp_editor_state.dart';
 

@@ -96,6 +96,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | Bloc structure | [`patterns/state/bloc-structure.md`](patterns/state/bloc-structure.md) |
 | Choosing Cubit vs Bloc | [`patterns/state/cubit-vs-bloc.md`](patterns/state/cubit-vs-bloc.md) |
 | json_serializable models | [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) |
+| Manual `fromJson` (int / String / double) | [`patterns/data/manual-json-fromjson-primitives.md`](patterns/data/manual-json-fromjson-primitives.md) |
 | Dio repositories | [`patterns/data/dio-and-repositories.md`](patterns/data/dio-and-repositories.md) |
 | Either and failures | [`patterns/data/either-and-failures.md`](patterns/data/either-and-failures.md) |
 | Feature `data/` folder (`api/`, `datasources/`, `models/`, `repository/`) | [`patterns/data/feature-data-layer.md`](patterns/data/feature-data-layer.md) |

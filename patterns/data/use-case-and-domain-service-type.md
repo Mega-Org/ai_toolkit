@@ -95,6 +95,7 @@ abstract class AuthenticationRepository {
 
 | Concern | Convention |
 |--------|------------|
+| Where params live | **`XxxUseCase`** first, **`XxxParams`** at the **bottom of the same file** (`xxx_use_case.dart`). **Do not** add a sibling **`*_params.dart`** unless several use cases **share** the same param type (rare). Repository contracts may **`import`** that use-case library **only** for the param type (`AuthenticationRepository` ↔ `login_use_case.dart`). |
 | Identity | **`*Params`** name pairs with use case (`LoginUseCase` ↔ `LoginParams`). |
 | Base type | **`extends NoParams`** (Equatable + empty default **`toMap`**). Override **`props`** / **`toMap`** as needed; annotate **`@override`** when overriding. |
 | Immutability | **`final` fields**, **`const` constructor** when every field allows it. |

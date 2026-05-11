@@ -20,8 +20,8 @@ shape and listeners.
 - Wrapper: `lib/material/overlay/show_modal_bottom_sheet.dart` (`showAppModalBottomSheet`,
   optional `showAppTopModalSheet`).
 - Cubit-backed examples:
-  - `lib/src/common/presentation/change_language/change_language_bottom_sheet.dart`
-  - `lib/src/common/presentation/menu/static_page/static_page_sheet.dart`
+  - `lib/src/features/_common/presentation/change_language/change_language_bottom_sheet.dart`
+  - `lib/src/features/_common/presentation/menu/static_page/static_page_sheet.dart`
 - No sheet Cubit (app blocs only):
   `lib/material/auth_states/unauthenticated_bottom_sheet.dart`
 - Mirror reference project:

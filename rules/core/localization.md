@@ -18,8 +18,8 @@ Define how this template app wires **Flutter gen-l10n**, a **DI-backed `Localiza
 | ARBs + generated l10n | `lib/core/localization/l10n/` (`app_en.arb`, `app_ar.arb`, generated `app_localizations*.dart`) |
 | App-wide language cubit | `lib/core/blocs/language_cubit/` (`app_language_cubit.dart`) |
 | `MaterialApp`, `setLocalizer`, cubit wiring | `lib/my_app.dart` |
-| Change-language UI (optional API + restart) | `lib/src/common/presentation/change_language/` (`change_language_bottom_sheet.dart`, `change_language_cubit.dart`) |
-| Backend language use case (when enabled) | `lib/src/common/domain/use_cases/language/change_langauge_use_case.dart` (file name retains the `langauge` typo; class: **`ChangeLanguageUseCase`**) |
+| Change-language UI (optional API + restart) | `lib/src/features/_common/presentation/change_language/` (`change_language_bottom_sheet.dart`, `change_language_cubit.dart`) |
+| Backend language use case (when enabled) | `lib/src/features/_common/domain/use_cases/language/change_langauge_use_case.dart` (file name retains the `langauge` typo; class: **`ChangeLanguageUseCase`**) |
 | DI before `runApp` | `lib/main.dart`, `lib/core/di/di.dart` |
 | Gen-l10n config | `l10n.yaml` (repo root) |
 | Language use cases (get/set/clear/device) | `lib/core/domain/use_cases/language/` |
