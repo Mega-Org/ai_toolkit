@@ -4,7 +4,7 @@
 
 Document how this app resolves **light/dark `ThemeData`**, persists preference, exposes **semantic colors** via **`AppTheme`**, and rebuilds **`MaterialApp`** when theme or locale keys change. Use this file when changing **`ThemeManager`**, **`AppTheme`** implementations, **`AppColors`**, **`ThemeBuilder`**, or root theme wiring in **`MyApp`**.
 
-**Navigation** is covered in [`router.md`](router.md). **Spacing, typography helpers, flutter_gen aliases, and `AppConstants`** are covered in [`config.md`](config.md).
+**Navigation** is covered in [`router.md`](router.md). **Spacing, flutter_gen aliases, and `AppConstants`** are covered in [`config.md`](config.md). **Typography (`TextStyles`)** — when to use tokens vs ad-hoc `TextStyle`, and alignment with `ThemeData` — is covered in [`text-styles.md`](text-styles.md).
 
 ## Fill when
 
@@ -21,6 +21,7 @@ Document how this app resolves **light/dark `ThemeData`**, persists preference, 
 - `lib/core/configs/theme/utils/theme_utils.dart` — helpers keyed off **`ThemeManager.instance.themeMode`**
 - `lib/core/domain/repository/theme_repository.dart`, `lib/core/data/repository/theme_repository_impl.dart`
 - `lib/core/configs/values/colors.dart` — **`AppColors`** top-level getter → **`ThemeManager.instance.theme`**
+- `lib/core/configs/values/text_styles.dart` — **`TextStyles`** (see [`text-styles.md`](text-styles.md))
 - `lib/my_app.dart` — **`ThemeBuilder`** wrapping **`MaterialApp`**; **`theme` / `darkTheme`** from **`LightTheme` / `DarkTheme`**
 
 ## Content
@@ -50,6 +51,7 @@ When the user **commits** a theme change from in-app UI, follow the same discipl
 
 - **`lib/core/configs/values/colors.dart`** (**`part of core`**) exposes **`AppColors`** as **`ThemeManager.instance.theme`**.
 - Prefer **`AppColors.someToken`** over hard-coded **`Color(0x…)`** in UI that must respect light/dark. For **`Dimensions`**, **`TextStyles`**, and asset accessors, see [`config.md`](config.md).
+- When **adding or renaming colors** on **`AppTheme`**, follow reusable naming and file grouping — see [`app-theme-color-tokens.md`](app-theme-color-tokens.md).
 
 ### Root wiring (`MyApp`)
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Shared **non-router** presentation constants: spacing and radii (**`Dimensions`**), typography (**`TextStyles`**, **`AppFonts`**), **semantic colors via `AppColors`** (theme-backed), **flutter_gen** asset accessors, and **`AppConstants`**. **`ThemeData`** construction and **`ThemeManager`** are in [`theme.md`](theme.md).
+Shared **non-router** presentation constants: spacing and radii (**`Dimensions`**), typography (**`TextStyles`**, **`AppFonts`**), **semantic colors via `AppColors`** (theme-backed), **flutter_gen** asset accessors, and **`AppConstants`**. **`ThemeData`** construction and **`ThemeManager`** are in [`theme.md`](theme.md). **`TextStyles`** usage rules — [`text-styles.md`](text-styles.md).
 
 ## Fill when
 
@@ -47,7 +47,7 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 
 ### `TextStyles` and `AppFonts`
 
-- **`TextStyles`** exposes pre-built **`TextStyle`** instances (light / regular / medium / bold families at sizes 8–24+). Combine with **`.copyWith(color: AppColors.text)`** (or other **`AppColors`** fields) so color stays theme-aware — see [`theme.md`](theme.md).
+- **`TextStyles`** exposes pre-built **`TextStyle`** instances (light / regular / medium / bold families at sizes 8–40+). Combine with **`.copyWith(color: AppColors.text)`** (or other **`AppColors`** fields) so color stays theme-aware — see [`theme.md`](theme.md). Full usage rules, rationale, and naming — [`text-styles.md`](text-styles.md).
 - **`AppFonts`** (in **`fonts.dart`**) holds **font family** names used by **`TextStyles`** and **`ThemeData`**; keep **`pubspec.yaml` `fonts:`** entries in sync when adding families.
 
 ### `AppColors` (getter)

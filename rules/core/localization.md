@@ -40,12 +40,14 @@ App-wide auth routing tied to restarts is documented in [`blocs-app-wide.md`](bl
 
 | Situation | Use |
 |-----------|-----|
-| Widget or method with **`BuildContext`** under `MaterialApp` | **`AppLocalizations.of(context).yourKey`** |
+| Widget or method with **`BuildContext`** under `MaterialApp` | **`AppLocalizations.of(context).yourKey`** — call **inline** at each use site (default). |
 | No **`BuildContext`** (getters, services, static helpers, deep non-UI code) | **`appLocalizer.yourKey`** — top-level getter in **`core`**, backed by **`injector<LocalizationContainer>().appLocalizations`** |
 | Current **`Locale`** (navigator context if mounted, else cached language, else safe default) | **`getLocale`** |
 | Map resolved locale to **`AppLanguageEnum`** | **`getLocaleTypeEnum`** |
 
-Prefer **`AppLocalizations.of(context)`** in UI when you already have a subtree **`BuildContext`**. Use **`appLocalizer`** when you would otherwise **thread `BuildContext` through constructors or services** only to read strings, or in non-widget code.
+In UI with **`BuildContext`**, prefer **`AppLocalizations.of(context).key`** written **directly** on widgets and expressions. A local **`final l10n = AppLocalizations.of(context);`** is optional when one **`build`** reads **many** keys and repeating **`AppLocalizations.of(context)`** hurts readability.
+
+Use **`appLocalizer`** when you would otherwise **thread `BuildContext` through constructors or services** only to read strings, or in non-widget code.
 
 ## `LocalizationContainer`
 

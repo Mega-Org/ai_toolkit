@@ -10,6 +10,7 @@ Execute **one phase** from a feature plan produced by [`make-plan.md`](make-plan
 
 ## References
 
+- **Session bootstrap (rules, patterns, load order):** [`../session/bootstrap-session.md`](../session/bootstrap-session.md) — call this **before** implementation so the agent loads `INDEX.md`, rule and pattern maps, optional aliases, `ai_docs/`, and active `ai_specs/` per [`INDEX.md`](../../INDEX.md) lite vs full guidance.
 - Planning: [`make-plan.md`](make-plan.md) (inputs, phased steps, outputs, and **After the plan** chain)
 - **Commit before starting this workflow:** [`../git/commit-before-work.md`](../git/commit-before-work.md)
 - Commit after completing a phase: [`../git/commit-after-phase.md`](../git/commit-after-phase.md)
@@ -22,12 +23,15 @@ Execute **one phase** from a feature plan produced by [`make-plan.md`](make-plan
 
 **What you say** — Natural language is enough, for example: “Implement phase 2 from the checkout plan,” or “Run the current authentication phase.” You do **not** need a special command name.
 
-- **Normal:** The agent runs **commit-before-work** first (same default as make-plan: check `git status`, propose a commit message, confirm before work). **You do not need to ask for commit-before-work every time.**
-- **Skip Git preflight:** **`implement-phase --no-commits`** or **“implement this phase without committing first.”**
+- **Normal:** The agent runs **`../session/bootstrap-session.md`** first (full bootstrap by default for a phase—multi-file, spec-driven—then **commit-before-work** (same default as make-plan: check `git status`, propose a commit message, confirm before work). **You do not need to ask for bootstrap or commit-before-work every time.**
+- **Skip Git preflight:** **`implement-phase --no-commits`** or **“implement this phase without committing first.”** (Bootstrap session is still recommended so rules and patterns stay loaded.)
 
 ## Preflight
 
-Before the steps below, follow **`../git/commit-before-work.md`**: check `git status`; if there are uncommitted changes, **default to committing** with an AI-generated message after quick confirmation—unless the user used **`--no-commits`**. Same default behavior as make-plan.
+Before the steps below:
+
+1. **Bootstrap session** — Follow [`../session/bootstrap-session.md`](../session/bootstrap-session.md): read `ai_toolkit/INDEX.md`, then load rules (`rules/_index.md` and subfolders you touch), patterns (`patterns/_index.md` and stack areas in play), optional [`alias/`](../../alias/_index.md) when running shell commands, app `ai_docs/` when present (for example [`architecture.md`](../../../ai_docs/architecture.md), [`conventions.md`](../../../ai_docs/conventions.md)), and the active feature spec under the app’s `ai_specs/` for this phase. Prefer **full** bootstrap (per `INDEX.md`) for phase work; use **lite** only for a minimal single-file slice when appropriate.
+2. **Commit before work** — Follow **`../git/commit-before-work.md`**: check `git status`; if there are uncommitted changes, **default to committing** with an AI-generated message after quick confirmation—unless the user used **`--no-commits`**. Same default behavior as make-plan.
 
 ## Steps
 
@@ -41,7 +45,7 @@ Optional: commit completed phase work per [`../git/commit-after-phase.md`](../gi
 
 ## After this phase
 
-- Run **implement-phase** again for the next slice (each run starts with **`../git/commit-before-work.md`** unless `--no-commits`).
+- Run **implement-phase** again for the next slice (each run starts with **`../session/bootstrap-session.md`** then **`../git/commit-before-work.md`** unless `--no-commits`).
 - Use **`../git/commit-after-phase.md`** when you commit per phase after completing work.
 - When all phases are done, run **`verify-and-pr.md`**.
 

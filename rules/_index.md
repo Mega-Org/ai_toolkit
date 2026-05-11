@@ -20,7 +20,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 
 | Topic | Leaf file |
 |--------|-----------|
-| Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md) |
+| Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md); callbacks (no tear-offs): [`dart/callbacks.md`](dart/callbacks.md) |
 | Widgets / performance | [`flutter/widgets-and-performance.md`](flutter/widgets-and-performance.md) |
 | Shared UI wrappers, `SizedBox` vs `Container` | [`flutter/ui-composition.md`](flutter/ui-composition.md); [`patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md) |
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
@@ -30,7 +30,8 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | `IUseCase`, params, `DomainServiceType` | [`core/foundation.md`](core/foundation.md); pattern [`../patterns/data/use-case-and-domain-service-type.md`](../patterns/data/use-case-and-domain-service-type.md) |
 | `get_it` / injectable | [`core/di.md`](core/di.md) |
 | App-wide blocs / cubits | [`core/blocs-app-wide.md`](core/blocs-app-wide.md) |
-| Theme (`ThemeManager`, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md) |
+| Theme (`ThemeManager`, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md); **`AppTheme` color naming** — [`core/app-theme-color-tokens.md`](core/app-theme-color-tokens.md) |
+| Typography (`TextStyles`, `AppFonts`) | [`core/text-styles.md`](core/text-styles.md); surface with dimensions — [`core/config.md`](core/config.md) |
 | Router | [`core/router.md`](core/router.md) |
 | Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md) (includes **`assets/icons/`** naming: **`*_ic.svg`** / prefer **`*_ic.png`**); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
 | Localization | [`core/localization.md`](core/localization.md) |

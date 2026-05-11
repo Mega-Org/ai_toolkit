@@ -44,7 +44,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 |------|------------|
 | Start or resume a session | [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md) |
 | Plan a feature from a spec | [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md) — preflight: [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`make-plan --no-commits`** to skip) |
-| Implement one phase | [`workflows/feature-delivery/implement-phase.md`](workflows/feature-delivery/implement-phase.md) — preflight: [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`implement-phase --no-commits`** to skip) |
+| Implement one phase | [`workflows/feature-delivery/implement-phase.md`](workflows/feature-delivery/implement-phase.md) — preflight: [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), then [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`implement-phase --no-commits`** to skip Git preflight only) |
 | Verify work or draft a PR | [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md) |
 | Fix a bug | [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md) |
 | Refactor existing code | [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) |
@@ -65,6 +65,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 |------|------|
 | Dart analysis, generated files, imports | [`rules/dart/_index.md`](rules/dart/_index.md) |
 | Redundant `: super()` (zero-arg superclass ctor) | [`rules/dart/constructors.md`](rules/dart/constructors.md) |
+| UI callbacks: explicit closures vs method tear-offs | [`rules/dart/callbacks.md`](rules/dart/callbacks.md) |
 | Flutter widgets and performance | [`rules/flutter/_index.md`](rules/flutter/_index.md) |
 | Shared UI wrappers (images, SVG, buttons), `SizedBox` vs `Container` | [`rules/flutter/ui-composition.md`](rules/flutter/ui-composition.md) |
 | Tests | [`rules/testing/_index.md`](rules/testing/_index.md) |
@@ -75,7 +76,8 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Network, Dio, failures | [`rules/core/network.md`](rules/core/network.md) |
 | Dependency injection | [`rules/core/di.md`](rules/core/di.md) |
 | App-wide blocs or cubits | [`rules/core/blocs-app-wide.md`](rules/core/blocs-app-wide.md) |
-| Theme (`ThemeManager`, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md) |
+| Theme (`ThemeManager`, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md); color naming on `AppTheme`: [`rules/core/app-theme-color-tokens.md`](rules/core/app-theme-color-tokens.md) |
+| Typography (`TextStyles`) | [`rules/core/text-styles.md`](rules/core/text-styles.md) |
 | Router | [`rules/core/router.md`](rules/core/router.md) |
 | Values, dimensions, flutter_gen, constants, responsive numbers, **`assets/icons/`** filenames (`*_ic.svg`) | [`rules/core/config.md`](rules/core/config.md); layout wiring: [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
 | `Async<T>` presentation state; **`final`** on submit/param arguments where not reassigned | [`rules/core/async.md`](rules/core/async.md) |

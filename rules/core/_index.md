@@ -24,7 +24,7 @@ Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforce
 | Router module | `lib/core/configs/router/` (see [`router.md`](router.md)) |
 | Values, dimensions, fonts, generated assets, constants | `lib/core/configs/values/`, `lib/core/constants/` (see [`config.md`](config.md)); responsive breakpoints / scaled tiers: [`responsive_constants.dart`](../../../lib/core/constants/responsive_constants.dart) (`AppResponsiveLayout`) |
 | Theme `ThemeData` classes | `lib/core/configs/theme/values/` (`app_theme.dart`, `light_theme.dart`, `dark_theme.dart`) |
-| Theme runtime | `lib/core/configs/theme/manager/theme_manager.dart` (see [`theme.md`](theme.md)); UI bridge: `configs/theme/widgets/theme_builder.dart` |
+| Theme runtime | `lib/core/configs/theme/manager/theme_manager.dart` (see [`theme.md`](theme.md)); typography tokens: [`text-styles.md`](text-styles.md); UI bridge: `configs/theme/widgets/theme_builder.dart` |
 | Network helper | `lib/core/network/helper/dio_helper.dart` |
 
 Always resolve **file paths from the actual tree**; do not assume folder names from other templates.
@@ -57,6 +57,8 @@ Always resolve **file paths from the actual tree**; do not assume folder names f
 | `domain-data-in-core.md` | repos/use cases in core vs features |
 | `blocs-app-wide.md` | auth bloc, language cubit, `_BuilderScreen` root routing |
 | `theme.md` | `ThemeManager`, `ThemeBuilder`, `AppTheme`, `AppColors`, root theme wiring |
+| `text-styles.md` | `TextStyles` scale, usage vs ad-hoc `TextStyle`, alignment with `ThemeData` |
+| `app-theme-color-tokens.md` | Naming and grouping rules for new **`AppTheme`** / **`AppColors`** entries |
 | `router.md` | `AppRouter`, navigator key, animated routes |
 | `config.md` | `Dimensions`, `TextStyles`, `AppColors` import surface, flutter_gen / `Assets`, `AppConstants`, **`AppResponsiveLayout`** vs other constant files |
 | `localization.md` | `LocalizationContainer`, l10n, change-language sheet |
