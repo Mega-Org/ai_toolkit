@@ -66,6 +66,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Dart analysis, generated files, imports | [`rules/dart/_index.md`](rules/dart/_index.md) |
 | Redundant `: super()` (zero-arg superclass ctor) | [`rules/dart/constructors.md`](rules/dart/constructors.md) |
 | Flutter widgets and performance | [`rules/flutter/_index.md`](rules/flutter/_index.md) |
+| Shared UI wrappers (images, SVG, buttons), `SizedBox` vs `Container` | [`rules/flutter/ui-composition.md`](rules/flutter/ui-composition.md) |
 | Tests | [`rules/testing/_index.md`](rules/testing/_index.md) |
 | Git conventions | [`rules/git/_index.md`](rules/git/_index.md) |
 | build_runner and generated code | [`rules/tooling/build-runner.md`](rules/tooling/build-runner.md) |
@@ -98,6 +99,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | Feature `data/` folder (`api/`, `datasources/`, `models/`, `repository/`) | [`patterns/data/feature-data-layer.md`](patterns/data/feature-data-layer.md) |
 | get_it and injectable | [`patterns/di/injectable-get-it.md`](patterns/di/injectable-get-it.md) |
 | Responsive Flutter layout | [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
+| Shared media and buttons (neutral; names in `ai_docs/conventions.md`) | [`patterns/flutter/shared-media-and-buttons.md`](patterns/flutter/shared-media-and-buttons.md) |
 | Page + `BlocProvider` + view (`context` under provider) | [`patterns/flutter/page-bloc-provider.md`](patterns/flutter/page-bloc-provider.md); rule [`rules/flutter/widgets-and-performance.md`](rules/flutter/widgets-and-performance.md) |
 | Presentation field naming (`TextEditingController`, private `_…Controller`) | [`patterns/flutter/presentation-field-naming.md`](patterns/flutter/presentation-field-naming.md) |
 | iOS pods and builds | [`patterns/platform/ios-pods-and-build.md`](patterns/platform/ios-pods-and-build.md) |

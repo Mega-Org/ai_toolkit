@@ -12,7 +12,7 @@
 | `patterns/state/` | Cubit-first state structure and when to choose Bloc | [`state/_index.md`](state/_index.md) |
 | `patterns/data/` | Models, Dio, `Either` / failures | [`data/_index.md`](data/_index.md) |
 | `patterns/di/` | `get_it` + injectable examples | [`di/_index.md`](di/_index.md) |
-| `patterns/flutter/` | Responsive layout, breakpoints | [`flutter/_index.md`](flutter/_index.md) |
+| `patterns/flutter/` | Responsive layout, shared media/buttons, breakpoints | [`flutter/_index.md`](flutter/_index.md) |
 | `patterns/platform/` | iOS pods, native build notes | [`platform/_index.md`](platform/_index.md) |
 
 ## References
