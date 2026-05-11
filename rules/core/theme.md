@@ -58,6 +58,12 @@ When the user **commits** a theme change from in-app UI, follow the same discipl
 - **`ResponsiveBreakpoints.builder`** wraps the tree (see [`router.md`](router.md) for **`AppRouter`** / navigator).
 - **`MaterialApp`**: **`navigatorKey`** is **`appNavigatorKey`** from **`AppRouter`**; **`themeMode`**, **`theme`**, **`darkTheme`** follow **`ThemeManager`** + **`LightTheme`/`DarkTheme`**; **`key`** combines language code and theme hash so a **full subtree reset** happens when locale or theme change (see [`localization.md`](localization.md) for locale).
 
+### `RadioListTile` / `Radio` (light theme)
+
+- **`radioTheme`** (``LightTheme``): selected fill uses **`primary500`** (`#112435`); unselected uses **`#595959`** (Figma secondary label / outline intent); disabled uses **`disableBorderColor`**.
+- **`listTileTheme`**: selected rows use **`selectedTileColor`** `#F7F7F8` and **`selectedColor`** `#1C1C1C` for title emphasis; unselected tile surface is **white** (`**tileColor**`). Pill-shaped language rows override **`shape`** locally (e.g. `BorderRadius.circular(50)`).
+- **`bottomSheetTheme`**: top corners **`12`**; optional **`dragHandleColor`** `#E1E1E1` and **`dragHandleSize`** `64×4` — consumed by **`showAppModalBottomSheet`** for the top drag indicator when themed.
+
 ### Rules
 
 - **One** place to persist theme preference: **`ThemeRepository`** through **`ThemeManager`**.

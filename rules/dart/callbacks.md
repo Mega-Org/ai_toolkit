@@ -26,6 +26,8 @@ Keep callback wiring explicit so call sites show intent, breakpoints stay obviou
 
 - **May** use tear-offs where Dart idioms expect them: **constructor tear-offs** (`MyWidget.new`), **`Iterable`/`Future` callbacks** (`items.map(Model.fromJson)`), or **top-level/static** one-shot handlers when a closure adds no clarity.
 
+- **App-only exception — `AppButton`:** For **`AppButton.onPressed`**, a tear-off of a **private, zero-argument** method is acceptable when the handler is a thin forward with **no** call-site guards (`mounted`, `if`, etc.). Example: `AppButton(text: l10n.confirm, onPressed: _onConfirm)`. Prefer an explicit closure again once guards or inline logic are needed. (Mirrors `.cursor/rules/dart-callbacks.mdc` and `flutter-shared-widgets.mdc`.)
+
 ## Rationale
 
 Explicit closures make “what runs when” visible in the widget tree, ease debugging, and avoid subtle differences between tear-offs and closures when methods depend on `this` or generics.
