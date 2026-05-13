@@ -106,6 +106,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | Shared media and buttons (neutral; names in `ai_docs/conventions.md`) | [`patterns/flutter/shared-media-and-buttons.md`](patterns/flutter/shared-media-and-buttons.md) |
 | Page + `BlocProvider` + view (`context` under provider) | [`patterns/flutter/page-bloc-provider.md`](patterns/flutter/page-bloc-provider.md); rule [`rules/flutter/widgets-and-performance.md`](rules/flutter/widgets-and-performance.md) |
 | Presentation field naming (`TextEditingController`, private `_…Controller`) | [`patterns/flutter/presentation-field-naming.md`](patterns/flutter/presentation-field-naming.md) |
+| Infinite scroll / `PaginatedListView` + `PaginationController` | [`patterns/flutter/pagination-paginated-list-view.md`](patterns/flutter/pagination-paginated-list-view.md) |
 | iOS pods and builds | [`patterns/platform/ios-pods-and-build.md`](patterns/platform/ios-pods-and-build.md) |
 
 ## Defaults
