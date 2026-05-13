@@ -8,7 +8,7 @@ How-to guidance for **Dart project structure and imports** in apps that follow t
 
 | File | Topic |
 |------|--------|
-| [`absolute-imports.md`](absolute-imports.md) | Migrating to and maintaining absolute `package:` imports |
+| [`enums-wire-parsing.md`](enums-wire-parsing.md) | API/cache **string tokens** → enhanced **`enum`**: named **`factory`**, `values.firstWhere`, wire field on the enum |
 
 ## References
 

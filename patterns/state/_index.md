@@ -14,6 +14,7 @@ authentication.
 | [`cubit-and-use-case.md`](cubit-and-use-case.md) | Cubit methods calling **`IUseCase`**: `await`, `fold`, **`SafeEmitMixin`**, `Async` vs composite state |
 | [`bloc-structure.md`](bloc-structure.md) | Full Bloc layout for app-wide event state |
 | [`cubit-vs-bloc.md`](cubit-vs-bloc.md) | When to prefer Cubit vs full Bloc |
+| [`broadcast-observer-hub.md`](broadcast-observer-hub.md) | Broadcast observer hub (singleton updater + observers + mixins): imperative fan-out, shell tabs, domain sync |
 
 ## References
 

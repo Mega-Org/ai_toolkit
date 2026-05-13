@@ -49,6 +49,15 @@ alias podupdate="cd ios && pod update && cd .."
 
 # Full iOS clean & reinstall (run from project root)
 alias iosclean="fclean && fpg && delpodlock && cd ios && pod update && cd .."
+
+# Per-flavor run / build (Tariq Alsamo — client + provider)
+# Prefer the repo Makefile (`make client run`, `make provider-apk`, …) when scripting.
+alias fr-client="flutter run --flavor client -t lib/main_client.dart"
+alias fr-provider="flutter run --flavor provider -t lib/main_provider.dart"
+alias fb-client="flutter build apk --release --flavor client -t lib/main_client.dart"
+alias fb-provider="flutter build apk --release --flavor provider -t lib/main_provider.dart"
+alias fbi-client="flutter build ipa --release --flavor client -t lib/main_client.dart"
+alias fbi-provider="flutter build ipa --release --flavor provider -t lib/main_provider.dart"
 ```
 
 Note: assume `brw` is automatically running when working on a Flutter

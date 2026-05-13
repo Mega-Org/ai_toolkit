@@ -8,8 +8,8 @@
 
 | Folder | Role | Index |
 |--------|------|--------|
-| `patterns/dart/` | Imports, analysis-related how-tos | [`dart/_index.md`](dart/_index.md) |
-| `patterns/state/` | Cubit-first state structure and when to choose Bloc | [`state/_index.md`](state/_index.md) |
+| `patterns/dart/` | Imports, analysis-related how-tos, **enum wire parsing** | [`dart/_index.md`](dart/_index.md) |
+| `patterns/state/` | Cubit-first state, Bloc choice, broadcast observer hub | [`state/_index.md`](state/_index.md) |
 | `patterns/data/` | Models, Dio, `Either` / failures | [`data/_index.md`](data/_index.md) |
 | `patterns/di/` | `get_it` + injectable examples | [`di/_index.md`](di/_index.md) |
 | `patterns/flutter/` | Responsive layout, shared media/buttons, breakpoints | [`flutter/_index.md`](flutter/_index.md) |

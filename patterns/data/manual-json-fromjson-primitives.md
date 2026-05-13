@@ -11,7 +11,7 @@ Single convention for **hand-written** `factory …fromJson(Map<String, dynamic>
 
 ## References (code)
 
-- **`ApiLoadTypeModel`**: `lib/src/features/_common/data/models/sections/load_type_model.dart` — **`int`**, strings, **`double`** (money).
+- **`ApiTankCapacityModel`**: `lib/src/features/_common/data/models/sections/tank_capacity_model.dart` — **`int`**, strings, **`double`** (money).
 - **`CityModel`**: `lib/src/features/_common/data/models/sections/city_model.dart` — **`int`** + **`String`**.
 
 ---

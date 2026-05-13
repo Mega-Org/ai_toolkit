@@ -20,7 +20,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 
 | Topic | Leaf file |
 |--------|-----------|
-| Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md); callbacks (no tear-offs): [`dart/callbacks.md`](dart/callbacks.md) |
+| Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md); callbacks (no tear-offs): [`dart/callbacks.md`](dart/callbacks.md); **enum wire parsing**: [`dart/enums-wire-parsing.md`](dart/enums-wire-parsing.md) |
 | Widgets / performance | [`flutter/widgets-and-performance.md`](flutter/widgets-and-performance.md) |
 | Shared UI wrappers, `SizedBox` vs `Container` | [`flutter/ui-composition.md`](flutter/ui-composition.md); [`patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md) |
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
@@ -36,6 +36,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md) (includes **`assets/icons/`** naming: **`*_ic.svg`** / prefer **`*_ic.png`**); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
 | Localization | [`core/localization.md`](core/localization.md) |
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
+| Broadcast observer hub (singleton updater + observers; not a global event bus) | [`../patterns/state/broadcast-observer-hub.md`](../patterns/state/broadcast-observer-hub.md) |
 
 ## References
 
