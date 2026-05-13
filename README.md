@@ -58,5 +58,6 @@ Each app should keep its own product-specific docs outside this toolkit:
 - `ai_docs/architecture.md`: app-specific core and feature boundaries.
 - `ai_docs/conventions.md`: naming, folders, and app-level exceptions.
 - `ai_specs/`: feature specs and phase plans.
+- **Cursor Agent Skills** (optional): portable templates under [`reference/agent-skills/`](reference/agent-skills/) — copy into `.agents/skills/<name>/` in each app repo so Cursor can discover them. Keep long-form guidance in `ai_toolkit/patterns/` and `ai_toolkit/rules/`; skills should stay short and link there.
 
 The toolkit should not contain secrets, environment URLs, client IDs, or product-only architecture prose.

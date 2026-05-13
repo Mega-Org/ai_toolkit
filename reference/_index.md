@@ -11,6 +11,14 @@
 | [`checklist-new-screen.md`](checklist-new-screen.md) | Items to verify when adding a new screen |
 | [`breaking-changes-notes.md`](breaking-changes-notes.md) | Notes on upstream breaking changes affecting the stack |
 
+## Cursor Agent Skills (portable templates)
+
+Reusable `SKILL.md` files for Cursor (and similar tools) live under **`reference/agent-skills/`**. Copy a skill folder into the app repo’s **`.agents/skills/<name>/`** so the IDE can discover it; long-form guidance stays in `ai_toolkit/patterns/` and `ai_toolkit/rules/`.
+
+| Folder | Topic |
+|--------|--------|
+| [`agent-skills/flutter-pagination-paginated-list/`](agent-skills/flutter-pagination-paginated-list/SKILL.md) | Infinite scroll: `PaginationController` + `PaginatedListView` → pattern [`../patterns/flutter/pagination-paginated-list-view.md`](../patterns/flutter/pagination-paginated-list-view.md) |
+
 ## References
 
 - Feature delivery verification: [`workflows/feature-delivery/verify-and-pr.md`](../workflows/feature-delivery/verify-and-pr.md)
