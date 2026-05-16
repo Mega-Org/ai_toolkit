@@ -14,9 +14,29 @@ This module is **UI-driven**: `PaginatedListView` wraps the list in a `Notificat
 |-------|------|
 | `PaginationController<K, T>` | Holds `PaginationState` (items, `pageKey`, `isLoading`, `isLastPage`, `failure`), notifies via `paginatedStateNotifier`, fires `addPageRequestListener` callbacks with the current `pageKey`. |
 | `PaginatedListView` | Renders items, empty/first-page loading/error, and trailing “new page” loading/error; triggers scroll-based fetches. |
-| Your Cubit / use case | Performs the network call for a given page; **you** push the result into the controller with `addItems` / `appendPage` / `setError` (or int-key helpers below). |
+| Your Cubit / use case | Performs the network call for a given page; **the UI** (or, in rare cases, the Cubit) pushes the result into the controller with `addItems` / `appendPage` / `setError`. |
 
-The controller is **not** the repository: it is a scroll-aware list coordinator. Keep request parameters (filters, search) in the Cubit; pass them inside the page listener when calling the use case.
+The controller is **not** the repository: it is a scroll-aware list coordinator. Keep request parameters (filters, search) in the Cubit or in page `State`; pass them inside the page listener when calling the use case.
+
+## Default: controller on the page `State` (preferred)
+
+**Put `PaginationController` on the private `_View` `State`**, not on the Cubit, unless a documented exception applies (see [Cubit-owned controller](#cubit-owned-controller-exceptions) below).
+
+This matches [`page-bloc-provider.md`](page-bloc-provider.md): the public page provides `BlocProvider`; the private `_…View` `State` owns scroll/list controllers and wires them to the Cubit.
+
+### Why UI-owned
+
+- **Lifecycle** — `initState` / `dispose` align with the list widget; no `close()` coupling on injectable Cubits.
+- **Local mutations** — `updateItem`, `addItem`, `refresh` from `OrderObserverStateMixin` (or similar) stay on the same `State` that already holds the controller.
+- **Thin Cubit** — fetch + domain params only; the loaded item list lives in the controller, not duplicated in Cubit state.
+
+### Reference screens (this app)
+
+| Screen | Controller owner | Fetch wiring |
+|--------|------------------|--------------|
+| [`orders_list.dart`](../../../lib/src/features/orders/presentation/orders_list/orders_list.dart) | `_OrderListBodyState` | `BlocListener` + `Async<PaginatedData<T>>` (see [Optional: `BlocListener` + `Async`](#optional-bloclistener--async)) |
+| [`client_all_complaints_page.dart`](../../../lib/src/features/client/complaints/presentation/all/client_all_complaints_page.dart) | `_ClientAllComplaintsViewState` | Page listener `await`s `loadComplaintsPage` → `fold` → `addItems` / `setError` (**preferred**) |
+| [`client_my_address_cubit.dart`](../../../lib/src/features/client/my_address/presentation/my_addresses/client_my_address_cubit.dart) | Cubit | Exception: observer + pull-to-refresh owned with fetch in Cubit |
 
 ## `PaginationController<int, T>` helpers (`addItems`)
 
@@ -27,50 +47,91 @@ For `K == int`, the extension `addItems(PaginatedData<T>)` on `PaginationControl
 
 Use **`setError`** when the use case returns a failure so the list can show first-page or inline retry UI.
 
-## Two wiring styles (pick one per screen)
+## Wiring checklist (UI-owned controller)
 
-Both are valid; choose based on who must own the controller lifecycle and who needs direct access to item mutations.
-
-### A — Controller on the **page / sheet `State`** (common)
-
-Use when the list is the main concern of the widget and you already use `BlocListener` to reflect fetch results.
-
-1. `final _paginationController = PaginationController<int, MyItem>(initialPageKey: 1);`
-2. In `initState`: `_paginationController.addPageRequestListener((page) { context.read<MyCubit>().load(page); });`
+1. On the private view `State`: `final _paginationController = PaginationController<int, MyItem>(initialPageKey: 1);`
+2. In `initState`: `_paginationController.addPageRequestListener((page) { … });` — call the Cubit with page + filters.
 3. In `dispose`: `_paginationController.dispose();`
-4. In `BlocListener` / `MultiBlocListener`: on success with `PaginatedData`, call `_paginationController.addItems(data)`; on failure, `_paginationController.setError(failure)`.
-5. Build `PaginatedListView(controller: _paginationController, itemBuilder: …)`.
+4. On each successful page: `_paginationController.addItems(data)`; on failure: `_paginationController.setError(failure)`.
+5. Build `PaginatedListView` (or `.sliver`) with `controller: _paginationController` and `itemBuilder`.
 
-**Examples (reference app, same module shape):** awards list with per-tab `BlocProvider`, society groups tab with pull-to-refresh + `removeDuplicatedItemsWhere`, country ranking tab with `updateItem` on side-channel state, add-members sheet with `listenWhen` on search to `refresh()`.
+### Preferred: page listener + `DomainServiceType` (no list `Async`)
 
-### B — Controller owned by the **Cubit** (compact for shared logic)
+Keep the Cubit free of a per-page `Async<PaginatedData<T>>` when the list is the only consumer:
 
-Use when multiple widgets read the same paged list, or the Cubit already coordinates observers that mutate items (e.g. “seen” / sync helpers).
+```dart
+Future<void> _onPageRequest(final int page) async {
+  final result = await context.read<MyCubit>().loadPage(
+    page: page,
+    filter: _filter,
+  );
+  if (!mounted) return;
+  result.fold(
+    (failure) => _paginationController.setError(failure),
+    (data) => _paginationController.addItems(data),
+  );
+}
+```
 
-1. Cubit holds `PaginationController<int, T>`, registers `addPageRequestListener` in the constructor or an init method, and disposes the controller in `close()`.
-2. Expose a getter if the UI needs the same instance (e.g. horizontal strip + elsewhere).
-3. On each fetch, call `_paginationController.addItems` / `setError` from inside the Cubit after `fold`.
+**Example:** `ClientAllComplaintsCubit.loadComplaintsPage` + `_ClientAllComplaintsViewState._onPageRequest`.
 
-**Example:** stories rail — horizontal `PaginatedListView`, custom `firstPageLoadingBuilder` / `newPageLoadingBuilder` / error builders wired with `controller.retryLastFailedRequest`.
+### Optional: `BlocListener` + `Async`
 
-## Required UI wiring checklist
+Use when you already emit `Async<PaginatedData<T>>` for the same screen (analytics, secondary widgets, or legacy cubits):
 
-- [ ] **Listener registered** before the first build completes (typically `initState`).
-- [ ] **`dispose`** on the controller when the owning `State` or Cubit is torn down.
-- [ ] **Every successful paged response** applied with `addItems` (or `appendPage` / `insertPage` if you are not using `PaginatedData` + int extension).
-- [ ] **Failures** call `setError` so loading flags clear and error UI can show.
-- [ ] **Do not** forget `setError` / `addItems` pairing — otherwise `isLoading` can stick.
+```dart
+BlocListener<MyCubit, Async<PaginatedData<MyItem>>>(
+  listener: (context, state) {
+    if (state.isFailure) {
+      _paginationController.setError(state.failure);
+    } else if (state.isSuccess && state.data != null) {
+      _paginationController.addItems(state.data!);
+    }
+  },
+  child: PaginatedListView<int, MyItem>(controller: _paginationController, …),
+)
+```
+
+Cubit contract for this style:
+
+- `emit(Async.loading())` before the use case.
+- `emit(Async.failure(…))` or `emit(Async.success(data))` on result.
+- **`emit(const Async.initial())` immediately after** so the next page request is not blocked and the listener does not re-apply stale success ([`async.md`](../../rules/core/async.md)).
+
+**Example:** `OrdersListCubit` + `_OrderListBody` in `orders_list.dart`.
+
+Do **not** emit `Async.loading()` again after success/failure.
+
+## Observer / in-place row updates (UI-owned)
+
+When a broadcast observer (e.g. `OrderObserverStateMixin`) updates rows without refetching:
+
+- Hold the controller on the same `State` as the mixin.
+- Call `updateItem`, `addItem`, or `refresh()` on `_paginationController` from observer callbacks.
+
+See [`broadcast-observer-hub.md`](../state/broadcast-observer-hub.md).
+
+## Cubit-owned controller (exceptions)
+
+Use **only** when multiple widgets must share one controller instance, or the Cubit already centralizes observer + pull-to-refresh + fetch (e.g. addresses).
+
+1. Cubit holds `PaginationController<int, T>`, registers `addPageRequestListener` in the constructor, disposes in `close()`.
+2. Expose a getter if the UI needs the same instance.
+3. On each fetch, call `paginationController.addItems` / `setError` from inside the Cubit after `fold`.
+
+**Example:** `ClientMyAddressCubit.paginationController`.
+
+Do **not** default new list screens to Cubit-owned controllers because an older screen did.
 
 ## Pull-to-refresh and filter changes
 
 - Call **`controller.refresh()`** to reset to `PaginationState.initial` and re-run the page-1 listener.
-- Some screens debounce refresh (`Timer` + `cancel`) so rapid filter updates do not stack requests; keep debounce logic next to the controller or Cubit, not inside the generic pagination library.
-
-When filters or query params change, prefer **`listenWhen`** on the Cubit field that represents those params, then `refresh()` the controller (country users tab pattern).
+- When filters or query params change (tab, status chip), update local `State` or Cubit params, then **`_paginationController.refresh()`** so stale rows are cleared.
+- Debounce rapid filter changes next to the controller or Cubit, not inside the generic pagination library.
 
 ## Deduplication
 
-After `addItems`, if the API can return overlapping rows across pages, call:
+After `addItems`, if the API can return overlapping rows across pages:
 
 `removeDuplicatedItemsWhere((first, second) => first.id == second.id)` (or your stable key).
 
@@ -78,38 +139,37 @@ After `addItems`, if the API can return overlapping rows across pages, call:
 
 `PaginationController` supports:
 
-- `updateItem(updateWhere: …, newItem: (old) => …)` — e.g. unread badge, step counts, membership flags.
-- `removeItem((e) => …)` — e.g. row removed after an action.
-- `addItem` / `itemList` / `uniqueByKey` — use sparingly and document why a refetch is not used.
-
-Cross-screen updates can still go through a **broadcast observer** pattern (see `patterns/state/broadcast-observer-hub.md`); the observer holds or receives the controller and calls these helpers.
+- `updateItem(updateWhere: …, newItem: (old) => …)`
+- `removeItem((e) => …)`
+- `addItem` / `getItemWhere` — use sparingly; prefer `refresh()` when correctness needs a full refetch.
 
 ## `PaginatedListView` options
 
-- **`scrollDirection`**: `Axis.horizontal` for rails; last item row/column appends new-page loading/error (see implementation in `paginated_list_view.dart`).
-- **Custom builders**: `firstPageLoadingBuilder`, `firstPageErrorBuilder`, `noItemsFoundBuilder`, `newPageLoadingBuilder`, `newPageErrorBuilder` — use for shimmer rows, compact spinners on horizontal lists, and l10n’d retry.
-- **`.sliver`**: embed inside `CustomScrollView` when the page already uses slivers (app bar, headers).
+- **`scrollDirection`**: `Axis.horizontal` for rails.
+- **Custom builders**: `firstPageLoadingBuilder`, `firstPageErrorBuilder`, `noItemsFoundBuilder`, `newPageLoadingBuilder`, `newPageErrorBuilder`.
+- **`.sliver`**: embed inside `CustomScrollView` when the page already uses slivers (orders list tab bodies).
 - **`padding` / `scrollController` / `cacheExtent`**: match design and nested scroll scenarios.
 
 ## Async state in the Cubit vs list state
 
-You may keep **`Async<PaginatedData<T>>`** (or similar) on the Cubit for one-shot UI or analytics while still driving **`PaginationController`** for the list. Emit loading/success/failure for the **current request** if needed, then reset to `Async.initial()` so the next page request is not blocked by a stuck “success” flag — see stories-style `getStories` emissions.
+- **Preferred:** no duplicate item list in Cubit; Cubit methods return `DomainServiceType<PaginatedData<T>>` for page fetches.
+- **Optional:** `Async<PaginatedData<T>>` per request + `BlocListener` as above; reset to `initial()` after each apply.
+- Avoid keeping the **full item list** in Cubit state when the controller already holds it.
 
-Avoid duplicating the **full item list** in Cubit state unless a second consumer truly needs it; the controller already holds the list.
+## Naming
 
-## Naming and typos
-
-Use a consistent name such as `_paginationController` (avoid drift like `_pagainationController` in long-lived code).
+Use `_paginationController` consistently (avoid typos like `_pagainationController`).
 
 ## Verification
 
 - Scroll to end: next page loads; `isLastPage` stops further triggers.
 - First-page error: retry invokes `retryLastFailedRequest` or your listener re-fetches.
 - Refresh: list clears and page 1 loads again.
-- Filter change: no stale rows from the previous query (usually `refresh()` + cubit param update ordering).
+- Filter change: no stale rows from the previous query (`refresh()` + param update ordering).
 
 ## Related toolkit
 
 - Page structure + `BlocProvider`: [`page-bloc-provider.md`](page-bloc-provider.md).
-- Imperative fan-out to lists: [`../state/broadcast-observer-hub.md`](../state/broadcast-observer-hub.md).
+- Imperative fan-out to lists: [`broadcast-observer-hub.md`](../state/broadcast-observer-hub.md).
 - `Async<T>` rules: [`../../rules/core/async.md`](../../rules/core/async.md).
+- Agent skill (portable): [`.agents/skills/flutter-pagination-paginated-list/SKILL.md`](../../../.agents/skills/flutter-pagination-paginated-list/SKILL.md).

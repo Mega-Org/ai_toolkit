@@ -14,7 +14,9 @@
 | [`core-alerts-dialogs.md`](core-alerts-dialogs.md) | Centered dialogs/alerts: `showAppDialog`, static `show`, dialog-scoped Cubit, when to use raw `showDialog` |
 | [`page-bloc-provider.md`](page-bloc-provider.md) | Route page: `StatelessWidget` + `BlocProvider` + private `_View` (`StatefulWidget` when needed) so `context` is under the provider |
 | [`presentation-field-naming.md`](presentation-field-naming.md) | Widget-local `TextEditingController` / `…Controller` fields: private `_…`, full `Controller` suffix (no `Ctrl`) |
-| [`pagination-paginated-list-view.md`](pagination-paginated-list-view.md) | `PaginationController` + `PaginatedListView`: wiring to Cubit, `addItems` / `refresh`, horizontal and sliver usage, dedupe and in-place updates |
+| [`pagination-paginated-list-view.md`](pagination-paginated-list-view.md) | `PaginationController` on page `State` (default) + `PaginatedListView`; Cubit fetch only; `addItems` / `refresh`, sliver, dedupe, observer updates |
+
+Large screens split with `part` / `part of`: [`../dart/part-part-of-library.md`](../dart/part-part-of-library.md) (canonical: `order_details_page.dart`).
 
 ## References
 
