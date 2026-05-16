@@ -1,17 +1,16 @@
-# Patterns: Dependency injection (`patterns/di/`)
+# Patterns: DI (`patterns/di/`)
 
 ## Purpose
 
-Examples for **`get_it`** and **`injectable`** registration and usage, consistent with [`rules/core/di.md`](../../rules/core/di.md).
+**get_it + injectable** registration and resolution examples aligned with [`../../rules/core/di.md`](../../rules/core/di.md).
 
 ## Contents
 
 | File | Topic |
 |------|--------|
-| [`injectable-get-it.md`](injectable-get-it.md) | Injectable patterns, modules, registration |
+| [`injectable-get-it.md`](injectable-get-it.md) | Scopes, annotations, layer wiring, `@factoryParam`, `@module`, UI resolution, checklist |
 
-## References
+## Related
 
-- Enforceable DI rules: [`../../rules/core/di.md`](../../rules/core/di.md)
-- Domain vs feature placement: [`../../rules/core/domain-data-in-core.md`](../../rules/core/domain-data-in-core.md)
+- Rules: [`../../rules/core/di.md`](../../rules/core/di.md)
 - Patterns overview: [`../_index.md`](../_index.md)
