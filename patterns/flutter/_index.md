@@ -16,7 +16,7 @@
 | [`presentation-field-naming.md`](presentation-field-naming.md) | Widget-local `TextEditingController` / `…Controller` fields: private `_…`, full `Controller` suffix (no `Ctrl`) |
 | [`pagination-paginated-list-view.md`](pagination-paginated-list-view.md) | `PaginationController` on page `State` (default) + `PaginatedListView`; Cubit fetch only; `addItems` / `refresh`, sliver, dedupe, observer updates |
 
-Large screens split with `part` / `part of`: [`../dart/part-part-of-library.md`](../dart/part-part-of-library.md) (canonical: `order_details_page.dart`).
+Large screens split with `part` / `part of`: [`../dart/part-part-of-library.md`](../dart/part-part-of-library.md).
 
 ## References
 
