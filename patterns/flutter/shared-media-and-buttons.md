@@ -34,7 +34,8 @@ Implementation-oriented guidance for **using** project-standard image, SVG, and 
 
 ### Layout hygiene
 
-- Spacing-only gaps: **`SizedBox`** with height/width (or the app’s spacing extensions if documented).
+- **Equal gaps in `Row` / `Column`:** set **`spacing`** on the flex parent (`Dimensions.*` tokens). Do not insert a `SizedBox` between every child when the gap is the same — see [`../../rules/flutter/ui-composition.md`](../../rules/flutter/ui-composition.md).
+- **Unequal gaps or space outside a flex:** **`SizedBox`** with height/width (or the app’s spacing extensions if documented).
 - Decorative surfaces: **`Container`** (or themed surfaces) with **`BoxDecoration`** as needed — do not use `Container` with only a fixed size and no decoration when `SizedBox` suffices.
 
 ## Checklist (before merge)
@@ -42,4 +43,5 @@ Implementation-oriented guidance for **using** project-standard image, SVG, and 
 - [ ] No raw `Image.network` / ad-hoc SVG in feature UI unless `ai_docs/conventions.md` allows it.
 - [ ] Buttons use the app’s shared API; loading/disabled behavior matches state.
 - [ ] No redundant `Container` where `SizedBox` is enough.
+- [ ] Uniform `Row`/`Column` child gaps use **`spacing`**, not repeated `SizedBox` separators.
 - [ ] Concrete widget names and imports match **`ai_docs/conventions.md`** for this repository.

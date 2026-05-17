@@ -22,7 +22,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 |--------|-----------|
 | Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md); callbacks (no tear-offs): [`dart/callbacks.md`](dart/callbacks.md); **enum wire parsing**: [`dart/enums-wire-parsing.md`](dart/enums-wire-parsing.md) |
 | Widgets / performance | [`flutter/widgets-and-performance.md`](flutter/widgets-and-performance.md) |
-| Shared UI wrappers, `SizedBox` vs `Container` | [`flutter/ui-composition.md`](flutter/ui-composition.md); [`patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md) |
+| Shared UI wrappers, `Row`/`Column` `spacing`, `SizedBox` vs `Container` | [`flutter/ui-composition.md`](flutter/ui-composition.md); [`patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md) |
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
 | Firebase secrets in repos | [`README.md`](../README.md) (until `rules/firebase/security-public-repos.md` is added) |
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |
