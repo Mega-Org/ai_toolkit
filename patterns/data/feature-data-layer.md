@@ -35,6 +35,7 @@ When the corresponding use case takes a **`NoParams` subclass** (feature params 
 
 ## Rules of thumb
 
+- **No observer hubs** in `data/` or `domain/` — broadcast observers and `*ObserverUpdater.notify…` belong in presentation only ([`../../rules/architecture/observer-presentation-only.md`](../../rules/architecture/observer-presentation-only.md)).
 - **One import surface for HTTP paths** per feature: `api/` (or a single module there), not duplicated in cubits or pages.
 - **Repository** orchestrates datasources and maps to domain entities; it does not own raw path strings.
 - Regenerate DI (`build_runner`) after renaming or moving `@injectable` datasources or repository impls.

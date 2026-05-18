@@ -85,6 +85,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | `Async<T>` presentation state; **`final`** on submit/param arguments where not reassigned | [`rules/core/async.md`](rules/core/async.md) |
 | Localization | [`rules/core/localization.md`](rules/core/localization.md) |
 | Services and utilities | [`rules/core/services.md`](rules/core/services.md), [`rules/core/utils.md`](rules/core/utils.md) |
+| Observer hubs (presentation only; not in `data/` or `domain/`) | [`rules/architecture/observer-presentation-only.md`](rules/architecture/observer-presentation-only.md) |
 
 ## Pattern routing
 

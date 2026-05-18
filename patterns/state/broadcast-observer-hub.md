@@ -2,6 +2,8 @@
 
 Portable pattern for **imperative fan-out**: one place broadcasts a signal; several listeners react without threading the same callback through many constructors.
 
+**Enforceable rule:** observer hubs are **presentation-layer only** — no definitions or `notify…` usage in feature **`data/`** or **`domain/`**. See [`../../rules/architecture/observer-presentation-only.md`](../../rules/architecture/observer-presentation-only.md).
+
 This file uses **generic names** only. Adapt folder and type names to your app.
 
 ## When to use

@@ -15,6 +15,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | `rules/tooling/` | Codegen, IDE, `build_runner` | [`tooling/_index.md`](tooling/_index.md) |
 | `rules/firebase/` | FlutterFire, public-repo safety | [`firebase/_index.md`](firebase/_index.md) |
 | `rules/core/` | Barrel, foundation, network, DI, app-wide blocs, theme, router, config values/assets, l10n, services, utils | [`core/_index.md`](core/_index.md) |
+| `rules/architecture/` | Cross-layer boundaries (observers, etc.) | [`architecture/_index.md`](architecture/_index.md) |
 
 ## Quick map (common tasks)
 
@@ -36,7 +37,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md) (includes **`assets/icons/`** naming: **`*_ic.svg`** / prefer **`*_ic.png`**); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
 | Localization | [`core/localization.md`](core/localization.md) |
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
-| Broadcast observer hub (singleton updater + observers; not a global event bus) | [`../patterns/state/broadcast-observer-hub.md`](../patterns/state/broadcast-observer-hub.md) |
+| Broadcast observer hub (singleton updater + observers; not a global event bus) | [`../patterns/state/broadcast-observer-hub.md`](../patterns/state/broadcast-observer-hub.md); **presentation only** — [`architecture/observer-presentation-only.md`](architecture/observer-presentation-only.md) |
 
 ## References
 
