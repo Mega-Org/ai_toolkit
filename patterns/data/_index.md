@@ -12,8 +12,8 @@
 | [`either-and-failures.md`](either-and-failures.md) | `Either<Failure, T>`, `collectFailure`, exception mapping, `fold` → `Async` / pagination |
 | [`feature-data-layer.md`](feature-data-layer.md) | Feature `data/` layout: `api/`, flat `datasources/` vs `remote`/`local`, `models/`, `repository/` |
 | [`manual-json-fromjson-primitives.md`](manual-json-fromjson-primitives.md) | Hand-written `fromJson`: **`int`** IDs, **`String`** fields, **`double`** / decimal strings — **always** follow for non-codegen DTOs |
-
-**Planned leaf doc** (path reserved): [`dio-and-repositories.md`](dio-and-repositories.md).
+| [`remote-data-source-inline.md`](remote-data-source-inline.md) | Inline `DioHelper` + response unwrap in each public method; no single-use `_paginatedPayload` / `_unwrap*` helpers |
+| [`dio-and-repositories.md`](dio-and-repositories.md) | Repository + Dio overview (links to inline datasource pattern) |
 
 ## References
 

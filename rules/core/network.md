@@ -33,6 +33,10 @@ Do **not** add feature-specific interceptors in core unless they are truly globa
 
 - **`mapApiException`** and **`collectFailure`** (note the legacy spelling **`execption`** in some parameter names in **`failure_collect.dart`**) map **`DioException`** / HTTP outcomes to typed domain exceptions and **`Failure`** — align new endpoints with the existing patterns in this app.
 
+### Remote data sources
+
+- **`DioHelper` calls and per-endpoint JSON unwrap** belong in the **public** datasource method body — not single-use private `_unwrap*` / `_paginatedPayload` helpers. See [`../flutter/remote-data-sources.md`](../flutter/remote-data-sources.md).
+
 ### Repository layer
 
 - Repositories should return **`Either<Failure, T>`** and map **domain exceptions** to **`Failure`** subclasses defined under **`network/errors/`** (see `failures.dart`, `failure_collect.dart`).

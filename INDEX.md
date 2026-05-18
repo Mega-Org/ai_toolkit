@@ -64,7 +64,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 
 | Area | Load |
 |------|------|
-| Dart analysis, generated files, imports, **`part` / `part of`**, **enum wire parsing** | [`rules/dart/_index.md`](rules/dart/_index.md) |
+| Dart analysis, generated files, imports, **`part` / `part of`**, **enum wire parsing**, **enum l10n** | [`rules/dart/_index.md`](rules/dart/_index.md) |
 | Feature UI `part` libraries (relative `part of`, formatters part) | [`rules/dart/part-part-of.md`](rules/dart/part-part-of.md) |
 | Redundant `: super()` (zero-arg superclass ctor) | [`rules/dart/constructors.md`](rules/dart/constructors.md) |
 | UI callbacks: explicit closures vs method tear-offs | [`rules/dart/callbacks.md`](rules/dart/callbacks.md) |
@@ -93,7 +93,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 
 | Need | Load |
 |------|------|
-| Absolute Dart imports; **`part` / `part of` screen libraries**; **enum wire parsing** (`factory` + strict `firstWhere`) | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md), [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md), [`patterns/dart/enums-wire-parsing.md`](patterns/dart/enums-wire-parsing.md) |
+| Absolute Dart imports; **`part` / `part of` screen libraries**; **enum wire parsing**; **enum l10n** | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md), [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md), [`patterns/dart/enums-wire-parsing.md`](patterns/dart/enums-wire-parsing.md), [`patterns/dart/enums-l10n.md`](patterns/dart/enums-l10n.md) |
 | Cubit structure | [`patterns/state/cubit-structure.md`](patterns/state/cubit-structure.md) |
 | Cubit + `IUseCase` (`await`, `fold`, `SafeEmitMixin`) | [`patterns/state/cubit-and-use-case.md`](patterns/state/cubit-and-use-case.md) |
 | Bloc structure | [`patterns/state/bloc-structure.md`](patterns/state/bloc-structure.md) |

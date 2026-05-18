@@ -49,6 +49,10 @@ In UI with **`BuildContext`**, prefer **`AppLocalizations.of(context).key`** wri
 
 Use **`appLocalizer`** when you would otherwise **thread `BuildContext` through constructors or services** only to read strings, or in non-widget code.
 
+## Enums (`title`, `label`, …)
+
+For enums that expose display copy, define **`String get title`** / **`label`** / **`tabTitle`** on the **enum** with **`appLocalizer`** — not on an **`extension`**, and not via **`AppLocalizations`** or **`BuildContext`** parameters. Prefer getters over zero-arg methods. Full rule: [`../dart/enums-l10n.md`](../dart/enums-l10n.md); examples: [`../../patterns/dart/enums-l10n.md`](../../patterns/dart/enums-l10n.md).
+
 ## `LocalizationContainer`
 
 - Holds **`AppLanguageEnum`** (`getLang` / **`setLanguage`**), persists via **`SetCachedLanguageUseCase`**, loads cache in **`init()`**.

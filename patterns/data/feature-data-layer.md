@@ -33,6 +33,10 @@ In datasource (and similar IO) method signatures, prefer **`final`** on formal p
 
 When the corresponding use case takes a **`NoParams` subclass** (feature params with a `toMap`), remote datasource methods should accept **that param type** — e.g. `Future<void> login(final LoginParams params)` — and call **`params.toMap`** only inside the datasource (or pass fields into Dio). Use cases whose repository API is **`NoParams`** literally (`logout`, `getProfile`, …) stay **parameterless** on the datasource. The repository then forwards **`params` objects** without building maps for HTTP.
 
+### Inline HTTP and response parsing (no single-use private helpers)
+
+Each public datasource method should contain the **`DioHelper` call and all JSON shaping for that endpoint** in one place. Do not extract `_paginatedPayload`, `_unwrap*`, or similar private methods used by only one public method. See [`../../rules/flutter/remote-data-sources.md`](../../rules/flutter/remote-data-sources.md) and [`remote-data-source-inline.md`](remote-data-source-inline.md).
+
 ## Rules of thumb
 
 - **No observer hubs** in `data/` or `domain/` — broadcast observers and `*ObserverUpdater.notify…` belong in presentation only ([`../../rules/architecture/observer-presentation-only.md`](../../rules/architecture/observer-presentation-only.md)).

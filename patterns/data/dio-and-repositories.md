@@ -10,4 +10,7 @@ Example-shaped guidance for Dio usage in repositories, aligning with `rules/core
 - `patterns/data/either-and-failures.md`
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+- **Remote datasources** call `DioHelper` and parse JSON **inside each public method** — no private helpers used by a single endpoint. Rule: [`../../rules/flutter/remote-data-sources.md`](../../rules/flutter/remote-data-sources.md). Examples: [`remote-data-source-inline.md`](remote-data-source-inline.md).
+- **Repositories** wrap datasource calls with **`collectFailure`** and return **`DomainServiceType`** / **`Either<Failure, T>`** — see [`either-and-failures.md`](either-and-failures.md).
+- **Paths** live in feature **`data/api/`**; datasources import paths only, not cubits/pages.

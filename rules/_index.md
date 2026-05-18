@@ -21,7 +21,8 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 
 | Topic | Leaf file |
 |--------|-----------|
-| Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md); callbacks (no tear-offs): [`dart/callbacks.md`](dart/callbacks.md); **enum wire parsing**: [`dart/enums-wire-parsing.md`](dart/enums-wire-parsing.md) |
+| Dart rules (imports, analysis — expand over time) | [`dart/_index.md`](dart/_index.md); constructors: [`dart/constructors.md`](dart/constructors.md); callbacks (no tear-offs): [`dart/callbacks.md`](dart/callbacks.md); **enum wire parsing**: [`dart/enums-wire-parsing.md`](dart/enums-wire-parsing.md); **enum l10n**: [`dart/enums-l10n.md`](dart/enums-l10n.md) |
+| Remote data sources (inline Dio + JSON in public methods) | [`flutter/remote-data-sources.md`](flutter/remote-data-sources.md); pattern [`../patterns/data/remote-data-source-inline.md`](../patterns/data/remote-data-source-inline.md) |
 | Widgets / performance | [`flutter/widgets-and-performance.md`](flutter/widgets-and-performance.md) |
 | Shared UI wrappers, `Row`/`Column` `spacing`, `SizedBox` vs `Container` | [`flutter/ui-composition.md`](flutter/ui-composition.md); [`patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md) |
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
