@@ -51,6 +51,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Upgrade dependencies | [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) |
 | Commit before plan or phase | [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) |
 | Commit after a phase | [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) |
+| Analyze a BRD or product source | [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) — templates: [`templates/brd/_index.md`](templates/brd/_index.md) |
 | Create or configure a Flutter app | [`setup/new-flutter-app.md`](setup/new-flutter-app.md) |
 | Work in a Melos repo | [`setup/melos-monorepo.md`](setup/melos-monorepo.md) |
 | Configure CI | [`setup/ci-github-gitlab.md`](setup/ci-github-gitlab.md) |
