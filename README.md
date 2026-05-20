@@ -12,6 +12,7 @@ Per-app files such as `CLAUDE.md`, `AGENTS.md`, and `.cursor/rules` should stay 
 - `rules/`: short must / must-not guidance — overview [`rules/_index.md`](rules/_index.md).
 - `patterns/`: implementation examples and conventions — overview [`patterns/_index.md`](patterns/_index.md).
 - `workflows/`: ordered playbooks — layout [`workflows/README.md`](workflows/README.md).
+- `templates/`: reusable spec and documentation skeletons — overview [`templates/_index.md`](templates/_index.md).
 - `reference/`: supporting checklists and notes — overview [`reference/_index.md`](reference/_index.md).
 
 This toolkit uses `workflows/`, not `commands/`. The intent is the same as command-style playbooks in some AI tools, but "workflow" better matches phased, multi-step work and keeps the naming tool-neutral.
@@ -27,13 +28,14 @@ If a referenced file does not exist yet, continue with the closest available fil
 
 ## Task Routing
 
-Section overviews: [`setup/_index.md`](setup/_index.md), [`workflows/README.md`](workflows/README.md), [`rules/_index.md`](rules/_index.md), [`patterns/_index.md`](patterns/_index.md).
+Section overviews: [`setup/_index.md`](setup/_index.md), [`workflows/README.md`](workflows/README.md), [`rules/_index.md`](rules/_index.md), [`patterns/_index.md`](patterns/_index.md), [`templates/_index.md`](templates/_index.md).
 
 - New Flutter app or repository setup: start in [`setup/`](setup/_index.md), then load relevant [`rules/`](rules/_index.md) before creating code.
 - Feature implementation from a spec: use [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md), then load matching rules and patterns (see indexes above).
 - Bug fix: use [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md), then load rules for the touched domain.
 - Refactor: use [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md), then load the current app architecture docs before editing.
 - Dependency upgrade: use [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) and relevant setup notes.
+- BRD or product-source analysis: use [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) and the [`templates/brd/`](templates/brd/_index.md) skeletons.
 - Commit or PR prep: use [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) and [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md).
 - Dart import cleanup: use [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md).
 - Build runner, generated files, or json_serializable: load [`rules/tooling/build-runner.md`](rules/tooling/build-runner.md) and [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) when available.

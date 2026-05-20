@@ -13,6 +13,7 @@ Each top-level folder has an overview that lists its files and cross-references 
 | Rules | [`rules/_index.md`](rules/_index.md) |
 | Patterns | [`patterns/_index.md`](patterns/_index.md) |
 | Workflows | [`workflows/README.md`](workflows/README.md) |
+| Templates | [`templates/_index.md`](templates/_index.md) |
 | Reference | [`reference/_index.md`](reference/_index.md) |
 
 Stack defaults, per-app integration, and repository boundaries are documented in [`README.md`](README.md).
@@ -31,7 +32,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 ## Load order
 
 1. Start here: `ai_toolkit/INDEX.md`.
-2. When you need breadth before leaf files, open the relevant section overview (`rules/_index.md`, `patterns/_index.md`, `workflows/README.md`, etc.).
+2. When you need breadth before leaf files, open the relevant section overview (`rules/_index.md`, `patterns/_index.md`, `workflows/README.md`, `templates/_index.md`, etc.).
 3. Load the task workflow from `ai_toolkit/workflows/` (see [`workflows/README.md`](workflows/README.md)).
 4. Load enforceable rules from `ai_toolkit/rules/`.
 5. Load implementation examples from `ai_toolkit/patterns/`.
