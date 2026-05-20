@@ -59,7 +59,7 @@ Each app should keep its own product-specific docs outside this toolkit:
 
 - `ai_docs/architecture.md`: app-specific core and feature boundaries.
 - `ai_docs/conventions.md`: naming, folders, and app-level exceptions.
-- `ai_specs/`: feature specs and phase plans.
+- `ai_specs/`: app-specific spec workspace. Prefer `ai_specs/INDEX.md`; per feature use `ai_specs/features/<feature>/README.md` (requirements) and `plan.md` (phased plan + progress). BRD in `ai_specs/brd/`. Plan with [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md); implement with [`implement-phase.md`](workflows/feature-delivery/implement-phase.md). Optional per app: `fixes/`, `integrations/`, `archive/`. Refactors/tooling: [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) + `ai_docs/`.
 - **Cursor Agent Skills** (optional): portable templates under [`reference/agent-skills/`](reference/agent-skills/) — copy into `.agents/skills/<name>/` in each app repo so Cursor can discover them. Keep long-form guidance in `ai_toolkit/patterns/` and `ai_toolkit/rules/`; skills should stay short and link there.
 
 The toolkit should not contain secrets, environment URLs, client IDs, or product-only architecture prose.

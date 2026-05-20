@@ -8,8 +8,8 @@
 
 | File | Topic |
 |------|--------|
-| [`make-plan.md`](make-plan.md) | Build a phased plan from a spec; use app `ai_docs/` when present |
-| [`implement-phase.md`](implement-phase.md) | Execute one checklist phase |
+| [`make-plan.md`](make-plan.md) | Write/update `features/<feature>/README.md` + `plan.md`; phased plan from spec or user message |
+| [`implement-phase.md`](implement-phase.md) | Execute one phase; update `plan.md` progress |
 | [`verify-and-pr.md`](verify-and-pr.md) | Tests, checks, PR description |
 
 ## Git preflight
@@ -18,6 +18,6 @@ Before planning or starting a phase, see [`../git/commit-before-work.md`](../git
 
 ## References
 
-- App specs live under each repo’s `ai_specs/` (not in this toolkit).
+- Per feature: `ai_specs/features/<feature>/README.md` + `plan.md` (not in this toolkit). Templates: [`../../templates/specs/_index.md`](../../templates/specs/_index.md).
 - Reference checklists: [`../../reference/_index.md`](../../reference/_index.md)
 - Workflow layout: [`../README.md`](../README.md)

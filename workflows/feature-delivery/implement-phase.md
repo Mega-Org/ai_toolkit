@@ -2,53 +2,58 @@
 
 ## Purpose
 
-Execute **one phase** from a feature plan produced by [`make-plan.md`](make-plan.md)—implementation steps, verification hooks, and handoff to the next phase or PR. Stay aligned with the spec’s **ordering** (e.g. stub HTTP / `Future.delayed` vs real Dio) and any **Next session** / API cutover checklist so this phase does not assume live endpoints or production JSON before the plan says so.
+Execute **one phase** from `ai_specs/features/<feature>/plan.md` produced by [`make-plan.md`](make-plan.md). Read the feature contract from `README.md`, implement code, verify, then **update `plan.md`** with status and handoff.
 
 ## Fill when
 
-- When phase granularity or verification gates change.
+- Phase granularity, verification gates, or spec/plan update rules change.
 
 ## References
 
-- **Session bootstrap (rules, patterns, load order):** [`../session/bootstrap-session.md`](../session/bootstrap-session.md) — call this **before** implementation so the agent loads `INDEX.md`, rule and pattern maps, optional aliases, `ai_docs/`, and active `ai_specs/` per [`INDEX.md`](../../INDEX.md) lite vs full guidance.
-- Planning: [`make-plan.md`](make-plan.md) (inputs, phased steps, outputs, and **After the plan** chain)
-- **Commit before starting this workflow:** [`../git/commit-before-work.md`](../git/commit-before-work.md)
-- Commit after completing a phase: [`../git/commit-after-phase.md`](../git/commit-after-phase.md)
-- When the feature is fully complete: [`verify-and-pr.md`](verify-and-pr.md)
-- Optional paths in **your app repos**: e.g. `ai_specs/`, `ai_docs/architecture.md`, `ai_docs/conventions.md`
+- Bootstrap: [`../session/bootstrap-session.md`](../session/bootstrap-session.md)
+- Planning: [`make-plan.md`](make-plan.md)
+- Commit before work: [`../git/commit-before-work.md`](../git/commit-before-work.md)
+- Commit after phase: [`../git/commit-after-phase.md`](../git/commit-after-phase.md)
+- When complete: [`verify-and-pr.md`](verify-and-pr.md)
+- App paths: `ai_specs/INDEX.md`, `ai_specs/features/<feature>/README.md`, `ai_specs/features/<feature>/plan.md`, `ai_docs/`
 
 ## How to invoke (users)
 
-**When to use** — You already have a phased plan (from make-plan or equivalent) and want **one slice** implemented with verification and handoff.
+**When to use** — A `plan.md` exists and you want one phase implemented.
 
-**What you say** — Natural language is enough, for example: “Implement phase 2 from the checkout plan,” or “Run the current authentication phase.” You do **not** need a special command name.
+**What you say** — e.g. “Implement phase 2 for authentication,” or “Run the next pending authentication phase.”
 
-- **Normal:** The agent runs **`../session/bootstrap-session.md`** first (full bootstrap by default for a phase—multi-file, spec-driven—then **commit-before-work** (same default as make-plan: check `git status`, propose a commit message, confirm before work). **You do not need to ask for bootstrap or commit-before-work every time.**
-- **Skip Git preflight:** **`implement-phase --no-commits`** or **“implement this phase without committing first.”** (Bootstrap session is still recommended so rules and patterns stay loaded.)
+- **Normal:** bootstrap session → commit-before-work → implement → **update `plan.md`**.
+- **Skip Git:** `implement-phase --no-commits` or “without committing first.”
 
 ## Preflight
 
-Before the steps below:
+1. **Bootstrap session** — [`../session/bootstrap-session.md`](../session/bootstrap-session.md). For feature work load, in order:
+   - `ai_specs/INDEX.md` (if present)
+   - `ai_specs/features/<feature>/README.md`
+   - `ai_specs/features/<feature>/plan.md`
+   - Routed BRD files when the plan lists them
+   - `ai_docs/` when present
+2. **Commit before work** — [`../git/commit-before-work.md`](../git/commit-before-work.md) unless `--no-commits`.
 
-1. **Bootstrap session** — Follow [`../session/bootstrap-session.md`](../session/bootstrap-session.md): read `ai_toolkit/INDEX.md`, then load rules (`rules/_index.md` and subfolders you touch), patterns (`patterns/_index.md` and stack areas in play), optional [`alias/`](../../alias/_index.md) when running shell commands, app `ai_docs/` when present (for example [`architecture.md`](../../../ai_docs/architecture.md), [`conventions.md`](../../../ai_docs/conventions.md)), and the active feature spec under the app’s `ai_specs/` for this phase. Prefer **full** bootstrap (per `INDEX.md`) for phase work; use **lite** only for a minimal single-file slice when appropriate.
-2. **Commit before work** — Follow **`../git/commit-before-work.md`**: check `git status`; if there are uncommitted changes, **default to committing** with an AI-generated message after quick confirmation—unless the user used **`--no-commits`**. Same default behavior as make-plan.
+If `plan.md` is missing, run [`make-plan.md`](make-plan.md) first (Mode A or B).
 
 ## Steps
 
-1. **Confirm scope** — Which phase from `ai_specs/` (or the active plan); restate deliverables in one sentence. If the spec defines **current implementation scope** (stubs vs real API), confirm this phase matches that slice and any **Next session** / cutover items are not jumped ahead of unintentionally.
-2. **Implement** — Data/domain, state, presentation, wiring per the plan and app rules (`ai_toolkit` `INDEX.md` → Defaults, Rule Routing, Pattern Routing). When this phase touches network configuration or paths, keep **feature-scoped API path constants** under the feature `data/api/` folder (single source for remote datasources; not in cubits)—see [`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)—as called out in make-plan when the feature has network calls.
-3. **Verify** — Tests and checks listed for this phase in the plan; analyzer clean for touched files.
-4. **Document** — Update `ai_specs/` and/or `ai_docs/` as agreed for this phase.
-5. **Handoff** — Mark phase done in the spec; note follow-ups. Keep explicit pointers to which `rules/` and `patterns/` files mattered so the next phase stays consistent (mirror make-plan **Outputs**).
+1. **Confirm scope** — Identify the target phase in `plan.md` (first `pending` unless the user named a phase). Restate deliverables in one sentence. Confirm stub vs real API matches `README.md` and this phase — do not skip ahead of **Next session** / API cutover unless the plan says so.
+2. **Implement** — Per `plan.md` deliverables and toolkit rules/patterns. Network: feature API constants under `data/api/` only ([`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)). UI: use Figma MCP only when this phase includes UI and `README.md` lists Figma URLs.
+3. **Verify** — Run checks listed for this phase in `plan.md`; keep analyzer clean for touched files.
+4. **Update `plan.md` (required)** — For the completed phase set **Status** to `done` (or `in-progress` if partially complete). Fill **Verification** results, **Notes**, and update **Next** / **Done** sections. Set plan **Status** to `in-progress` until all phases are `done`.
+5. **Update `README.md` when needed** — Only if this phase changed contracts (API shapes, cache rules, new TBDs resolved). Do not duplicate phase progress in `README.md` — that lives in `plan.md`.
+6. **Handoff** — State the next `pending` phase and which rules/patterns apply.
 
-Optional: commit completed phase work per [`../git/commit-after-phase.md`](../git/commit-after-phase.md).
+Optional: commit per [`../git/commit-after-phase.md`](../git/commit-after-phase.md).
 
 ## After this phase
 
-- Run **implement-phase** again for the next slice (each run starts with **`../session/bootstrap-session.md`** then **`../git/commit-before-work.md`** unless `--no-commits`).
-- Use **`../git/commit-after-phase.md`** when you commit per phase after completing work.
-- When all phases are done, run **`verify-and-pr.md`**.
+- Run **implement-phase** again for the next `pending` phase.
+- When every phase is `done`, set plan **Status** to `done` and run **`verify-and-pr.md`**.
 
 ## Done when
 
-Phase verification passes and the plan (or spec) reflects this phase as complete.
+Phase verification passes and `plan.md` shows this phase as `done` with verification notes recorded.

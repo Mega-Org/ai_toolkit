@@ -24,12 +24,12 @@ Use **lite** or **full** bootstrap as described in `INDEX.md`. Full bootstrap is
 4. **Patterns** — Load `patterns/_index.md`, then the subfolder `_index.md` (for example `patterns/data/_index.md`) and leaf files for the stack areas in play.
 5. **Aliases** — Read `alias/_index.md` and the linked alias files only when you will run shell commands that rely on those shortcuts.
 6. **App docs** — If the repo has `ai_docs/` (for example `ai_docs/architecture.md`, `ai_docs/conventions.md`), read them before changing boundaries between core and features or naming conventions.
-7. **Active spec** — For spec-driven feature work, open the active file under the app’s `ai_specs/` (per-product specs stay in the app repo, not in this toolkit).
+7. **Active feature spec** — For spec-driven feature work, load from the app repo (not this toolkit): `ai_specs/INDEX.md` (if present) → `ai_specs/features/<feature>/README.md` → `ai_specs/features/<feature>/plan.md`. Use `plan.md` for the current phase and progress; use `README.md` for requirements and contracts.
 
 ### Resume mid-task
 
 - Re-read `INDEX.md` and [`README.md`](../../README.md) for defaults and boundaries.
-- Re-open the workflow from step 2 above and any `ai_specs/` file that defines the current slice of work.
+- Re-open the workflow from step 2 above and the active feature’s `README.md` + `plan.md` under `ai_specs/features/<feature>/`.
 - Pull in additional rules (`rules/_index.md`) or patterns (`patterns/_index.md`) only when the task expands into new areas.
 
 ### Missing paths

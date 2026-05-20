@@ -13,7 +13,7 @@ Create an app-specific BRD knowledge base from a source business requirements do
 ## Inputs
 
 1. **Source documents** — PDFs, Markdown, docs, OCR text, or exported notes. Store originals under the app repo, for example `ai_specs/brd/source/`.
-2. **App context** — `ai_docs/`, existing `ai_specs/`, localization or RTL conventions, and known app surfaces.
+2. **App context** — `ai_docs/`, existing `ai_specs/INDEX.md`, existing `ai_specs/`, localization or RTL conventions, and known app surfaces.
 3. **Templates** — Use [`../../templates/brd/brd-index.md`](../../templates/brd/brd-index.md), [`../../templates/brd/feature-business-spec.md`](../../templates/brd/feature-business-spec.md), and [`../../templates/brd/app-surface-spec.md`](../../templates/brd/app-surface-spec.md).
 
 ## Output Shape
@@ -31,6 +31,7 @@ ai_specs/brd/
 ```
 
 Keep reusable extraction guidance in `ai_toolkit/`. Keep project-specific facts, rules, uncertainties, and references in `ai_specs/brd/`.
+When the app uses a root `ai_specs/INDEX.md`, add or update its BRD entry so future agents route through the project-level specs map before loading BRD details.
 
 ## Steps
 
@@ -39,7 +40,7 @@ Keep reusable extraction guidance in `ai_toolkit/`. Keep project-specific facts,
 3. **Normalize language** — Convert noisy PDF or OCR text into clear business language. Preserve Arabic-first, RTL-first assumptions where the product or UI copy implies them.
 4. **Classify every fact** — Assign each fact to one of: product, actor, app surface, feature, business rule, status or enum, integration, admin control, MVP scope, future scope, or ambiguity.
 5. **Write cross-cutting analysis first** — Create concise files under `analysis/` for product summary, business model, users and roles, app surfaces, MVP vs future scope, global rules, statuses, and integrations.
-6. **Write feature contracts** — Create one file per feature under `features/` using `feature-business-spec.md`. Link any existing implementation spec instead of duplicating it.
+6. **Write feature contracts** — Create one file per feature under `features/` using `feature-business-spec.md`. Link implementation specs at `ai_specs/features/<feature>/README.md` and execution plans at `plan.md` instead of duplicating them in BRD files.
 7. **Write app-surface journeys** — Create customer, provider, admin, or other surface files under `app_surfaces/` using `app-surface-spec.md`.
 8. **Build the BRD index** — Use `brd-index.md` to route future agents from tasks to the right analysis, feature, and app-surface files.
 9. **Record ambiguities** — Mark uncertain details as `TBD` with an owner such as product, backend, design, or admin policy.

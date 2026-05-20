@@ -9,6 +9,7 @@ Reusable Markdown skeletons for app-specific specs and documentation. Templates 
 | Folder | Topic |
 |--------|-------|
 | [`brd/`](brd/_index.md) | BRD knowledge base, feature business contract, and app-surface spec templates |
+| [`specs/`](specs/_index.md) | Root `ai_specs/` routing, feature implementation, fix, change, and integration spec templates |
 
 ## References
 

@@ -1,66 +1,110 @@
 # Make plan from spec
 
 ## Purpose
-Phased planning from a feature spec; pulls in `ai_docs/` and BRD business analysis when present, then aligns phases with business rules, rules, and patterns.
+
+Phased planning for a product feature: capture requirements in a durable feature spec, generate or refresh a tracked execution plan, and align with BRD business analysis, `ai_docs/`, and toolkit rules/patterns.
 
 ## Fill when
-- When your planning phases or spec format conventions change.
+
+- Planning phases, spec/plan file layout, or make-plan invocation modes change.
 
 ## References
-- Optional paths in **your app repos** (not copied here): e.g. `ai_specs/`, `ai_docs/architecture.md`
-- Optional BRD analysis in **your app repos** (not copied here): e.g. `ai_specs/brd/INDEX.md`, `ai_specs/brd/README.md`
 
-## Content
+- App paths (per repo): `ai_specs/INDEX.md`, `ai_specs/features/<feature>/README.md`, `ai_specs/features/<feature>/plan.md`, `ai_docs/architecture.md`, `ai_docs/conventions.md`
+- BRD (when present): `ai_specs/brd/INDEX.md`, `ai_specs/brd/README.md`
+- Templates: [`../../templates/specs/feature-implementation-spec.md`](../../templates/specs/feature-implementation-spec.md), [`../../templates/specs/feature-plan.md`](../../templates/specs/feature-plan.md)
+- Next step: [`implement-phase.md`](implement-phase.md)
 
-Use this workflow after you have (or will create) a written spec for the feature—typically under the app’s `ai_specs/`.
+## Feature folder contract
 
-### Usage
+Each feature uses:
 
-**When to use** — You have (or will write) a feature idea and want a **phased plan**: scope, surfaces, core vs feature placement, ordered phases, risks, and per-phase verification—aligned with this app’s `ai_docs/` and the shared toolkit.
+```text
+ai_specs/features/<feature>/
+  README.md   # requirements, logic, services, API/UI contracts, Figma links
+  plan.md     # phased plan, progress, verification, done/pending
+```
 
-**What you say** — Use natural language, for example: “Plan the feature from `ai_specs/checkout/README.md`,” or “Run make-plan for the payment flow we discussed.” You do **not** need a special command name; describing the goal is enough.
+- **`README.md`** is stable feature truth (what to build).
+- **`plan.md`** is execution state (how to build it, what is done). **Always write or update `plan.md` during make-plan** — do not leave the plan only in chat or `.cursor/plans/`.
 
-**What happens by default**
+If the app has `ai_specs/INDEX.md`, read it first.
 
-1. **Commit-first preflight (automatic)** — The agent follows [`../git/commit-before-work.md`](../git/commit-before-work.md) **without you asking**: checks `git status`, and if there are uncommitted changes, proposes a commit message and confirms before planning. **You do not need to say “do commit before work” every time**; it is the default for this workflow.
-2. **Planning** — The agent runs the **Steps** below (restate scope, map surfaces, align with core, phase the work, risks, verification) and outputs a plan you can execute with [`implement-phase.md`](implement-phase.md).
+## Usage
 
-**When you do need to say something extra** — Only if you want to **skip** the Git preflight (e.g. dirty tree on purpose). Then say **`make-plan --no-commits`** or plain language such as **“plan without committing first.”** Otherwise, stay silent; preflight still runs.
+**When to use** — You want a phased delivery plan for a feature, either from an existing spec or from a new requirements message.
 
-### Preflight: commit before planning
+**What you say** — Natural language is enough. Examples:
 
-Before step 1 below, follow **`../git/commit-before-work.md`**: check `git status`; if there are uncommitted changes, **default to committing** with an AI-generated message after quick confirmation—unless the user used **`--no-commits`**. This is **default behavior**; the user does not need to request it explicitly each session.
+- `make-plan feature authentication` (with requirements, logic, services, UI, Figma URLs in the same message)
+- `Plan from ai_specs/features/checkout/README.md`
+- `make-plan --no-commits` to skip Git preflight
 
-### Inputs
+**Default behavior**
 
-1. **Spec** — The feature brief or requirement document (markdown or equivalent in `ai_specs/` or agreed location).
-2. **`ai_docs/`** — When present, read `ai_docs/architecture.md` and `ai_docs/conventions.md` so the plan respects this app’s core vs feature layout and naming.
-3. **BRD business analysis** — Search the app repo for `ai_specs/brd/INDEX.md`, `ai_specs/brd/README.md`, or a similar BRD analysis index. If found, read the index first, then load the feature-specific BRD files, app-surface files, and global rule/status files routed by that index.
-4. **Toolkit** — Cross-check `ai_toolkit/INDEX.md` → `Defaults`, `Rule Routing`, and `Pattern Routing` for stack-wide constraints (Bloc/Cubit, Dio, injectable, json_serializable, Either/failures, etc.).
+1. **Commit-first preflight** — [`../git/commit-before-work.md`](../git/commit-before-work.md) unless `--no-commits`.
+2. **Spec + plan files** — Create or update `README.md` and **`plan.md`** under `ai_specs/features/<feature>/`.
+3. **Planning steps** — Run the **Steps** below.
+4. **Handoff** — User runs [`implement-phase.md`](implement-phase.md) per phase; each phase updates `plan.md`.
 
-If the spec defines **current implementation scope** (e.g. UI + logic first, **stub HTTP** / `Future.delayed`, connect real API later), **restate that ordering** in phased delivery and point to the spec’s **Next session** / API cutover checklist so Phase B–E do not assume live endpoints prematurely. When the feature has network calls, note **feature-scoped API path constants** under the feature `data/` folder (single source for remote services; not in cubits)—see e.g. `ai_specs/authentication/README.md` §1.
+## Invocation modes
 
-### Steps
+### Mode A — Plan from existing spec
 
-1. **Restate scope** — Summarize goals, non-goals, and acceptance criteria from the spec in your own words so gaps are visible early. If BRD analysis was found, include a short **Business alignment** summary naming the BRD files loaded and the business rules that constrain the feature.
-2. **Map surfaces** — List UI entry points, state (Bloc/Cubit), data (repos, APIs), DI registrations, routing, l10n keys, and tests affected.
-3. **Align with core** — Decide what belongs in shared `lib/core` vs the feature folder using app `ai_docs/` when available; otherwise follow `rules/core/_index.md` and linked core rules.
-4. **Phase the work** — Break delivery into ordered phases (for example: models and API layer → repositories → domain/use cases → presentation → wiring → tests → docs). Each phase should be committable or reviewable on its own where possible. **Stub-first specs:** allow repository **stubs** early if the spec says so; reserve a later slice or explicit “next session” for **real Dio**, DTOs against production JSON, and base URL configuration—without inventing the checklist in chat when the spec already lists it.
-5. **Risks and dependencies** — Flag migrations, flag/env changes, breaking API contracts, ordering constraints between phases, and any differences between the feature spec and BRD business truth:
-   - **Spec extends BRD** — The spec introduces allowed new behavior not present in the BRD. Ask whether to update the BRD analysis or treat the feature spec as the approved override.
-   - **Spec conflicts with BRD** — The spec contradicts BRD business truth. Pause for clarification unless the user explicitly approves the newer spec.
-   - **BRD has missing detail** — Mark the gap as `TBD` and identify the likely owner (`product`, `backend`, `design`, or `admin policy`).
-6. **Verification** — For each phase, note how you will verify it (unit/widget/integration tests, manual checks, affected platforms).
+Use when `ai_specs/features/<feature>/README.md` already exists.
 
-### Outputs
+1. Load `README.md` (+ BRD + `ai_docs/` per Inputs).
+2. Create or refresh `plan.md` from the spec.
+3. Do **not** rewrite `README.md` unless the user asked to update requirements.
 
-- A phased checklist or bullet plan you can execute with `workflows/feature-delivery/implement-phase.md` one slice at a time.
-- Explicit pointers to which `rules/` and `patterns/` files apply per phase so implementation stays consistent with the toolkit.
-- **Business references loaded** when BRD analysis exists, including the BRD index, feature files, app-surface files, and global rules/statuses used to shape the plan.
-- A clear note for every BRD/spec difference found, using `Spec extends BRD`, `Spec conflicts with BRD`, or `BRD has missing detail`.
+### Mode B — Spec + plan from user message (preferred for new features)
 
-### After the plan
+Use when the user provides requirements in chat (logic, services, UI, Figma URLs, backend constraints).
 
-- Run **`workflows/feature-delivery/implement-phase.md`** for each phase (each run starts with **`../git/commit-before-work.md`** unless `--no-commits`).
-- Use **`workflows/git/commit-after-phase.md`** if you commit per phase after completing work.
-- Finish with **`workflows/feature-delivery/verify-and-pr.md`** when the feature is complete.
+1. Create `ai_specs/features/<feature>/` if missing.
+2. **Write or update `README.md`** — capture requirements, feature logic, services/integrations, API assumptions, UI/UX, **Figma references** (URLs only in the spec; load design via Figma MCP during UI phases, not necessarily during planning).
+3. Align with BRD when present; mark `TBD(owner): ...` for gaps.
+4. **Write or update `plan.md`** — phased checklist with status `pending` for each phase, verification per phase, risks, rules/patterns pointers.
+5. Set feature `Status` in `README.md` header to `draft` or `in-progress` as appropriate.
+
+If the feature name is unclear, ask before writing files.
+
+## Preflight: commit before planning
+
+Before step 1, follow [`../git/commit-before-work.md`](../git/commit-before-work.md) unless `--no-commits`.
+
+## Inputs
+
+1. **Feature identity** — Slug folder name under `ai_specs/features/<feature>/` (e.g. `authentication`, `notifications`).
+2. **User requirements** (Mode B) — Purpose, flows, services, API/stub scope, UI notes, Figma links, flavors/surfaces, non-goals.
+3. **`README.md`** — Feature contract when it exists or after Mode B writes it.
+4. **`ai_docs/`** — `architecture.md`, `conventions.md` when present.
+5. **BRD** — `ai_specs/brd/INDEX.md` and routed feature/app-surface/analysis files when present.
+6. **Toolkit** — `ai_toolkit/INDEX.md` → Defaults, Rule Routing, Pattern Routing.
+
+**Stub-first:** If the spec or user says UI/domain first with stub HTTP, order phases accordingly and copy any **Next session** / API cutover checklist into `plan.md` — do not assume live endpoints in early phases.
+
+**Network features:** Note feature-scoped API path constants under `<feature>/data/api/` (remote datasources only; not cubits) — see [`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md).
+
+## Steps
+
+1. **Restate scope** — Goals, non-goals, acceptance criteria. If BRD was loaded, add **Business alignment** (files + constraining rules).
+2. **Map surfaces** — UI entry points, Bloc/Cubit, data/repos/APIs, DI, routing, l10n, tests.
+3. **Align with core** — Core vs feature placement (`ai_docs/` or `rules/core/_index.md`).
+4. **Phase the work** — Ordered, committable phases in **`plan.md`** (e.g. contract → data → domain → presentation → wiring → tests). Each phase: **Status**, **Deliverables**, **Verification**, **Rules/patterns** links.
+5. **Risks and dependencies** — BRD/spec differences: `Spec extends BRD` | `Spec conflicts with BRD` | `BRD has missing detail`.
+6. **Persist files** — Update `plan.md` (required). Update `README.md` in Mode B or when requirements changed. Update `ai_specs/INDEX.md` **Current Active Specs** if this feature is new.
+
+## Outputs
+
+- **`ai_specs/features/<feature>/plan.md`** — canonical phased plan and progress tracker.
+- **`ai_specs/features/<feature>/README.md`** — created or updated in Mode B (or unchanged in Mode A).
+- Pointers to `rules/` and `patterns/` per phase in `plan.md`.
+- **Next:** [`implement-phase.md`](implement-phase.md) for the first `pending` phase.
+
+## After the plan
+
+- Run **`implement-phase.md`** per phase (bootstrap + commit-before-work unless `--no-commits`).
+- **`implement-phase`** must update `plan.md` after each phase (status, verification, notes, **Next**).
+- Use [`../git/commit-after-phase.md`](../git/commit-after-phase.md) when committing per phase.
+- Finish with [`verify-and-pr.md`](verify-and-pr.md) when all phases are `done`.

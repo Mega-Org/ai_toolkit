@@ -23,7 +23,7 @@ Stack defaults, per-app integration, and repository boundaries are documented in
 Choose one mode:
 
 - **Lite**: read this file, then only the rule, pattern, or workflow files needed for the task (use the section overviews above to find leaf files).
-- **Full**: read this file, then [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), relevant [`alias/`](alias/_index.md) files, app-specific `ai_docs/`, and the active `ai_specs/` file when the task is spec-driven.
+- **Full**: read this file, then [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), relevant [`alias/`](alias/_index.md) files, app-specific `ai_docs/`, `ai_specs/INDEX.md` when present, and the active spec file when the task is spec-driven.
 
 Use full bootstrap for new features, refactors, multi-file work, architecture changes, debugging with unknown scope, and PR preparation. Use lite bootstrap for small edits, targeted reviews, and quick fixes.
 
@@ -37,7 +37,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 4. Load enforceable rules from `ai_toolkit/rules/`.
 5. Load implementation examples from `ai_toolkit/patterns/`.
 6. Load command aliases from `ai_toolkit/alias/` only when running commands.
-7. Load app-specific `ai_docs/` and `ai_specs/` from the app repo when they exist.
+7. Load app-specific `ai_docs/` and `ai_specs/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply.
 
 ## Task routing
 
