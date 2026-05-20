@@ -1,13 +1,14 @@
 # Make plan from spec
 
 ## Purpose
-Phased planning from a feature spec; pulls in `ai_docs/` when present and aligns phases with rules and patterns.
+Phased planning from a feature spec; pulls in `ai_docs/` and BRD business analysis when present, then aligns phases with business rules, rules, and patterns.
 
 ## Fill when
 - When your planning phases or spec format conventions change.
 
 ## References
 - Optional paths in **your app repos** (not copied here): e.g. `ai_specs/`, `ai_docs/architecture.md`
+- Optional BRD analysis in **your app repos** (not copied here): e.g. `ai_specs/brd/INDEX.md`, `ai_specs/brd/README.md`
 
 ## Content
 
@@ -34,23 +35,29 @@ Before step 1 below, follow **`../git/commit-before-work.md`**: check `git statu
 
 1. **Spec** — The feature brief or requirement document (markdown or equivalent in `ai_specs/` or agreed location).
 2. **`ai_docs/`** — When present, read `ai_docs/architecture.md` and `ai_docs/conventions.md` so the plan respects this app’s core vs feature layout and naming.
-3. **Toolkit** — Cross-check `ai_toolkit/INDEX.md` → `Defaults`, `Rule Routing`, and `Pattern Routing` for stack-wide constraints (Bloc/Cubit, Dio, injectable, json_serializable, Either/failures, etc.).
+3. **BRD business analysis** — Search the app repo for `ai_specs/brd/INDEX.md`, `ai_specs/brd/README.md`, or a similar BRD analysis index. If found, read the index first, then load the feature-specific BRD files, app-surface files, and global rule/status files routed by that index.
+4. **Toolkit** — Cross-check `ai_toolkit/INDEX.md` → `Defaults`, `Rule Routing`, and `Pattern Routing` for stack-wide constraints (Bloc/Cubit, Dio, injectable, json_serializable, Either/failures, etc.).
 
 If the spec defines **current implementation scope** (e.g. UI + logic first, **stub HTTP** / `Future.delayed`, connect real API later), **restate that ordering** in phased delivery and point to the spec’s **Next session** / API cutover checklist so Phase B–E do not assume live endpoints prematurely. When the feature has network calls, note **feature-scoped API path constants** under the feature `data/` folder (single source for remote services; not in cubits)—see e.g. `ai_specs/authentication/README.md` §1.
 
 ### Steps
 
-1. **Restate scope** — Summarize goals, non-goals, and acceptance criteria from the spec in your own words so gaps are visible early.
+1. **Restate scope** — Summarize goals, non-goals, and acceptance criteria from the spec in your own words so gaps are visible early. If BRD analysis was found, include a short **Business alignment** summary naming the BRD files loaded and the business rules that constrain the feature.
 2. **Map surfaces** — List UI entry points, state (Bloc/Cubit), data (repos, APIs), DI registrations, routing, l10n keys, and tests affected.
 3. **Align with core** — Decide what belongs in shared `lib/core` vs the feature folder using app `ai_docs/` when available; otherwise follow `rules/core/_index.md` and linked core rules.
 4. **Phase the work** — Break delivery into ordered phases (for example: models and API layer → repositories → domain/use cases → presentation → wiring → tests → docs). Each phase should be committable or reviewable on its own where possible. **Stub-first specs:** allow repository **stubs** early if the spec says so; reserve a later slice or explicit “next session” for **real Dio**, DTOs against production JSON, and base URL configuration—without inventing the checklist in chat when the spec already lists it.
-5. **Risks and dependencies** — Flag migrations, flag/env changes, breaking API contracts, and ordering constraints between phases.
+5. **Risks and dependencies** — Flag migrations, flag/env changes, breaking API contracts, ordering constraints between phases, and any differences between the feature spec and BRD business truth:
+   - **Spec extends BRD** — The spec introduces allowed new behavior not present in the BRD. Ask whether to update the BRD analysis or treat the feature spec as the approved override.
+   - **Spec conflicts with BRD** — The spec contradicts BRD business truth. Pause for clarification unless the user explicitly approves the newer spec.
+   - **BRD has missing detail** — Mark the gap as `TBD` and identify the likely owner (`product`, `backend`, `design`, or `admin policy`).
 6. **Verification** — For each phase, note how you will verify it (unit/widget/integration tests, manual checks, affected platforms).
 
 ### Outputs
 
 - A phased checklist or bullet plan you can execute with `workflows/feature-delivery/implement-phase.md` one slice at a time.
 - Explicit pointers to which `rules/` and `patterns/` files apply per phase so implementation stays consistent with the toolkit.
+- **Business references loaded** when BRD analysis exists, including the BRD index, feature files, app-surface files, and global rules/statuses used to shape the plan.
+- A clear note for every BRD/spec difference found, using `Spec extends BRD`, `Spec conflicts with BRD`, or `BRD has missing detail`.
 
 ### After the plan
 
