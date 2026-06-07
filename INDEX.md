@@ -71,6 +71,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Redundant `: super()` (zero-arg superclass ctor) | [`rules/dart/constructors.md`](rules/dart/constructors.md) |
 | UI callbacks: explicit closures vs method tear-offs | [`rules/dart/callbacks.md`](rules/dart/callbacks.md) |
 | Flutter widgets and performance | [`rules/flutter/_index.md`](rules/flutter/_index.md) |
+| Figma → Flutter direction, defaults before explicit alignment | [`rules/flutter/design-direction-and-localization.md`](rules/flutter/design-direction-and-localization.md) |
 | Shared UI wrappers (images, SVG, buttons), `SizedBox` vs `Container` | [`rules/flutter/ui-composition.md`](rules/flutter/ui-composition.md) |
 | Tests | [`rules/testing/_index.md`](rules/testing/_index.md) |
 | Git conventions | [`rules/git/_index.md`](rules/git/_index.md) |

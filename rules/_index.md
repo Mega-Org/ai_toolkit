@@ -25,6 +25,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Remote data sources (inline Dio + JSON in public methods) | [`flutter/remote-data-sources.md`](flutter/remote-data-sources.md); pattern [`../patterns/data/remote-data-source-inline.md`](../patterns/data/remote-data-source-inline.md) |
 | Widgets / performance | [`flutter/widgets-and-performance.md`](flutter/widgets-and-performance.md) |
 | Shared UI wrappers, `Row`/`Column` `spacing`, `SizedBox` vs `Container` | [`flutter/ui-composition.md`](flutter/ui-composition.md); [`patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md) |
+| Figma → Flutter direction, defaults before explicit alignment, l10n copy | [`flutter/design-direction-and-localization.md`](flutter/design-direction-and-localization.md) |
 | `build_runner`, generation | [`tooling/build-runner.md`](tooling/build-runner.md) |
 | Firebase secrets in repos | [`README.md`](../README.md) (until `rules/firebase/security-public-repos.md` is added) |
 | Dio, interceptors, failures | [`core/network.md`](core/network.md) |

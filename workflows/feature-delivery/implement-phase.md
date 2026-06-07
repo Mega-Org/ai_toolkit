@@ -34,6 +34,7 @@ Execute **one phase** from `ai_specs/features/<feature>/plan.md` produced by [`m
    - `ai_specs/features/<feature>/plan.md`
    - Routed BRD files when the plan lists them
    - `ai_docs/` when present
+   - When the target phase includes UI/Figma: [`../../rules/flutter/design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) and [`../../rules/core/localization.md`](../../rules/core/localization.md)
 2. **Commit before work** — [`../git/commit-before-work.md`](../git/commit-before-work.md) unless `--no-commits`.
 
 If `plan.md` is missing, run [`make-plan.md`](make-plan.md) first (Mode A or B).
@@ -41,7 +42,10 @@ If `plan.md` is missing, run [`make-plan.md`](make-plan.md) first (Mode A or B).
 ## Steps
 
 1. **Confirm scope** — Identify the target phase in `plan.md` (first `pending` unless the user named a phase). Restate deliverables in one sentence. Confirm stub vs real API matches `README.md` and this phase — do not skip ahead of **Next session** / API cutover unless the plan says so.
-2. **Implement** — Per `plan.md` deliverables and toolkit rules/patterns. Network: feature API constants under `data/api/` only ([`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)). UI: use Figma MCP only when this phase includes UI and `README.md` lists Figma URLs.
+2. **Implement** — Per `plan.md` deliverables and toolkit rules/patterns. Network: feature API constants under `data/api/` only ([`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)). **UI / Figma:** load design via Figma MCP when this phase includes UI and `README.md` lists Figma URLs; then:
+   - Detect and apply **design direction** per [`../../rules/flutter/design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) (defaults first — do not hardcode `TextAlign.right`, `Alignment.centerRight`, or `EdgeInsets.only(left/right)` to match Arabic screenshots).
+   - Map all user-visible copy to **l10n** keys ([`../../rules/core/localization.md`](../../rules/core/localization.md)).
+   - Verify layout in both supported locales when the app supports Arabic and English.
 3. **Verify** — Run checks listed for this phase in `plan.md`; keep analyzer clean for touched files.
 4. **Update `plan.md` (required)** — For the completed phase set **Status** to `done` (or `in-progress` if partially complete). Fill **Verification** results, **Notes**, and update **Next** / **Done** sections. Set plan **Status** to `in-progress` until all phases are `done`.
 5. **Update `README.md` when needed** — Only if this phase changed contracts (API shapes, cache rules, new TBDs resolved). Do not duplicate phase progress in `README.md` — that lives in `plan.md`.

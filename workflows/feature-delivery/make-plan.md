@@ -62,7 +62,7 @@ Use when `ai_specs/features/<feature>/README.md` already exists.
 Use when the user provides requirements in chat (logic, services, UI, Figma URLs, backend constraints).
 
 1. Create `ai_specs/features/<feature>/` if missing.
-2. **Write or update `README.md`** — capture requirements, feature logic, services/integrations, API assumptions, UI/UX, **Figma references** (URLs only in the spec; load design via Figma MCP during UI phases, not necessarily during planning).
+2. **Write or update `README.md`** — capture requirements, feature logic, services/integrations, API assumptions, UI/UX, **Figma references** (URLs only in the spec; load design via Figma MCP during UI phases, not necessarily during planning). For Figma/UI surfaces, record **design direction** (`RTL` / `LTR` / `mixed/TBD`) using: explicit frame/spec notes → dominant visible language → app default from `ai_docs/conventions.md`. Note that Figma copy is **l10n intent**, not hardcoded strings.
 3. Align with BRD when present; mark `TBD(owner): ...` for gaps.
 4. **Write or update `plan.md`** — phased checklist with status `pending` for each phase, verification per phase, risks, rules/patterns pointers.
 5. Set feature `Status` in `README.md` header to `draft` or `in-progress` as appropriate.
@@ -76,7 +76,7 @@ Before step 1, follow [`../git/commit-before-work.md`](../git/commit-before-work
 ## Inputs
 
 1. **Feature identity** — Slug folder name under `ai_specs/features/<feature>/` (e.g. `authentication`, `notifications`).
-2. **User requirements** (Mode B) — Purpose, flows, services, API/stub scope, UI notes, Figma links, flavors/surfaces, non-goals.
+2. **User requirements** (Mode B) — Purpose, flows, services, API/stub scope, UI notes, Figma links, **design direction/locale notes** when UI is in scope, flavors/surfaces, non-goals.
 3. **`README.md`** — Feature contract when it exists or after Mode B writes it.
 4. **`ai_docs/`** — `architecture.md`, `conventions.md` when present.
 5. **BRD** — `ai_specs/brd/INDEX.md` and routed feature/app-surface/analysis files when present.
@@ -89,9 +89,9 @@ Before step 1, follow [`../git/commit-before-work.md`](../git/commit-before-work
 ## Steps
 
 1. **Restate scope** — Goals, non-goals, acceptance criteria. If BRD was loaded, add **Business alignment** (files + constraining rules).
-2. **Map surfaces** — UI entry points, Bloc/Cubit, data/repos/APIs, DI, routing, l10n, tests.
+2. **Map surfaces** — UI entry points, Bloc/Cubit, data/repos/APIs, DI, routing, l10n, tests. For Figma-backed UI, note detected **design direction** and link [`../../rules/flutter/design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) on presentation phases.
 3. **Align with core** — Core vs feature placement (`ai_docs/` or `rules/core/_index.md`).
-4. **Phase the work** — Ordered, committable phases in **`plan.md`** (e.g. contract → data → domain → presentation → wiring → tests). Each phase: **Status**, **Deliverables**, **Verification**, **Rules/patterns** links.
+4. **Phase the work** — Ordered, committable phases in **`plan.md`** (e.g. contract → data → domain → presentation → wiring → tests). Each phase: **Status**, **Deliverables**, **Verification**, **Rules/patterns** links. Presentation phases with Figma must list [`design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) and [`../../rules/core/localization.md`](../../rules/core/localization.md).
 5. **Risks and dependencies** — BRD/spec differences: `Spec extends BRD` | `Spec conflicts with BRD` | `BRD has missing detail`.
 6. **Persist files** — Update `plan.md` (required). Update `README.md` in Mode B or when requirements changed. Update `ai_specs/INDEX.md` **Current Active Specs** if this feature is new.
 

@@ -17,3 +17,4 @@ Entry point for Flutter UI and framework enforceable rules.
 - Shared UI wrappers (images, SVG, buttons), `Row`/`Column` **`spacing`**, `SizedBox` vs `Container`: [`ui-composition.md`](ui-composition.md); examples: [`../patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md).
 - Widget-local controllers and similar fields: [`../patterns/flutter/presentation-field-naming.md`](../patterns/flutter/presentation-field-naming.md).
 - Paged lists — **default:** `PaginationController` on the page `_View` `State`, not the Cubit; see [`../patterns/flutter/pagination-paginated-list-view.md`](../patterns/flutter/pagination-paginated-list-view.md).
+- Figma → Flutter direction, defaults vs explicit alignment, l10n copy: [`design-direction-and-localization.md`](design-direction-and-localization.md).
