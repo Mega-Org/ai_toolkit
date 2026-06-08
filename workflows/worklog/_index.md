@@ -1,5 +1,7 @@
 # Workflows: Worklog (`workflows/worklog/`)
 
+**How to use:** [`README.md`](README.md)
+
 ## Purpose
 
 **Daily execution tracking**: setup per-project `ai_worklog/`, record completed work and TODOs, generate management reports (English or Arabic).
