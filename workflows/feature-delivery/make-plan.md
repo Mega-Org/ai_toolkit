@@ -13,6 +13,7 @@ Phased planning for a product feature: capture requirements in a durable feature
 - App paths (per repo): `ai_specs/INDEX.md`, `ai_specs/features/<feature>/README.md`, `ai_specs/features/<feature>/plan.md`, `ai_docs/architecture.md`, `ai_docs/conventions.md`
 - BRD (when present): `ai_specs/brd/INDEX.md`, `ai_specs/brd/README.md`
 - Templates: [`../../templates/specs/feature-implementation-spec.md`](../../templates/specs/feature-implementation-spec.md), [`../../templates/specs/feature-plan.md`](../../templates/specs/feature-plan.md)
+- Worklog: [`../worklog/update-worklog.md`](../worklog/update-worklog.md)
 - Next step: [`implement-phase.md`](implement-phase.md)
 
 ## Feature folder contract
@@ -94,6 +95,7 @@ Before step 1, follow [`../git/commit-before-work.md`](../git/commit-before-work
 4. **Phase the work** — Ordered, committable phases in **`plan.md`** (e.g. contract → data → domain → presentation → wiring → tests). Each phase: **Status**, **Deliverables**, **Verification**, **Rules/patterns** links. Presentation phases with Figma must list [`design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) and [`../../rules/core/localization.md`](../../rules/core/localization.md).
 5. **Risks and dependencies** — BRD/spec differences: `Spec extends BRD` | `Spec conflicts with BRD` | `BRD has missing detail`.
 6. **Persist files** — Update `plan.md` (required). Update `README.md` in Mode B or when requirements changed. Update `ai_specs/INDEX.md` **Current Active Specs** if this feature is new.
+7. **Update worklog** — If `ai_worklog/` exists, follow [`../worklog/update-worklog.md`](../worklog/update-worklog.md): record the feature plan created/updated, spec paths, phase count, first pending phase, and any backend/design/product TODOs discovered. Stored entries in English.
 
 ## Outputs
 

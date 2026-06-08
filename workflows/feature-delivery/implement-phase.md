@@ -16,6 +16,7 @@ Execute **one phase** from `ai_specs/features/<feature>/plan.md` produced by [`m
 - Commit after phase: [`../git/commit-after-phase.md`](../git/commit-after-phase.md)
 - When complete: [`verify-and-pr.md`](verify-and-pr.md)
 - App paths: `ai_specs/INDEX.md`, `ai_specs/features/<feature>/README.md`, `ai_specs/features/<feature>/plan.md`, `ai_docs/`
+- Worklog: [`../worklog/update-worklog.md`](../worklog/update-worklog.md)
 
 ## How to invoke (users)
 
@@ -50,6 +51,7 @@ If `plan.md` is missing, run [`make-plan.md`](make-plan.md) first (Mode A or B).
 4. **Update `plan.md` (required)** — For the completed phase set **Status** to `done` (or `in-progress` if partially complete). Fill **Verification** results, **Notes**, and update **Next** / **Done** sections. Set plan **Status** to `in-progress` until all phases are `done`.
 5. **Update `README.md` when needed** — Only if this phase changed contracts (API shapes, cache rules, new TBDs resolved). Do not duplicate phase progress in `README.md` — that lives in `plan.md`.
 6. **Handoff** — State the next `pending` phase and which rules/patterns apply.
+7. **Update worklog (required)** — If `ai_worklog/` exists, follow [`../worklog/update-worklog.md`](../worklog/update-worklog.md): record completed phase work, verification outcome, next pending phase, and new or closed TODOs. Stored entries in English.
 
 Optional: commit per [`../git/commit-after-phase.md`](../git/commit-after-phase.md).
 

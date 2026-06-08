@@ -1,0 +1,41 @@
+---
+description: Keep ai_worklog updated after meaningful work; English storage, optional Arabic reports
+alwaysApply: true
+---
+
+# Worklog automation
+
+When `ai_worklog/` exists in the project:
+
+## After meaningful work
+
+Update today's log per `ai_toolkit/workflows/worklog/update-worklog.md`:
+
+- `ai_worklog/daily/YYYY-MM-DD.md` — **Done**, **TODO**, **Blockers**, **Summary**
+- `ai_worklog/TODOS.md` — add, update, or close global TODOs
+
+Required after **make-plan**, **implement-phase**, bugfixes, refactors, and multi-file implementation — not after read-only Q&A.
+
+## Language
+
+- Write all **stored** worklog content in **English**.
+- Translate user descriptions (including Arabic) into clear English before saving.
+- Generate **Arabic reports** only when the user explicitly asks. Do not rewrite stored files in Arabic.
+
+## Reports
+
+| User says | Action |
+|-----------|--------|
+| `generate today report` | English report in chat only |
+| `generate today report in Arabic` | Arabic report in chat only |
+| `… and save it` / `export` / `store` | Also write `ai_worklog/reports/YYYY-MM-DD-<en\|ar>.md` |
+
+Follow `ai_toolkit/workflows/worklog/daily-report.md` for structure (Slack-ready sections). Reports must include **Tomorrow** / **ما سيتم العمل عليه غدًا**; if the user attaches tomorrow's plan in the command, include it there.
+
+## TODO IDs
+
+Use `TODO-YYYY-MM-DD-###` (sequential per day). Mirror open items in `TODOS.md` under the correct owner section.
+
+## Before ending a coding session
+
+If work was completed and the worklog was not updated, update it before finishing.

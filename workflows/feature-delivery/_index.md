@@ -12,6 +12,10 @@
 | [`implement-phase.md`](implement-phase.md) | Execute one phase; update `plan.md` progress |
 | [`verify-and-pr.md`](verify-and-pr.md) | Tests, checks, PR description |
 
+## Worklog
+
+After planning or each implemented phase, update `ai_worklog/` when present — see [`../worklog/update-worklog.md`](../worklog/update-worklog.md).
+
 ## Git preflight
 
 Before planning or starting a phase, see [`../git/commit-before-work.md`](../git/commit-before-work.md) (`make-plan --no-commits`, `implement-phase --no-commits` to skip).

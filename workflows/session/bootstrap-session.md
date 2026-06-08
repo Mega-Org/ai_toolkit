@@ -25,6 +25,7 @@ Use **lite** or **full** bootstrap as described in `INDEX.md`. Full bootstrap is
 5. **Aliases** — Read `alias/_index.md` and the linked alias files only when you will run shell commands that rely on those shortcuts.
 6. **App docs** — If the repo has `ai_docs/` (for example `ai_docs/architecture.md`, `ai_docs/conventions.md`), read them before changing boundaries between core and features or naming conventions.
 7. **Active feature spec** — For spec-driven feature work, load from the app repo (not this toolkit): `ai_specs/INDEX.md` (if present) → `ai_specs/features/<feature>/README.md` → `ai_specs/features/<feature>/plan.md`. Use `plan.md` for the current phase and progress; use `README.md` for requirements and contracts.
+8. **Worklog (optional)** — If `ai_worklog/` exists: `ai_worklog/INDEX.md` → today's `ai_worklog/daily/YYYY-MM-DD.md` → `ai_worklog/TODOS.md`. Update via [`../worklog/update-worklog.md`](../worklog/update-worklog.md) after meaningful work.
 
 ### Resume mid-task
 
@@ -34,4 +35,4 @@ Use **lite** or **full** bootstrap as described in `INDEX.md`. Full bootstrap is
 
 ### Missing paths
 
-If `ai_docs/`, `ai_specs/`, or a referenced toolkit file does not exist yet, treat the path as the intended contract and continue with the nearest existing guidance in `INDEX.md` or the relevant section `_index.md`.
+If `ai_docs/`, `ai_specs/`, `ai_worklog/`, or a referenced toolkit file does not exist yet, treat the path as the intended contract and continue with the nearest existing guidance in `INDEX.md` or the relevant section `_index.md`.

@@ -37,7 +37,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 4. Load enforceable rules from `ai_toolkit/rules/`.
 5. Load implementation examples from `ai_toolkit/patterns/`.
 6. Load command aliases from `ai_toolkit/alias/` only when running commands.
-7. Load app-specific `ai_docs/` and `ai_specs/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply.
+7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply. For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
 
 ## Task routing
 
@@ -52,6 +52,10 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Upgrade dependencies | [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) |
 | Commit before plan or phase | [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) |
 | Commit after a phase | [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) |
+| Setup daily worklog | [`workflows/worklog/setup-worklog.md`](workflows/worklog/setup-worklog.md) — templates: [`templates/worklog/_index.md`](templates/worklog/_index.md) |
+| Update worklog after work | [`workflows/worklog/update-worklog.md`](workflows/worklog/update-worklog.md) |
+| Generate daily report | [`workflows/worklog/daily-report.md`](workflows/worklog/daily-report.md) |
+| Show open TODOs | [`workflows/worklog/todo-list.md`](workflows/worklog/todo-list.md) |
 | Analyze a BRD or product source | [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) — templates: [`templates/brd/_index.md`](templates/brd/_index.md) |
 | Create or configure a Flutter app | [`setup/new-flutter-app.md`](setup/new-flutter-app.md) |
 | Work in a Melos repo | [`setup/melos-monorepo.md`](setup/melos-monorepo.md) |
