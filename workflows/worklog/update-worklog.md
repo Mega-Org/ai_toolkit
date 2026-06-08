@@ -15,9 +15,11 @@ Record completed work, new TODOs, closed TODOs, and blockers in today's English 
 
 ## Usage
 
-**When to use** — After planning, implementing a phase, bugfixes, refactors, or any session with deliverables.
+**When to use** — When the user asks, or when **make-plan** / **implement-phase** reaches its worklog step. Also after bugfixes, refactors, or any session with deliverables if the user requests an update at session end.
 
 **What you say** — `update worklog`, `record this TODO for backend: …`, `close TODO-2026-06-08-001`.
+
+Do not update the worklog automatically in Ask mode, Plan mode, read-only Q&A, or after shell/status checks.
 
 If `ai_worklog/` is missing, run [`setup-worklog.md`](setup-worklog.md) first.
 

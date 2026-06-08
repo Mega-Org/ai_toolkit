@@ -48,8 +48,15 @@ The report will include it under **Tomorrow** / **ما سيتم العمل عل�
 
 Saved reports use a structured format suitable for Slack, email, or daily standups. Copy from chat or from `reports/YYYY-MM-DD-<lang>.md`.
 
-## Automation
+## When to update
 
-When present, `.cursor/rules/worklog.mdc` and the optional `stop` hook remind agents to update this folder after meaningful work, including after `make-plan` and `implement-phase`.
+Worklog updates are **explicit only** — no Cursor rules or hooks.
+
+| Trigger | Action |
+|---------|--------|
+| **make-plan** workflow completes | Agent follows step 7 in `ai_toolkit/workflows/feature-delivery/make-plan.md` |
+| **implement-phase** workflow completes | Agent follows step 7 in `ai_toolkit/workflows/feature-delivery/implement-phase.md` |
+| End of any other coding session | Ask: `update worklog` |
+| Standup / management report | Ask: `generate today report` (or Arabic variant) |
 
 Workflow reference: `ai_toolkit/workflows/worklog/_index.md`.

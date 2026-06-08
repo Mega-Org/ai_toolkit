@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Generate or refresh app-local `ai_worklog/` from reusable toolkit templates. Optionally install Cursor automation (rule + stop hook).
+Generate or refresh app-local `ai_worklog/` from reusable toolkit templates.
 
 ## Fill when
 
-- Template layout, generated paths, or automation files change.
+- Template layout or generated paths change.
 
 ## References
 
@@ -43,27 +43,8 @@ Generate or refresh app-local `ai_worklog/` from reusable toolkit templates. Opt
 
 3. **Replace placeholders** in today's daily file: `YYYY-MM-DD` → actual date.
 
-4. **Install Cursor rule** — Copy [`cursor-rule.mdc`](../../templates/worklog/cursor-rule.mdc) to `.cursor/rules/worklog.mdc` (overwrite to refresh).
-
-5. **Optional stop hook** — If `.cursor/hooks.json` does not list `worklog-stop.sh`, add:
-
-   ```json
-   {
-     "version": 1,
-     "hooks": {
-       "stop": [
-         {
-           "command": ".cursor/hooks/worklog-stop.sh"
-         }
-       ]
-     }
-   }
-   ```
-
-   Merge with existing hooks; do not remove unrelated entries. Ensure `.cursor/hooks/worklog-stop.sh` exists and is executable.
-
-6. **Handoff** — Tell the user commands from `ai_worklog/README.md`.
+4. **Handoff** — Tell the user commands from `ai_worklog/README.md`.
 
 ## Done when
 
-`ai_worklog/` exists with README, INDEX, TODOS, SUMMARY, today's daily file, reports README, and `.cursor/rules/worklog.mdc`.
+`ai_worklog/` exists with README, INDEX, TODOS, SUMMARY, today's daily file, and reports README.

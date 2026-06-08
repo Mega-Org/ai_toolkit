@@ -8,7 +8,7 @@
 
 | File | Topic |
 |------|--------|
-| [`setup-worklog.md`](setup-worklog.md) | Generate `ai_worklog/` from templates + Cursor rule + optional stop hook |
+| [`setup-worklog.md`](setup-worklog.md) | Generate `ai_worklog/` from templates |
 | [`update-worklog.md`](update-worklog.md) | Record done work, TODOs, blockers after sessions |
 | [`daily-report.md`](daily-report.md) | Generate chat or saved reports (EN / AR) |
 | [`todo-list.md`](todo-list.md) | List and triage open TODOs |

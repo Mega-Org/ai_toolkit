@@ -13,7 +13,6 @@ Reusable templates for app-specific `ai_worklog/` folders. Copy into each app re
 | [`daily-log.md`](daily-log.md) | `ai_worklog/daily/YYYY-MM-DD.md` |
 | [`report-saved.md`](report-saved.md) | `ai_worklog/reports/YYYY-MM-DD-<lang>.md` |
 | [`reports-readme.md`](reports-readme.md) | `ai_worklog/reports/README.md` |
-| [`cursor-rule.mdc`](cursor-rule.mdc) | `.cursor/rules/worklog.mdc` |
 
 ## Workflows
 
