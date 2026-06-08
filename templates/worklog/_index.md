@@ -8,7 +8,7 @@ Reusable templates for app-specific `ai_worklog/` folders. Copy into each app re
 |----------|---------|
 | [`README.md`](README.md) | Root `ai_worklog/README.md` — usage, language policy, report commands |
 | [`INDEX.md`](INDEX.md) | Root `ai_worklog/INDEX.md` — routing map |
-| [`TODOS.md`](TODOS.md) | Global open TODO index |
+| [`TODOS.md`](TODOS.md) | Interactive TODO index for Active, Done, and Archive states |
 | [`SUMMARY.md`](SUMMARY.md) | Rolling summary across days |
 | [`daily-log.md`](daily-log.md) | `ai_worklog/daily/YYYY-MM-DD.md` |
 | [`report-saved.md`](report-saved.md) | `ai_worklog/reports/YYYY-MM-DD-<lang>.md` |

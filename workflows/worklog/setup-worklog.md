@@ -36,7 +36,7 @@ Generate or refresh app-local `ai_worklog/` from reusable toolkit templates.
    |----------|-------------|
    | `README.md` | `ai_worklog/README.md` |
    | `INDEX.md` | `ai_worklog/INDEX.md` |
-   | `TODOS.md` | `ai_worklog/TODOS.md` (skip if exists and has open TODOs) |
+   | `TODOS.md` | `ai_worklog/TODOS.md` (skip if exists and has active or done TODOs) |
    | `SUMMARY.md` | `ai_worklog/SUMMARY.md` (skip if exists with content) |
    | `reports-readme.md` | `ai_worklog/reports/README.md` |
    | `daily-log.md` | `ai_worklog/daily/YYYY-MM-DD.md` (today; skip if exists) |

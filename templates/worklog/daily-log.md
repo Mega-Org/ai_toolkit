@@ -6,7 +6,7 @@ Short English summary of today's work.
 
 ## Done
 
-- [x] Completed task description.
+- [✓] Completed task description.
 
 ## TODO
 

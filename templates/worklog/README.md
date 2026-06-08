@@ -7,7 +7,7 @@ Daily execution tracking for completed work, open TODOs, blockers, and managemen
 | Path | Purpose |
 |------|---------|
 | `INDEX.md` | Routing map |
-| `TODOS.md` | Global open TODO index |
+| `TODOS.md` | Interactive TODO index with Active, Done, and Archive sections |
 | `SUMMARY.md` | Rolling summary across days |
 | `daily/YYYY-MM-DD.md` | English source of truth for one day |
 | `reports/` | Saved reports (only when explicitly requested) |
@@ -30,7 +30,12 @@ Ask the agent naturally:
 | `update worklog` | Append today's completed work and TODOs |
 | `record TODO for backend: …` | Add a tracked TODO |
 | `show open TODOs` | List open items from `TODOS.md` |
+| `show blocked TODOs` | List active blocked items |
+| `show done TODOs` | List completed items |
+| `sort TODOs by owner` | Sort or present TODOs grouped by owner |
 | `close TODO-YYYY-MM-DD-001` | Mark a TODO done |
+| `reopen TODO-YYYY-MM-DD-001` | Move a done TODO back to Active |
+| `archive done TODOs` | Move older completed items from Done to Archive |
 | `generate today report` | English report in chat only |
 | `generate today report in Arabic` | Arabic report in chat only |
 | `generate today report and save it` | English report saved to `reports/YYYY-MM-DD-en.md` |
@@ -47,6 +52,15 @@ The report will include it under **Tomorrow** / **ما سيتم العمل عل�
 ## Slack / Management Use
 
 Saved reports use a structured format suitable for Slack, email, or daily standups. Copy from chat or from `reports/YYYY-MM-DD-<lang>.md`.
+
+## TODO Format
+
+`TODOS.md` uses a simple visual checkbox convention:
+
+- `[ ]` for active items
+- `[✓]` for done or archived items
+
+Items are organized into `Active` (`Blocked`, `Waiting`, `Open`), `Done`, and `Archive`. Keep metadata fields stable (`Owner`, `Area`, `Status`, `Priority`, `Source`, optional `File`, optional `Closed`) so the agent can filter and sort reliably.
 
 ## When to update
 

@@ -4,8 +4,8 @@ Rolling summary across recent days. Update when closing a day or when generating
 
 ## Current Week
 
-| Date | Focus | Open TODOs |
-|------|-------|------------|
+| Date | Focus | Active TODOs |
+|------|-------|--------------|
 | YYYY-MM-DD | Short focus line | count or none |
 
 ## Highlights
