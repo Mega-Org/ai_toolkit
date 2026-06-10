@@ -13,6 +13,7 @@
 | [`core-bottom-sheets.md`](core-bottom-sheets.md) | Modal sheets: static `show`, `showAppModalBottomSheet`, sheet-scoped `BlocProvider`, Cubit alignment |
 | [`core-alerts-dialogs.md`](core-alerts-dialogs.md) | Centered dialogs/alerts: `showAppDialog`, static `show`, dialog-scoped Cubit, when to use raw `showDialog` |
 | [`page-bloc-provider.md`](page-bloc-provider.md) | Route page: `StatelessWidget` + `BlocProvider` + private `_View` (`StatefulWidget` when needed) so `context` is under the provider |
+| [`stepped-page-flow.md`](stepped-page-flow.md) | Multi-step / wizard route structure: Cubit-owned step/tab navigation, optional `enums/` and `models/`, step drafts, animated switcher |
 | [`presentation-field-naming.md`](presentation-field-naming.md) | Widget-local `TextEditingController` / `…Controller` fields: private `_…`, full `Controller` suffix (no `Ctrl`) |
 | [`pagination-paginated-list-view.md`](pagination-paginated-list-view.md) | `PaginationController` on page `State` (default) + `PaginatedListView`; Cubit fetch only; `addItems` / `refresh`, sliver, dedupe, observer updates |
 

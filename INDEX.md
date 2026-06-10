@@ -115,6 +115,7 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | Responsive Flutter layout | [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
 | Shared media and buttons (neutral; names in `ai_docs/conventions.md`) | [`patterns/flutter/shared-media-and-buttons.md`](patterns/flutter/shared-media-and-buttons.md) |
 | Page + `BlocProvider` + view (`context` under provider) | [`patterns/flutter/page-bloc-provider.md`](patterns/flutter/page-bloc-provider.md); rule [`rules/flutter/widgets-and-performance.md`](rules/flutter/widgets-and-performance.md) |
+| Multi-step / wizard page flow | [`patterns/flutter/stepped-page-flow.md`](patterns/flutter/stepped-page-flow.md); pair with [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md) for large route UI |
 | Presentation field naming (`TextEditingController`, private `_…Controller`) | [`patterns/flutter/presentation-field-naming.md`](patterns/flutter/presentation-field-naming.md) |
 | Infinite scroll / `PaginatedListView` + `PaginationController` | [`patterns/flutter/pagination-paginated-list-view.md`](patterns/flutter/pagination-paginated-list-view.md) |
 | iOS pods and builds | [`patterns/platform/ios-pods-and-build.md`](patterns/platform/ios-pods-and-build.md) |
