@@ -1,0 +1,11 @@
+{
+    /// Controls how .md files open by default in the editor.
+    /// To show first in preview mode
+    "workbench.editorAssociations": {
+        "*.md": "vscode.markdown.preview.editor",
+        "ai_worklog/**/*.md": "vscode.markdown.preview.editor",
+        "ai_toolkit/**/*.md": "vscode.markdown.preview.editor",
+        "ai_specs/**/*.md": "vscode.markdown.preview.editor",
+        "ai_docs/**/*.md": "vscode.markdown.preview.editor"
+    }
+}
