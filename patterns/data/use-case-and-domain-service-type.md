@@ -17,6 +17,7 @@ Step-by-step convention for **`IUseCase<Output, Params>`**, **param objects**, a
 - Rules: [`../../rules/core/foundation.md`](../../rules/core/foundation.md)
 - Code: `lib/core/foundation/i_use_case.dart`, `lib/core/foundation/typedef.dart`
 - Presentation: Cubit → use case (`await`, `fold`, ephemeral reset): [`../state/cubit-and-use-case.md`](../state/cubit-and-use-case.md)
+- Multi-step submit mapping: [`../flutter/stepped-page-flow.md`](../flutter/stepped-page-flow.md)
 
 ---
 
@@ -102,6 +103,69 @@ abstract class AuthenticationRepository {
 | Body JSON | **`@override Map<String, dynamic> get toMap`** on params or on sealed variants when the API expects a body. |
 | Query string | **`Map<String, dynamic> get queryParameters`** (or getters merged into one map) for anything the **caller** supplies — see **Query parameters** below. |
 | Presentation | Cubits/pages map UI → **`Params`**; params stay free of **`BuildContext`** / widgets. |
+| Design traceability | **Should:** one-line **`///` doc comment immediately above each field** that maps to a labeled design control — see **Field doc comments** below. |
+| Selected entities | **Should:** prefer **domain entity** types over bare ids when the user picked an object in UI — see **Entity vs primitive id** below. |
+
+### Field doc comments
+
+Add a **single-line doc comment directly above each field** in `*Params` when the
+field maps to a **labeled control in design** (form label, section title, toggle
+caption).
+
+- **Purpose:** traceability only — link the code field to the design label so
+  implementers know which attribute is which without opening the mockup.
+- **Placement:** **above the field only** — not class-level essays, not on
+  `toMap`, not duplicated in widgets or cubits.
+- **Wording:** use the **user-facing label text from design** (same meaning as
+  the primary locale l10n `…Label` where applicable). Per-repo locale policy
+  (e.g. Arabic-first products) belongs in that repo’s **`ai_docs/conventions.md`**.
+- **Does not replace l10n** — UI still reads strings from ARB / `AppLocalizations`.
+- **Internal / non-UI fields** (flags with no design control) may omit a comment
+  or use a short technical note.
+
+```dart
+class SubmitOrderParams extends NoParams {
+  const SubmitOrderParams({
+    required this.orderType,
+    required this.customerName,
+    required this.deliverySite,
+  });
+
+  /// Order type
+  final OrderTypeEnum orderType;
+
+  /// Customer name
+  final String customerName;
+
+  /// Delivery site
+  final SiteEntity deliverySite;
+
+  @override
+  Map<String, dynamic> get toMap => {
+        'order_type': orderType.apiValue,
+        'customer_name': customerName,
+        'site_id': deliverySite.id,
+      };
+
+  @override
+  List<Object?> get props => [orderType, customerName, deliverySite];
+}
+```
+
+### Entity vs primitive id
+
+For fields the user selects in a dropdown, picker, or catalog:
+
+- **Prefer the domain entity** (`SiteEntity`, `UnitEntity`, `PhoneEntity`, …)
+  on `*Params` when that object exists in the domain layer.
+- **Map to API ids / keys only inside `toMap`** (or the data-layer mapper).
+- **Use a bare id** only when the entity is never needed after selection (no
+  review screen, no display name) **and** no suitable domain type exists.
+
+This keeps review steps and submit builders able to show names without extra
+fetches. Stepped flows that assemble submit params from drafts should follow
+this when mapping picker selections — see
+[`../flutter/stepped-page-flow.md`](../flutter/stepped-page-flow.md).
 
 ### Preferred: flat `*Params` class
 
