@@ -210,6 +210,11 @@ Widgets used **only inside one step** (section headers, row layouts, bottom-shee
 bodies) stay in that step’s **`part` file** as **`class _…` private widgets**.
 Do not promote them to `widgets/` unless a second step or another flow needs them.
 
+Class names follow Dart **`UpperCamelCase`** (private: leading `_`). Do **not**
+embed the step index in type names — the numeric prefix is for **`steps/`** and
+**`models/`** files only, not for classes (Dart identifiers cannot start with a
+digit).
+
 | Location | Use for |
 |----------|---------|
 | `steps/<n>_*_step.dart` | Step widget + step-only private helpers |
