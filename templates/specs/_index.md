@@ -11,6 +11,7 @@ Reusable templates for app-specific `ai_specs/` folders. Copy into each app repo
 | [`feature-plan.md`](feature-plan.md) | `ai_specs/features/<feature>/plan.md` — phases, progress, verification |
 | [`fix-spec.md`](fix-spec.md) | Optional `ai_specs/fixes/YYYY-MM-DD-short-slug/README.md` |
 | [`integration-spec.md`](integration-spec.md) | Optional `ai_specs/integrations/<service>/README.md` |
+| [`integration-remote-config-store-ops.md`](integration-remote-config-store-ops.md) | Optional `ai_specs/features/remote-config-store-ops/` |
 
 ## Workflows
 

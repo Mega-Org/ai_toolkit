@@ -9,6 +9,7 @@
 | File | Topic |
 |------|--------|
 | [`checklist-new-screen.md`](checklist-new-screen.md) | Items to verify when adding a new screen |
+| [`checklist-remote-config-store-ops.md`](checklist-remote-config-store-ops.md) | Store review, updater, RC admin integration |
 | [`breaking-changes-notes.md`](breaking-changes-notes.md) | Notes on upstream breaking changes affecting the stack |
 
 ## Cursor Agent Skills (portable templates)
@@ -18,6 +19,7 @@ Reusable `SKILL.md` files for Cursor (and similar tools) live under **`reference
 | Folder | Topic |
 |--------|--------|
 | [`agent-skills/flutter-pagination-paginated-list/`](agent-skills/flutter-pagination-paginated-list/SKILL.md) | Infinite scroll: `PaginationController` + `PaginatedListView` → pattern [`../patterns/flutter/pagination-paginated-list-view.md`](../patterns/flutter/pagination-paginated-list-view.md) |
+| [`agent-skills/remote-config-store-ops/`](agent-skills/remote-config-store-ops/SKILL.md) | Store review + force update + RC admin → workflow [`../workflows/integration/remote-config-store-ops.md`](../workflows/integration/remote-config-store-ops.md) |
 
 ## References
 

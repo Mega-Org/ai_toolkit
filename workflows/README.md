@@ -14,6 +14,7 @@
 | [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades | [`maintenance/_index.md`](maintenance/_index.md) |
 | [`git/`](git/_index.md) | Commit before plan/phase work; commits after phases | [`git/_index.md`](git/_index.md) |
 | [`worklog/`](worklog/README.md) | Daily worklog, TODOs, management reports | [`worklog/README.md`](worklog/README.md) |
+| [`integration/`](integration/_index.md) | Cross-cutting integrations (Firebase RC store-ops, etc.) | [`integration/_index.md`](integration/_index.md) |
 
 Add new workflow files under the closest subfolder. If something spans categories, note it here and in [`INDEX.md`](../INDEX.md) task routing.
 

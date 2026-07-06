@@ -14,6 +14,8 @@
 | `patterns/di/` | `get_it` + injectable examples | [`di/_index.md`](di/_index.md) |
 | `patterns/flutter/` | Responsive layout, shared media/buttons, breakpoints, **stepped flows**, **pagination list** | [`flutter/_index.md`](flutter/_index.md) |
 | `patterns/platform/` | iOS pods, native build notes | [`platform/_index.md`](platform/_index.md) |
+| `patterns/modules/` | RC store review / updater modules | [`modules/_index.md`](modules/_index.md) |
+| `patterns/tooling/` | Local admin tools (RC admin panel) | [`tooling/rc-admin-panel.md`](tooling/rc-admin-panel.md) |
 
 ## References
 

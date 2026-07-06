@@ -63,6 +63,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Use shell aliases | [`alias/flutter.md`](alias/flutter.md), [`alias/firebase.md`](alias/firebase.md) |
 | Clean up imports | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md) |
 | Split a large screen into `part` files | [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md) |
+| Integrate store review + force update + RC admin | [`workflows/integration/remote-config-store-ops.md`](workflows/integration/remote-config-store-ops.md) |
 
 ## Rule routing
 
@@ -81,6 +82,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Git conventions | [`rules/git/_index.md`](rules/git/_index.md) |
 | build_runner and generated code | [`rules/tooling/build-runner.md`](rules/tooling/build-runner.md) |
 | Firebase and public repo safety | [`rules/firebase/security-public-repos.md`](rules/firebase/security-public-repos.md) |
+| Remote Config store-ops | [`rules/firebase/remote-config-store-ops.md`](rules/firebase/remote-config-store-ops.md) |
 | Shared core architecture | [`rules/core/_index.md`](rules/core/_index.md) |
 | Network, Dio, failures | [`rules/core/network.md`](rules/core/network.md) |
 | Dependency injection | [`rules/core/di.md`](rules/core/di.md) |
@@ -118,6 +120,8 @@ Pattern subfolders (state, data, DI, platform, etc.): [`patterns/_index.md`](pat
 | Multi-step / wizard page flow | [`patterns/flutter/stepped-page-flow.md`](patterns/flutter/stepped-page-flow.md); pair with [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md) for large route UI |
 | Presentation field naming (`TextEditingController`, private `_…Controller`) | [`patterns/flutter/presentation-field-naming.md`](patterns/flutter/presentation-field-naming.md) |
 | Infinite scroll / `PaginatedListView` + `PaginationController` | [`patterns/flutter/pagination-paginated-list-view.md`](patterns/flutter/pagination-paginated-list-view.md) |
+| RC store review / updater modules | [`patterns/modules/_index.md`](patterns/modules/_index.md) |
+| RC admin local panel | [`patterns/tooling/rc-admin-panel.md`](patterns/tooling/rc-admin-panel.md) |
 | iOS pods and builds | [`patterns/platform/ios-pods-and-build.md`](patterns/platform/ios-pods-and-build.md) |
 
 ## Defaults

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remote Config Admin — Store Review &amp; Updater</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="page-loader" class="page-loader" aria-live="polite">
+      <div class="loader-card">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="loader-title">Connecting to Firebase</p>
+        <p class="loader-sub" id="loader-message">Loading project and Remote Config…</p>
+      </div>
+    </div>
+
+    <div id="page-content" class="app" hidden>
+      <header class="header">
+        <div class="header-copy">
+          <p class="header-eyebrow">Firebase Remote Config</p>
+          <h1>Store Review &amp; Update Admin</h1>
+          <p class="header-tagline">
+            Control when the app hides UI during store review and when users are prompted to update.
+          </p>
+          <p class="subtitle" id="project-id">Project —</p>
+        </div>
+        <div class="header-meta">
+          <span class="pill">App <strong id="app-version">—</strong></span>
+          <span class="pill" id="rc-state-pill">RC —</span>
+        </div>
+      </header>
+
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" role="tab" aria-selected="true" data-tab="storeReview" id="tab-btn-review">
+          Store Review
+        </button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-tab="storeUpdater" id="tab-btn-updater">
+          Store Updater
+        </button>
+      </nav>
+
+      <div class="workspace">
+        <div class="main-column">
+          <section class="card selectors-card">
+            <h3 class="card-label">Target</h3>
+            <div class="selectors">
+              <fieldset class="selector-group" id="flavor-selector-group">
+                <legend>Flavor</legend>
+                <div class="pill-group" role="radiogroup" aria-label="Flavor" id="flavor-pill-group">
+                  <label class="pill-option"><input type="radio" name="flavor" value="app" checked /><span>App</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="selector-group">
+                <legend>Platform</legend>
+                <div class="pill-group" role="radiogroup" aria-label="Platform">
+                  <label class="pill-option"><input type="radio" name="platform" value="android" checked /><span>Android</span></label>
+                  <label class="pill-option"><input type="radio" name="platform" value="ios" /><span>iOS</span></label>
+                  <label class="pill-option"><input type="radio" name="platform" value="both" /><span>Both</span></label>
+                </div>
+              </fieldset>
+            </div>
+          </section>
+
+          <!-- Store Review -->
+          <section class="tab-panel active" role="tabpanel" id="panel-storeReview" aria-labelledby="tab-btn-review">
+            <div class="card form-card">
+              <div class="card-head">
+                <h2>Configuration</h2>
+                <span class="badge" id="review-firebase-badge">—</span>
+              </div>
+              <p class="card-hint">Values loaded from Firebase for the selected keys. Edit below, then push or use a preset.</p>
+              <form id="form-review" class="form-grid">
+                <div class="form-row switch-row">
+                  <div class="switch-label">
+                    <span class="field-name">is_enabled</span>
+                    <span class="field-hint">Turn review mode on or off for this version</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="review-is-enabled" role="switch" />
+                    <span class="switch-track" aria-hidden="true"></span>
+                  </label>
+                </div>
+                <label class="field" id="review-version-field">
+                  <span class="field-name">review_version</span>
+                  <span class="field-hint">Semver name only — must match <code>PackageInfo.version</code> (e.g. 1.0.0, not 1.0.0+42)</span>
+                  <input
+                    type="text"
+                    id="review-version"
+                    placeholder="1.0.0"
+                    autocomplete="off"
+                    spellcheck="false"
+                    pattern="\d+\.\d+\.\d+"
+                    aria-describedby="review-version-error"
+                  />
+                  <span class="field-error" id="review-version-error" role="alert" hidden></span>
+                </label>
+              </form>
+            </div>
+
+            <section class="actions-section">
+              <h3 class="section-title">Actions</h3>
+
+              <article class="action-card">
+                <div class="action-body">
+                  <h4>Reload from Firebase</h4>
+                  <p>Fetch the latest Remote Config for the selected flavor and platform, then refill the form.</p>
+                </div>
+                <button type="button" class="btn secondary" id="review-load">Reload</button>
+              </article>
+
+              <article class="action-card">
+                <div class="action-body">
+                  <h4>Push custom values</h4>
+                  <p>Publish the current form values to Firebase. Use when you need manual control over both fields.</p>
+                </div>
+                <button type="button" class="btn primary" id="review-push">Push</button>
+              </article>
+
+              <article class="action-card action-card--success">
+                <div class="action-body">
+                  <h4>Review ON</h4>
+                  <p>Enable review mode for store submission. Sets <code>is_enabled: true</code> and <code>review_version</code> to the pubspec version.</p>
+                  <pre class="action-example" id="review-on-example"></pre>
+                </div>
+                <button type="button" class="btn success" id="review-on">Review ON</button>
+              </article>
+
+              <article class="action-card action-card--danger">
+                <div class="action-body">
+                  <h4>Review OFF</h4>
+                  <p>Disable review mode after store approval. Sets <code>is_enabled: false</code> and <code>review_version: "0.0.0"</code>.</p>
+                  <pre class="action-example">{"is_enabled":false,"review_version":"0.0.0"}</pre>
+                </div>
+                <button type="button" class="btn danger" id="review-off">Review OFF</button>
+              </article>
+            </section>
+          </section>
+
+          <!-- Store Updater -->
+          <section class="tab-panel" role="tabpanel" id="panel-storeUpdater" aria-labelledby="tab-btn-updater" hidden>
+            <div class="card form-card">
+              <div class="card-head">
+                <h2>Configuration</h2>
+                <span class="badge" id="update-firebase-badge">—</span>
+              </div>
+              <p class="card-hint">Values loaded from Firebase for the selected keys. Edit below, then push or use a preset.</p>
+              <form id="form-updater" class="form-grid">
+                <div class="form-row switch-row">
+                  <div class="switch-label">
+                    <span class="field-name">is_enabled</span>
+                    <span class="field-hint">Enable or disable the update prompt</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="update-is-enabled" role="switch" />
+                    <span class="switch-track" aria-hidden="true"></span>
+                  </label>
+                </div>
+                <label class="field">
+                  <span class="field-name">min_version</span>
+                  <span class="field-hint">Users below this version will be prompted to update</span>
+                  <input type="text" id="update-min-version" placeholder="1.0.0" autocomplete="off" />
+                </label>
+                <div class="form-row switch-row">
+                  <div class="switch-label">
+                    <span class="field-name">force_update</span>
+                    <span class="field-hint">When on, users cannot dismiss the update dialog</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="update-force" role="switch" />
+                    <span class="switch-track" aria-hidden="true"></span>
+                  </label>
+                </div>
+              </form>
+            </div>
+
+            <section class="actions-section">
+              <h3 class="section-title">Actions</h3>
+
+              <article class="action-card">
+                <div class="action-body">
+                  <h4>Reload from Firebase</h4>
+                  <p>Fetch the latest Remote Config for the selected flavor and platform, then refill the form.</p>
+                </div>
+                <button type="button" class="btn secondary" id="update-load">Reload</button>
+              </article>
+
+              <article class="action-card">
+                <div class="action-body">
+                  <h4>Push custom values</h4>
+                  <p>Publish the current form values to Firebase. Respects all three fields including force update.</p>
+                </div>
+                <button type="button" class="btn primary" id="update-push">Push</button>
+              </article>
+
+              <article class="action-card action-card--success">
+                <div class="action-body">
+                  <h4>Update ON</h4>
+                  <p>Enable update prompts. Sets <code>is_enabled: true</code>, <code>min_version</code> to pubspec version, and uses the force-update switch above.</p>
+                  <pre class="action-example" id="update-on-example"></pre>
+                </div>
+                <button type="button" class="btn success" id="update-on">Update ON</button>
+              </article>
+
+              <article class="action-card action-card--danger">
+                <div class="action-body">
+                  <h4>Update OFF</h4>
+                  <p>Disable update prompts. Sets <code>is_enabled: false</code>, <code>min_version: "0.0.0"</code>, <code>force_update: false</code>.</p>
+                  <pre class="action-example">{"is_enabled":false,"min_version":"0.0.0","force_update":false}</pre>
+                </div>
+                <button type="button" class="btn danger" id="update-off">Update OFF</button>
+              </article>
+            </section>
+          </section>
+        </div>
+
+        <aside class="preview-column">
+          <div class="card preview-card sticky">
+            <h3 class="card-label">Publish preview</h3>
+            <p class="preview-hint">JSON that <strong>Push</strong> will send to Firebase for each target key.</p>
+
+            <div class="preview-block">
+              <span class="preview-label">Target keys</span>
+              <ul id="preview-keys" class="key-list"></ul>
+            </div>
+
+            <div class="preview-block">
+              <span class="preview-label">Payload (JSON)</span>
+              <pre id="preview-json" class="json-preview">{}</pre>
+            </div>
+
+            <div class="preview-block">
+              <span class="preview-label">Current in Firebase</span>
+              <pre id="preview-current" class="json-preview json-preview--muted">—</pre>
+            </div>
+
+            <div class="preview-block preview-block--groups">
+              <span class="preview-label">Firebase Console layout</span>
+              <p class="preview-hint preview-hint--compact">
+                Keys are filed under <strong>Store Review</strong> and <strong>Store Updater</strong> folders automatically on every push.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <footer class="status card">
+        <div class="status-row">
+          <span class="status-label">Status</span>
+          <span id="status-message" class="status-idle">Ready</span>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
