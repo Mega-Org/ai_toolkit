@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { exec } from 'child_process';
 import express from 'express';
 import admin from 'firebase-admin';
@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { resolveCredentials } from './credentials.js';
 import {
   buildReviewOffPreset,
   buildReviewOnPreset,
@@ -25,6 +26,15 @@ import {
 } from './rc-groups.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ENV_PATH = path.join(__dirname, '.env');
+const ENV_EXAMPLE_PATH = path.join(__dirname, '.env.example');
+
+if (!fs.existsSync(ENV_PATH) && fs.existsSync(ENV_EXAMPLE_PATH)) {
+  fs.copyFileSync(ENV_EXAMPLE_PATH, ENV_PATH);
+  console.log(`Created ${ENV_PATH} from .env.example`);
+}
+
+dotenv.config({ path: ENV_PATH });
 
 const projectId = process.env.FIREBASE_PROJECT_ID;
 const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
@@ -36,20 +46,10 @@ if (!projectId) {
   process.exit(1);
 }
 
-if (!credentialsPath) {
-  console.error(
-    'GOOGLE_APPLICATION_CREDENTIALS is required. Copy .env.example to .env',
-  );
-  process.exit(1);
-}
-
-if (!fs.existsSync(credentialsPath)) {
-  console.error(`Service account file not found: ${credentialsPath}`);
-  process.exit(1);
-}
+const { credential, source } = resolveCredentials(credentialsPath);
 
 admin.initializeApp({
-  credential: admin.credential.cert(credentialsPath),
+  credential,
   projectId,
 });
 
@@ -116,6 +116,7 @@ app.get('/api/meta', (_req, res) => {
     platforms: PLATFORMS,
     keys: ALL_KEYS,
     parameterGroups: PARAMETER_GROUPS,
+    authSource: source,
   });
 });
 
@@ -240,6 +241,7 @@ const url = `http://127.0.0.1:${port}`;
 
 const server = app.listen(port, '127.0.0.1', () => {
   console.log(`RC Admin — project: ${projectId}`);
+  console.log(`Auth: ${source}`);
   console.log(`Running at ${url}`);
   openBrowser(url);
 });
@@ -260,6 +262,7 @@ server.on('error', (err) => {
  * @param {string} target
  */
 function openBrowser(target) {
+  if (process.env.OPEN_BROWSER === '0') return;
   const cmd =
     process.platform === 'darwin'
       ? `open "${target}"`

@@ -29,14 +29,15 @@ Enforceable rules for Firebase Remote Config keys, the local RC admin tool, and 
 ## Secrets and repo hygiene
 
 - **Must not** commit: `tool/firebase/rc-admin/.env`, service account JSON, `node_modules/`.
-- Service account keys **must** live outside the repository with absolute path in `.env`.
+- Service account keys **should** live outside the repository; when used, set absolute path in `.env`.
+- **May** omit `GOOGLE_APPLICATION_CREDENTIALS` when developers use `firebase login` — resolved in `credentials.js` (never commit refresh tokens).
 - **Must not** embed Firebase project IDs or package names in toolkit templates — use placeholders (`{{FIREBASE_PROJECT_ID}}`, etc.).
 
 ## Admin server
 
 - Server **must** bind to **127.0.0.1** only (local ops tool — not hosted in v1).
 - **Should** set optional `ADMIN_TOKEN` when running on shared developer machines.
-- **Must** exit on startup if credentials path is missing or file does not exist.
+- **Must** fail with a clear error if neither a valid service account path nor Firebase CLI login is available.
 
 ## Payload contracts
 

@@ -22,8 +22,8 @@ Prerequisites and one-time bootstrap for **store review**, **store updater**, an
 |-------------|--------|
 | **Node.js 18+** | For `tool/firebase/rc-admin/` |
 | **Firebase project** | Shared across app flavors unless documented otherwise |
-| **Service account JSON** | Remote Config Admin role; store **outside** repo |
-| **`GOOGLE_APPLICATION_CREDENTIALS`** | Absolute path in `tool/firebase/rc-admin/.env` |
+| **Service account JSON** | Remote Config Admin role; store **outside** repo (optional if `firebase login` is active) |
+| **`GOOGLE_APPLICATION_CREDENTIALS`** | Optional absolute path in `tool/firebase/rc-admin/.env`; when omitted, rc-admin uses Firebase CLI login |
 | **Flutter deps** | Add if missing: `firebase_remote_config`, `package_info_plus`, `pub_semver`, `url_launcher` |
 | **Integration manifest** | `ai_docs/integrations/remote-config-store-ops.md` after Phase 0 |
 
@@ -51,7 +51,9 @@ Copy [`../templates/tooling/rc-admin/`](../templates/tooling/rc-admin/) → `too
 
 ```bash
 cp tool/firebase/rc-admin/.env.example tool/firebase/rc-admin/.env
-# Edit .env — set FIREBASE_PROJECT_ID and GOOGLE_APPLICATION_CREDENTIALS
+# Edit .env — set FIREBASE_PROJECT_ID (required)
+# Optional: GOOGLE_APPLICATION_CREDENTIALS for a service account JSON outside the repo
+# Otherwise ensure you ran: firebase login
 ```
 
 ### 3. Configure keys
@@ -115,7 +117,9 @@ See [`../reference/checklist-remote-config-store-ops.md`](../reference/checklist
 
 | Symptom | Fix |
 |---------|-----|
-| Service account file not found | Use absolute path in `.env` |
+| `FIREBASE_PROJECT_ID is required` | Copy `.env.example` → `.env` and set project id |
+| Service account file not found | Set `GOOGLE_APPLICATION_CREDENTIALS` to an absolute path, or run `firebase login` and omit it |
+| `invalid_client` on Firebase CLI auth | Update `credentials.js` OAuth client ids from current `firebase-tools` (`lib/api.js`) |
 | PERMISSION_DENIED on publish | Grant Remote Config Admin to service account |
 | App ignores RC changes | Restart app; check correct flavor/platform key |
 | Port in use | Change `PORT` in `.env` |

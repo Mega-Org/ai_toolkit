@@ -22,6 +22,7 @@ Pattern for `tool/firebase/rc-admin/`: a **local-only** Node/Express admin UI th
 tool/firebase/rc-admin/
   package.json
   server.js              # Express + firebase-admin
+  credentials.js         # service account or Firebase CLI login fallback
   rc-keys.js             # KEY_MAP, FLAVORS, resolveKeys()
   rc-groups.js           # Console parameter groups
   payloads.js            # validate + preset builders
@@ -106,12 +107,15 @@ Optional `ADMIN_TOKEN` env → require `X-Admin-Token` header on `/api/*`.
 
 ```env
 FIREBASE_PROJECT_ID=
-GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json
+# Optional — when omitted, uses Firebase CLI login (~/.config/configstore/firebase-tools.json)
+# GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json
 PORT=3847
 # ADMIN_TOKEN=optional
 ```
 
 Service account needs **Firebase Remote Config Admin** (or Editor). Never commit `.env` or key JSON.
+
+**Local dev without a service account:** run `firebase login` once; `credentials.js` refreshes the CLI OAuth token using the public Firebase CLI client id (keep in sync with `firebase-tools` if Google rotates it).
 
 ## Makefile targets
 
