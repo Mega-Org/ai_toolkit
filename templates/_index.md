@@ -13,6 +13,7 @@ Reusable Markdown skeletons for app-specific specs and documentation. Templates 
 | [`worklog/`](worklog/_index.md) | Root `ai_worklog/` daily tracking, TODOs, and saved reports |
 | [`tooling/rc-admin/`](tooling/rc-admin/README.md) | Local Firebase RC admin scaffold (store review + updater) |
 | [`docs/integration-manifest.md`](docs/integration-manifest.md) | App integration manifest for RC store-ops |
+| [`docs/qa-intake.md`](docs/qa-intake.md) | Optional `ai_docs/qa-intake.md` — Excel/Jira column mapping for bugfix Mode B |
 
 ## References
 

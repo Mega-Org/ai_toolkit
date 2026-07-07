@@ -15,7 +15,7 @@ Record completed work, new TODOs, closed TODOs, and blockers in today's English 
 
 ## Usage
 
-**When to use** — When the user asks, or when **make-plan** / **implement-phase** reaches its worklog step. Also after bugfixes, refactors, or any session with deliverables if the user requests an update at session end.
+**When to use** — When the user asks, or when **make-plan** / **implement-phase** / **bugfix** reaches its worklog step. Also after refactors or any session with deliverables if the user requests an update at session end.
 
 **What you say** — `update worklog`, `record this TODO for backend: …`, `close TODO-2026-06-08-001`, `reopen TODO-2026-06-08-001`, `archive done TODOs`.
 

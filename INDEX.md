@@ -47,7 +47,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Plan a feature from a spec | [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md) — preflight: [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`make-plan --no-commits`** to skip) |
 | Implement one phase | [`workflows/feature-delivery/implement-phase.md`](workflows/feature-delivery/implement-phase.md) — preflight: [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), then [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`implement-phase --no-commits`** to skip Git preflight only) |
 | Verify work or draft a PR | [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md) |
-| Fix a bug | [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md) |
+| Fix a bug | [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md) — Modes: chat (`bugfix:`), QA intake (`bugfix from tester report`), resume fix folder; persists `ai_specs/fixes/.../request.md` |
 | Refactor existing code | [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) |
 | Upgrade dependencies | [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) |
 | Commit before plan or phase | [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) |

@@ -8,7 +8,7 @@
 
 | File | Topic |
 |------|--------|
-| [`bugfix.md`](bugfix.md) | Triage and fix defects |
+| [`bugfix.md`](bugfix.md) | Triage and fix defects; chat request + optional QA intake persistence |
 | [`refactor.md`](refactor.md) | Safe refactors with architecture context |
 | [`dependency-upgrade.md`](dependency-upgrade.md) | Upgrade packages and resolve breakage |
 

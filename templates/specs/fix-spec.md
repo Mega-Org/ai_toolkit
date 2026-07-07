@@ -44,6 +44,16 @@ Describe what should happen instead.
 - Manual checks:
 - Regression areas:
 
+### Retest for QA
+
+(Copy this block back to Excel, Jira, or the tester when external QA was involved.)
+
+- Build:
+- Flavor / locale:
+- Steps:
+- Expected now:
+- Regression areas:
+
 ## Related Specs
 
 - Feature spec:
