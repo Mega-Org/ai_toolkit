@@ -16,3 +16,4 @@ Reusable skeletons for app-specific BRD knowledge bases. Copy these into the app
 ## References
 
 - BRD workflow: [`../../workflows/product-analysis/brd-analysis.md`](../../workflows/product-analysis/brd-analysis.md)
+- Design / Figma KB (UI side): [`../design/_index.md`](../design/_index.md)

@@ -15,8 +15,9 @@ Execute **one phase** from `ai_specs/features/<feature>/plan.md` produced by [`m
 - Commit before work: [`../git/commit-before-work.md`](../git/commit-before-work.md)
 - Commit after phase: [`../git/commit-after-phase.md`](../git/commit-after-phase.md)
 - When complete: [`verify-and-pr.md`](verify-and-pr.md)
-- App paths: `ai_specs/INDEX.md`, `ai_specs/features/<feature>/README.md`, `ai_specs/features/<feature>/plan.md`, `ai_docs/`
+- App paths: `ai_specs/INDEX.md`, `ai_specs/features/<feature>/README.md`, `ai_specs/features/<feature>/plan.md`, `ai_specs/design/` when UI, `ai_docs/`
 - Worklog: [`../worklog/update-worklog.md`](../worklog/update-worklog.md)
+- Design analysis: [`../product-analysis/figma-analysis.md`](../product-analysis/figma-analysis.md)
 
 ## How to invoke (users)
 
@@ -34,6 +35,7 @@ Execute **one phase** from `ai_specs/features/<feature>/plan.md` produced by [`m
    - `ai_specs/features/<feature>/README.md`
    - `ai_specs/features/<feature>/plan.md`
    - Routed BRD files when the plan lists them
+   - Routed design KB files when the phase includes UI and `ai_specs/design/` exists (`design/INDEX.md` → feature design → screen nodes → navigation-graph as needed)
    - `ai_docs/` when present
    - When the target phase includes UI/Figma: [`../../rules/flutter/design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) and [`../../rules/core/localization.md`](../../rules/core/localization.md)
 2. **Commit before work** — [`../git/commit-before-work.md`](../git/commit-before-work.md) unless `--no-commits`.
@@ -43,7 +45,8 @@ If `plan.md` is missing, run [`make-plan.md`](make-plan.md) first (Mode A or B).
 ## Steps
 
 1. **Confirm scope** — Identify the target phase in `plan.md` (first `pending` unless the user named a phase). Restate deliverables in one sentence. Confirm stub vs real API matches `README.md` and this phase — do not skip ahead of **Next session** / API cutover unless the plan says so.
-2. **Implement** — Per `plan.md` deliverables and toolkit rules/patterns. Network: feature API constants under `data/api/` only ([`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)). **UI / Figma:** load design via Figma MCP when this phase includes UI and `README.md` lists Figma URLs; then:
+2. **Implement** — Per `plan.md` deliverables and toolkit rules/patterns. Network: feature API constants under `data/api/` only ([`../../patterns/data/feature-data-layer.md`](../../patterns/data/feature-data-layer.md)). **UI / Figma:** load design via Figma MCP when this phase includes UI and screen URLs are listed in `README.md` or `ai_specs/design/screens/` ; then:
+   - Prefer screen slugs and edges from `ai_specs/design/`; do not implement `assumed` / `broken` graph edges unless the user accepted them.
    - Detect and apply **design direction** per [`../../rules/flutter/design-direction-and-localization.md`](../../rules/flutter/design-direction-and-localization.md) (defaults first — do not hardcode `TextAlign.right`, `Alignment.centerRight`, or `EdgeInsets.only(left/right)` to match Arabic screenshots).
    - Map all user-visible copy to **l10n** keys ([`../../rules/core/localization.md`](../../rules/core/localization.md)).
    - Verify layout in both supported locales when the app supports Arabic and English.

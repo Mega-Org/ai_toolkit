@@ -37,7 +37,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 4. Load enforceable rules from `ai_toolkit/rules/`.
 5. Load implementation examples from `ai_toolkit/patterns/`.
 6. Load command aliases from `ai_toolkit/alias/` only when running commands.
-7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply. For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
+7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply; design under `ai_specs/design/` when UI/Figma contracts apply. For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
 
 ## Task routing
 
@@ -57,6 +57,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Generate daily report | [`workflows/worklog/daily-report.md`](workflows/worklog/daily-report.md) |
 | Show open TODOs | [`workflows/worklog/todo-list.md`](workflows/worklog/todo-list.md) |
 | Analyze a BRD or product source | [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) — templates: [`templates/brd/_index.md`](templates/brd/_index.md) |
+| Analyze Figma / design for screens, flows, and nav graph | [`workflows/product-analysis/figma-analysis.md`](workflows/product-analysis/figma-analysis.md) — templates: [`templates/design/_index.md`](templates/design/_index.md) |
 | Create or configure a Flutter app | [`setup/new-flutter-app.md`](setup/new-flutter-app.md) |
 | Work in a Melos repo | [`setup/melos-monorepo.md`](setup/melos-monorepo.md) |
 | Configure CI | [`setup/ci-github-gitlab.md`](setup/ci-github-gitlab.md) |

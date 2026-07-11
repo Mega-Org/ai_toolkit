@@ -10,7 +10,7 @@
 |-----------|------|----------|
 | [`session/`](session/_index.md) | Start or resume a session; load context in a fixed order | [`session/_index.md`](session/_index.md) |
 | [`feature-delivery/`](feature-delivery/_index.md) | Spec-driven planning, phased implementation, verify / PR | [`feature-delivery/_index.md`](feature-delivery/_index.md) |
-| [`product-analysis/`](product-analysis/_index.md) | Turn BRDs and product sources into app-specific AI-readable specs | [`product-analysis/_index.md`](product-analysis/_index.md) |
+| [`product-analysis/`](product-analysis/_index.md) | Turn BRDs, Figma, and product sources into app-specific AI-readable specs | [`product-analysis/_index.md`](product-analysis/_index.md) |
 | [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades | [`maintenance/_index.md`](maintenance/_index.md) |
 | [`git/`](git/_index.md) | Commit before plan/phase work; commits after phases | [`git/_index.md`](git/_index.md) |
 | [`worklog/`](worklog/README.md) | Daily worklog, TODOs, management reports | [`worklog/README.md`](worklog/README.md) |

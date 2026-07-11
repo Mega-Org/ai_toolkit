@@ -8,8 +8,9 @@ Last updated: YYYY-MM-DD
 
 - User prompt summary (if created from make-plan):
 - BRD files loaded:
+- Design KB files loaded (`ai_specs/design/` when present):
 - App docs loaded:
-- Figma references (from spec; load via MCP only when implementing UI):
+- Figma references (prefer design screen nodes; load via MCP only when implementing UI):
 
 ## Business Alignment
 
@@ -17,6 +18,12 @@ Last updated: YYYY-MM-DD
 - App surfaces:
 - Cross-cutting rules:
 - BRD differences: `none` | `Spec extends BRD` | `Spec conflicts with BRD` | `BRD has missing detail`
+
+## Design Alignment
+
+- Design feature file:
+- Screen slugs / navigation-graph notes:
+- Design differences: `none` | `Spec extends design` | `Spec conflicts with design` | `Design has missing detail` | `Unwired edges`
 
 ## Scope Summary
 

@@ -9,6 +9,7 @@ Reusable Markdown skeletons for app-specific specs and documentation. Templates 
 | Folder | Topic |
 |--------|-------|
 | [`brd/`](brd/_index.md) | BRD knowledge base, feature business contract, and app-surface spec templates |
+| [`design/`](design/_index.md) | Figma/design knowledge base, navigation graph, screen nodes, and feature design templates |
 | [`specs/`](specs/_index.md) | Root `ai_specs/` routing, feature implementation, fix, change, and integration spec templates |
 | [`worklog/`](worklog/_index.md) | Root `ai_worklog/` daily tracking, TODOs, and saved reports |
 | [`tooling/rc-admin/`](tooling/rc-admin/README.md) | Local Firebase RC admin scaffold (store review + updater) |
@@ -19,3 +20,4 @@ Reusable Markdown skeletons for app-specific specs and documentation. Templates 
 
 - Toolkit entrypoint: [`../INDEX.md`](../INDEX.md)
 - BRD analysis workflow: [`../workflows/product-analysis/brd-analysis.md`](../workflows/product-analysis/brd-analysis.md)
+- Design / Figma analysis workflow: [`../workflows/product-analysis/figma-analysis.md`](../workflows/product-analysis/figma-analysis.md)

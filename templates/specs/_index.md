@@ -24,6 +24,7 @@ Reusable templates for app-specific `ai_specs/` folders. Copy into each app repo
 ## Rules
 
 - BRD business truth stays in `ai_specs/brd/`.
+- Design / UI / nav truth stays in `ai_specs/design/` (see [`../design/_index.md`](../design/_index.md)).
 - Feature **`README.md`** = what to build; **`plan.md`** = how and progress (updated by make-plan and implement-phase).
 - Fix **`request.md`** = requester command and stated requirements; fix **`README.md`** = investigation and verification (updated by bugfix workflow).
 - Mark unknowns as `TBD(owner): note`.

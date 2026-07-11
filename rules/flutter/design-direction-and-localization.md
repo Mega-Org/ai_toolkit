@@ -16,13 +16,14 @@ Load this rule for any presentation phase that implements from a design file. Pa
 - Localization pipeline: [`../core/localization.md`](../core/localization.md)
 - UI composition: [`ui-composition.md`](ui-composition.md)
 - Per-app design defaults (when present): **`ai_docs/conventions.md`** in each repository
+- Design KB extraction: [`../../workflows/product-analysis/figma-analysis.md`](../../workflows/product-analysis/figma-analysis.md), templates [`../../templates/design/_index.md`](../../templates/design/_index.md)
 - Feature planning / implementation: [`../../workflows/feature-delivery/make-plan.md`](../../workflows/feature-delivery/make-plan.md), [`../../workflows/feature-delivery/implement-phase.md`](../../workflows/feature-delivery/implement-phase.md)
 
 ## Detect design direction (before coding UI)
 
 Run this intake **once per screen or frame group** before writing layout code:
 
-1. **Explicit source** — frame name, spec note, annotation, or feature `README.md` entry (preferred).
+1. **Explicit source** — design KB screen node / feature design file, frame name, spec note, annotation, or feature `README.md` entry (preferred).
 2. **Visible copy** — dominant Arabic ⇒ RTL intent; dominant English ⇒ LTR intent. Treat copy as **language intent**, not literal strings or keys.
 3. **App default** — when unclear, follow **`ai_docs/conventions.md`** (e.g. Arabic-first for this product).
 

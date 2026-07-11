@@ -3,6 +3,7 @@
 Status: draft
 Type: feature
 Related BRD: `ai_specs/brd/features/<feature>.md`
+Related design: `ai_specs/design/features/<feature>.md`
 Surfaces: customer | provider | admin
 Owner: product | design | backend | frontend
 Last updated: YYYY-MM-DD
@@ -41,14 +42,22 @@ Last updated: YYYY-MM-DD
 
 ## Figma References
 
-- Screen/flow name: `https://www.figma.com/design/...`
+- Prefer design KB when present: `ai_specs/design/features/<feature>.md` and linked `screens/<slug>.md` (URLs + node-ids there).
+- Screen/flow name: `https://www.figma.com/design/...` (only if design KB is absent or incomplete)
 - Load via Figma MCP during UI implementation phases; keep URLs here, not full design dumps.
+- Navigation: follow `ai_specs/design/analysis/navigation-graph.md`; do not implement `assumed` / `broken` edges unless accepted.
 
 ## Business Alignment
 
 - BRD feature file:
 - App-surface files:
 - BRD differences: `none` | `Spec extends BRD` | `Spec conflicts with BRD` | `BRD has missing detail`
+
+## Design Alignment
+
+- Design feature file:
+- Screen slugs:
+- Design differences: `none` | `Spec extends design` | `Spec conflicts with design` | `Design has missing detail` | `Unwired edges`
 
 ## Open Questions
 
