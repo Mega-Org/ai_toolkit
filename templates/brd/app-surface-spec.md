@@ -15,10 +15,25 @@ Describe what this app surface exists to support and which business outcomes it 
 2. Include approval, moderation, support, and notification handoffs.
 3. Include cross-surface dependencies where one app surface changes another actor's experience.
 
-## Screens and Modules
+## Screen Inventory
 
-- List required screens, dashboard modules, tabs, dialogs, or key sections.
+List required screens, dashboard modules, tabs, dialogs, or key sections. Keep this at business inventory level; leave Flutter layout and widgets to implementation specs.
+
+| Screen or module | Purpose | Entry | Exit / next | BRD / design refs |
+|------------------|---------|-------|-------------|-------------------|
+| Example home | Landing after login | Auth success | Orders, profile | … |
+
+- Use `TBD(design)` when a journey needs a screen that the BRD does not name.
 - Link designs or implementation specs when available.
+
+## Journey to Screen Map
+
+| Journey | Ordered screens / modules | Notes |
+|---------|---------------------------|-------|
+| Example onboarding | splash → login → OTP → home | … |
+
+- Every main journey should appear here.
+- If a journey step has no screen, keep the step and mark the gap `TBD(design)`.
 
 ## Required Features
 
@@ -40,4 +55,4 @@ Describe what this app surface exists to support and which business outcomes it 
 
 ## Related Feature Specs
 
-- Link related feature files, BRD analysis files, implementation specs, designs, or API docs.
+- Link related feature files, BRD analysis files, glossary, implementation specs, designs, or API docs.
