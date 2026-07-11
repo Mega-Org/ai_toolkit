@@ -1,0 +1,7 @@
+#!/bin/sh
+# Optional: copy to .githooks/post-merge and run:
+#   git config core.hooksPath .githooks
+# After every git pull/merge, checkout the pinned ai_toolkit commit.
+if [ -f .gitmodules ] && [ -d ai_toolkit ]; then
+  git submodule update --init --recursive -- ai_toolkit || true
+fi

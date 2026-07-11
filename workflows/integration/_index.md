@@ -8,6 +8,7 @@
 
 | File | Topic |
 |------|--------|
+| [`link-ai-toolkit.md`](link-ai-toolkit.md) | Add or migrate `ai_toolkit` submodule, seed files, Makefile targets |
 | [`remote-config-store-ops.md`](remote-config-store-ops.md) | Store review UI gating, force-update prompts, and local RC admin panel |
 
 ## References

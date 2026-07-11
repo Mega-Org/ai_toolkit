@@ -64,6 +64,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Use shell aliases | [`alias/flutter.md`](alias/flutter.md), [`alias/firebase.md`](alias/firebase.md) |
 | Clean up imports | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md) |
 | Split a large screen into `part` files | [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md) |
+| Link this toolkit into an app (submodule) | [`workflows/integration/link-ai-toolkit.md`](workflows/integration/link-ai-toolkit.md) — setup: [`setup/per-app-integration.md`](setup/per-app-integration.md) |
 | Integrate store review + force update + RC admin | [`workflows/integration/remote-config-store-ops.md`](workflows/integration/remote-config-store-ops.md) |
 
 ## Rule routing

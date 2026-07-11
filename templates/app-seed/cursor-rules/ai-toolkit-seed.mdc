@@ -1,0 +1,11 @@
+---
+description: Team-wide AI seed — canonical toolkit entry and bootstrap mode
+alwaysApply: true
+---
+
+# AI toolkit seed
+
+- **Start here:** `ai_toolkit/INDEX.md`. It is the single canonical entry for rules, patterns, workflows, and task routing.
+- **Bootstrap cost:** Follow **lite** vs **full** session loading as described in that index (full for large or ambiguous work; lite for small, scoped edits). For the ordered full path, use `ai_toolkit/workflows/session/bootstrap-session.md`.
+- **App boundaries:** When they exist, respect `ai_docs/` and active `ai_specs/` alongside the toolkit.
+- **Do not duplicate** long toolkit prose in chat or in other rules—point to paths under `ai_toolkit/` and load only the leaf files the task needs.

@@ -1,0 +1,27 @@
+# Optional Makefile targets — merge into the app Makefile
+#
+# Prefer: ./ai_toolkit/bin/toolkit <cmd>
+# After first submodule add, these targets work on Mac/Linux and Git Bash/WSL.
+
+.PHONY: toolkit-add toolkit-sync toolkit-pull toolkit-push toolkit-status
+
+TOOLKIT_BIN := ./ai_toolkit/bin/toolkit
+
+toolkit-add:
+	@if [ -x "$(TOOLKIT_BIN)" ]; then $(TOOLKIT_BIN) add; \
+	else git submodule add -b main https://github.com/Mega-Org/ai_toolkit.git ai_toolkit \
+	  && git submodule update --init --recursive -- ai_toolkit; fi
+
+toolkit-sync:
+	@$(TOOLKIT_BIN) sync
+
+toolkit-pull:
+	@$(TOOLKIT_BIN) pull
+
+# Usage: make toolkit-push MSG="describe change"
+toolkit-push:
+	@test -n "$(MSG)" || (echo 'usage: make toolkit-push MSG="describe change"' >&2; exit 1)
+	@$(TOOLKIT_BIN) push "$(MSG)"
+
+toolkit-status:
+	@$(TOOLKIT_BIN) status

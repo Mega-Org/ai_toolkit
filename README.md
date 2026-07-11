@@ -7,12 +7,13 @@ Per-app files such as `CLAUDE.md`, `AGENTS.md`, and `.cursor/rules` should stay 
 ## Layout
 
 - `INDEX.md`: the AI entrypoint. Read this first in every session.
+- `bin/toolkit`: repo-local CLI to add/sync/pull/push the toolkit submodule in each app.
 - `alias/`: shell aliases and command shortcuts — overview [`alias/_index.md`](alias/_index.md).
 - `setup/`: project setup checklists and bootstrapping — overview [`setup/_index.md`](setup/_index.md).
 - `rules/`: short must / must-not guidance — overview [`rules/_index.md`](rules/_index.md).
 - `patterns/`: implementation examples and conventions — overview [`patterns/_index.md`](patterns/_index.md).
 - `workflows/`: ordered playbooks — layout [`workflows/README.md`](workflows/README.md).
-- `templates/`: reusable spec and documentation skeletons — overview [`templates/_index.md`](templates/_index.md).
+- `templates/`: reusable spec and documentation skeletons — overview [`templates/_index.md`](templates/_index.md). Includes [`templates/app-seed/`](templates/app-seed/README.md) for per-app bootstrap files.
 - `reference/`: supporting checklists and notes — overview [`reference/_index.md`](reference/_index.md).
 
 This toolkit uses `workflows/`, not `commands/`. The intent is the same as command-style playbooks in some AI tools, but "workflow" better matches phased, multi-step work and keeps the naming tool-neutral.
@@ -53,6 +54,35 @@ These defaults guide future rules and patterns unless an app-specific `ai_docs/`
 - Serialization: `json_serializable` generated `*.g.dart` files. Do not use Freezed for these models unless a documented exception exists.
 - Repository results: `dartz` `Either<Failure, T>`.
 - Common supporting packages: firebase, flutter_gen, responsive_framework, path_provider, and intl.
+
+## How to use in an app (submodule)
+
+Full guide: [`setup/per-app-integration.md`](setup/per-app-integration.md). Playbook: [`workflows/integration/link-ai-toolkit.md`](workflows/integration/link-ai-toolkit.md).
+
+**Add once** (from the app repo root — Mac, Linux, or Git Bash / WSL on Windows):
+
+```bash
+git submodule add -b main https://github.com/Mega-Org/ai_toolkit.git ai_toolkit
+cp ai_toolkit/templates/app-seed/CLAUDE.md .
+cp ai_toolkit/templates/app-seed/AGENTS.md .
+mkdir -p .cursor/rules && cp ai_toolkit/templates/app-seed/cursor-rules/ai-toolkit-seed.mdc .cursor/rules/
+# Merge Makefile targets from ai_toolkit/templates/app-seed/Makefile.snippet
+git add .gitmodules ai_toolkit CLAUDE.md AGENTS.md .cursor/rules
+git commit -m "Add ai_toolkit submodule and AI seed files"
+```
+
+**Daily** (repo-local CLI — no global install):
+
+| Goal | Command |
+|------|---------|
+| After app `git pull` | `./ai_toolkit/bin/toolkit sync` or `make toolkit-sync` |
+| Upgrade toolkit | `./ai_toolkit/bin/toolkit pull` then commit the app pointer |
+| Push toolkit edits | `./ai_toolkit/bin/toolkit push "message"` then bump the app |
+| Status | `./ai_toolkit/bin/toolkit status` |
+
+**Clone for teammates:** `git clone --recurse-submodules <app-url>` (or `git submodule update --init --recursive` after clone).
+
+Apps pin a commit SHA. Other apps do not auto-update when you push toolkit changes — run `toolkit pull` in each app when you want the newer pin.
 
 ## Per-App Integration
 

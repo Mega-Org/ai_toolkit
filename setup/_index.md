@@ -14,6 +14,7 @@
 | [`melos-monorepo.md`](melos-monorepo.md) | Optional Melos monorepo notes |
 | [`ci-github-gitlab.md`](ci-github-gitlab.md) | Optional CI recipes for GitHub / GitLab |
 | [`remote-config-store-ops.md`](remote-config-store-ops.md) | Store review, force update, local RC admin panel |
+| [`per-app-integration.md`](per-app-integration.md) | Add/sync/pull/push this toolkit as a git submodule (Mac + Windows) |
 | [`scripts/bootstrap-rc-admin.sh`](scripts/bootstrap-rc-admin.sh) | Copy rc-admin template, npm install, print URL |
 
 ## References

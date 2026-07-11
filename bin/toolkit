@@ -1,0 +1,283 @@
+#!/usr/bin/env bash
+# ai_toolkit CLI — repo-local submodule helpers (Mac / Linux / Git Bash / WSL)
+set -euo pipefail
+
+TOOLKIT_REPO="${TOOLKIT_REPO:-https://github.com/Mega-Org/ai_toolkit.git}"
+TOOLKIT_DIR="${TOOLKIT_DIR:-ai_toolkit}"
+TOOLKIT_BRANCH="${TOOLKIT_BRANCH:-main}"
+
+die() { echo "error: $*" >&2; exit 1; }
+info() { echo "→ $*"; }
+ok() { echo "✓ $*"; }
+
+# Resolve absolute path of this script (works when invoked as ./ai_toolkit/bin/toolkit)
+SCRIPT_PATH="${BASH_SOURCE[0]}"
+while [[ -L "$SCRIPT_PATH" ]]; do
+  SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+  SCRIPT_PATH="$(readlink "$SCRIPT_PATH")"
+  [[ "$SCRIPT_PATH" != /* ]] && SCRIPT_PATH="$SCRIPT_DIR/$SCRIPT_PATH"
+done
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+TOOLKIT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+find_app_root() {
+  # If we are inside the submodule, prefer the parent app work tree
+  local super
+  super="$(git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+  if [[ -n "$super" ]]; then
+    echo "$super"
+    return 0
+  fi
+  git rev-parse --show-toplevel 2>/dev/null || die "not inside a git repository"
+}
+
+is_submodule() {
+  local app_root="$1"
+  [[ -f "$app_root/.gitmodules" ]] && grep -q "path = ${TOOLKIT_DIR}\$" "$app_root/.gitmodules" 2>/dev/null
+}
+
+has_nested_git() {
+  local path="$1"
+  [[ -d "$path/.git" || -f "$path/.git" ]]
+}
+
+require_clean_or_warn() {
+  local repo="$1"
+  local label="$2"
+  if [[ -n "$(git -C "$repo" status --porcelain 2>/dev/null)" ]]; then
+    echo "warning: $label has uncommitted changes:" >&2
+    git -C "$repo" status --short >&2
+    return 1
+  fi
+  return 0
+}
+
+cmd_add() {
+  local app_root
+  app_root="$(find_app_root)"
+  cd "$app_root"
+
+  if is_submodule "$app_root"; then
+    info "submodule already registered — initializing"
+    git submodule update --init --recursive -- "$TOOLKIT_DIR"
+    ok "synced pinned $TOOLKIT_DIR"
+    return 0
+  fi
+
+  if [[ -e "$TOOLKIT_DIR" ]]; then
+    if has_nested_git "$TOOLKIT_DIR" && ! is_submodule "$app_root"; then
+      die "$TOOLKIT_DIR exists as a nested clone, not a submodule. Run: toolkit migrate"
+    fi
+    die "$TOOLKIT_DIR already exists. Remove it or run: toolkit migrate"
+  fi
+
+  info "adding submodule $TOOLKIT_REPO → $TOOLKIT_DIR"
+  git submodule add -b "$TOOLKIT_BRANCH" "$TOOLKIT_REPO" "$TOOLKIT_DIR"
+  git submodule update --init --recursive -- "$TOOLKIT_DIR"
+  ok "added $TOOLKIT_DIR — commit .gitmodules and $TOOLKIT_DIR in this app"
+  echo "  next: copy seed files from $TOOLKIT_DIR/templates/app-seed/ (see setup/per-app-integration.md)"
+}
+
+cmd_migrate() {
+  local app_root
+  app_root="$(find_app_root)"
+  cd "$app_root"
+
+  if is_submodule "$app_root"; then
+    info "already a submodule — initializing"
+    git submodule update --init --recursive -- "$TOOLKIT_DIR"
+    ok "nothing to migrate"
+    return 0
+  fi
+
+  if [[ ! -e "$TOOLKIT_DIR" ]]; then
+    info "no existing $TOOLKIT_DIR — running add"
+    cmd_add
+    return 0
+  fi
+
+  if has_nested_git "$TOOLKIT_DIR"; then
+    if ! require_clean_or_warn "$TOOLKIT_DIR" "$TOOLKIT_DIR"; then
+      die "commit or stash toolkit changes before migrate"
+    fi
+  fi
+
+  local bak="${TOOLKIT_DIR}.bak.$$"
+  info "moving $TOOLKIT_DIR → $bak"
+  mv "$TOOLKIT_DIR" "$bak"
+
+  if ! git submodule add -b "$TOOLKIT_BRANCH" "$TOOLKIT_REPO" "$TOOLKIT_DIR"; then
+    info "submodule add failed — restoring $bak"
+    rm -rf "$TOOLKIT_DIR" 2>/dev/null || true
+    mv "$bak" "$TOOLKIT_DIR"
+    die "migrate failed; original folder restored"
+  fi
+
+  git submodule update --init --recursive -- "$TOOLKIT_DIR"
+  rm -rf "$bak"
+  ok "migrated to submodule — commit .gitmodules and $TOOLKIT_DIR"
+}
+
+cmd_sync() {
+  local app_root
+  app_root="$(find_app_root)"
+  cd "$app_root"
+
+  if [[ ! -e "$TOOLKIT_DIR" ]]; then
+    die "$TOOLKIT_DIR missing. Run: toolkit add"
+  fi
+
+  if is_submodule "$app_root"; then
+    git submodule update --init --recursive -- "$TOOLKIT_DIR"
+    ok "checked out pinned commit for $TOOLKIT_DIR"
+  else
+    die "$TOOLKIT_DIR is not a registered submodule. Run: toolkit migrate"
+  fi
+}
+
+cmd_pull() {
+  local app_root
+  app_root="$(find_app_root)"
+  cd "$app_root"
+
+  if [[ ! -d "$TOOLKIT_DIR" ]]; then
+    die "$TOOLKIT_DIR missing. Run: toolkit add"
+  fi
+
+  if ! is_submodule "$app_root"; then
+    die "$TOOLKIT_DIR is not a submodule. Run: toolkit migrate"
+  fi
+
+  info "fetching latest $TOOLKIT_BRANCH in $TOOLKIT_DIR"
+  git -C "$TOOLKIT_DIR" fetch origin "$TOOLKIT_BRANCH"
+  git -C "$TOOLKIT_DIR" checkout "$TOOLKIT_BRANCH"
+  git -C "$TOOLKIT_DIR" merge --ff-only "origin/$TOOLKIT_BRANCH"
+  git add "$TOOLKIT_DIR"
+  ok "updated $TOOLKIT_DIR to latest origin/$TOOLKIT_BRANCH and staged pointer"
+  echo "  commit in the app repo when ready: git commit -m \"Bump ai_toolkit\""
+}
+
+cmd_push() {
+  local msg="${1:-}"
+  local app_root
+  app_root="$(find_app_root)"
+  cd "$app_root"
+
+  if [[ ! -d "$TOOLKIT_DIR" ]]; then
+    die "$TOOLKIT_DIR missing"
+  fi
+
+  if [[ -z "$(git -C "$TOOLKIT_DIR" status --porcelain)" ]]; then
+    info "no changes inside $TOOLKIT_DIR"
+  else
+    if [[ -z "$msg" ]]; then
+      die "usage: toolkit push \"commit message\""
+    fi
+    info "committing inside $TOOLKIT_DIR"
+    git -C "$TOOLKIT_DIR" add -A
+    git -C "$TOOLKIT_DIR" commit -m "$msg"
+  fi
+
+  info "pushing $TOOLKIT_DIR to origin"
+  git -C "$TOOLKIT_DIR" push origin HEAD
+
+  if is_submodule "$app_root"; then
+    git add "$TOOLKIT_DIR"
+    ok "pushed toolkit; staged app pointer — commit app when you want this bump"
+    echo "  git commit -m \"Bump ai_toolkit\""
+  else
+    ok "pushed toolkit"
+  fi
+}
+
+cmd_status() {
+  local app_root
+  app_root="$(find_app_root)"
+  cd "$app_root"
+
+  echo "app:      $app_root"
+  echo "toolkit:  $TOOLKIT_DIR"
+
+  if [[ ! -e "$TOOLKIT_DIR" ]]; then
+    echo "state:    missing (run toolkit add)"
+    return 0
+  fi
+
+  if is_submodule "$app_root"; then
+    echo "state:    git submodule"
+  elif has_nested_git "$TOOLKIT_DIR"; then
+    echo "state:    nested clone (run toolkit migrate)"
+  else
+    echo "state:    folder without .git"
+  fi
+
+  if has_nested_git "$TOOLKIT_DIR" || [[ -d "$TOOLKIT_DIR/.git" || -f "$TOOLKIT_DIR/.git" ]]; then
+    echo "branch:   $(git -C "$TOOLKIT_DIR" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')"
+    echo "commit:   $(git -C "$TOOLKIT_DIR" rev-parse --short HEAD 2>/dev/null || echo '?')"
+    local dirty
+    dirty="$(git -C "$TOOLKIT_DIR" status --porcelain 2>/dev/null || true)"
+    if [[ -n "$dirty" ]]; then
+      echo "dirty:    yes"
+      git -C "$TOOLKIT_DIR" status --short
+    else
+      echo "dirty:    no"
+    fi
+    git -C "$TOOLKIT_DIR" fetch origin "$TOOLKIT_BRANCH" --quiet 2>/dev/null || true
+    local local_sha remote_sha
+    local_sha="$(git -C "$TOOLKIT_DIR" rev-parse HEAD 2>/dev/null || true)"
+    remote_sha="$(git -C "$TOOLKIT_DIR" rev-parse "origin/$TOOLKIT_BRANCH" 2>/dev/null || true)"
+    if [[ -n "$local_sha" && -n "$remote_sha" ]]; then
+      if [[ "$local_sha" == "$remote_sha" ]]; then
+        echo "remote:   up to date with origin/$TOOLKIT_BRANCH"
+      else
+        local ahead behind
+        ahead="$(git -C "$TOOLKIT_DIR" rev-list --count "origin/$TOOLKIT_BRANCH..HEAD" 2>/dev/null || echo 0)"
+        behind="$(git -C "$TOOLKIT_DIR" rev-list --count "HEAD..origin/$TOOLKIT_BRANCH" 2>/dev/null || echo 0)"
+        echo "remote:   ahead $ahead / behind $behind (origin/$TOOLKIT_BRANCH)"
+      fi
+    fi
+  fi
+}
+
+cmd_help() {
+  cat <<'EOF'
+toolkit — manage ai_toolkit as a git submodule (repo-local; no global install)
+
+Usage:
+  toolkit add                 Add submodule (or init if already registered)
+  toolkit migrate             Convert nested clone → submodule
+  toolkit sync                Checkout pinned commit after app git pull
+  toolkit pull                Fast-forward toolkit to origin/main; stage app pointer
+  toolkit push "message"      Commit+push inside ai_toolkit/; stage app pointer
+  toolkit status              Show branch, dirty, ahead/behind
+  toolkit help                This help
+
+Defaults:
+  TOOLKIT_REPO=https://github.com/Mega-Org/ai_toolkit.git
+  TOOLKIT_DIR=ai_toolkit
+  TOOLKIT_BRANCH=main
+
+Mac / Linux / Git Bash / WSL:
+  ./ai_toolkit/bin/toolkit sync
+  make toolkit-sync   # if Makefile targets are installed
+
+Docs: ai_toolkit/setup/per-app-integration.md
+EOF
+}
+
+main() {
+  local cmd="${1:-help}"
+  shift || true
+  case "$cmd" in
+    add)     cmd_add "$@" ;;
+    migrate) cmd_migrate "$@" ;;
+    sync)    cmd_sync "$@" ;;
+    pull)    cmd_pull "$@" ;;
+    push)    cmd_push "$@" ;;
+    status)  cmd_status "$@" ;;
+    help|-h|--help) cmd_help ;;
+    *) die "unknown command: $cmd (try: toolkit help)" ;;
+  esac
+}
+
+main "$@"
