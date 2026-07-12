@@ -10,6 +10,7 @@ Documents **shell aliases and command shortcuts** for Flutter, Dart codegen, iOS
 |------|--------|
 | [`flutter.md`](flutter.md) | Flutter CLI, `build_runner`, common project shortcuts |
 | [`firebase.md`](firebase.md) | Firebase / FlutterFire CLI notes and safety reminders |
+| [`api.md`](api.md) | Chat phrases for API collection analyze / reanalyze / collection handoff |
 
 ## References
 

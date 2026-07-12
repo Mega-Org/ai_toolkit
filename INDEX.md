@@ -37,7 +37,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 4. Load enforceable rules from `ai_toolkit/rules/`.
 5. Load implementation examples from `ai_toolkit/patterns/`.
 6. Load command aliases from `ai_toolkit/alias/` only when running commands.
-7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply; design under `ai_specs/design/` when UI/Figma contracts apply. For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
+7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply; design under `ai_specs/design/` when UI/Figma contracts apply; API under `ai_specs/api/` when collection/OpenAPI contracts apply (`COLLECTION_HANDOFF.md` for collection owners). For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
 
 ## Task routing
 
@@ -58,10 +58,12 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Show open TODOs | [`workflows/worklog/todo-list.md`](workflows/worklog/todo-list.md) |
 | Analyze a BRD or product source | [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) — templates: [`templates/brd/_index.md`](templates/brd/_index.md) |
 | Analyze Figma / design for screens, flows, and nav graph | [`workflows/product-analysis/figma-analysis.md`](workflows/product-analysis/figma-analysis.md) — templates: [`templates/design/_index.md`](templates/design/_index.md) |
+| Analyze / reanalyze API collection (Postman, Apidog, OpenAPI) | [`workflows/api-analysis/_index.md`](workflows/api-analysis/_index.md) — full: [`analyze-collection.md`](workflows/api-analysis/analyze-collection.md); update: [`reanalyze-collection.md`](workflows/api-analysis/reanalyze-collection.md); pack handoff: [`pack-collection-handoff.md`](workflows/api-analysis/pack-collection-handoff.md) — templates: [`templates/api/_index.md`](templates/api/_index.md) |
 | Create or configure a Flutter app | [`setup/new-flutter-app.md`](setup/new-flutter-app.md) |
 | Work in a Melos repo | [`setup/melos-monorepo.md`](setup/melos-monorepo.md) |
 | Configure CI | [`setup/ci-github-gitlab.md`](setup/ci-github-gitlab.md) |
 | Use shell aliases | [`alias/flutter.md`](alias/flutter.md), [`alias/firebase.md`](alias/firebase.md) |
+| API analyze / reanalyze / pack collection handoff phrases | [`alias/api.md`](alias/api.md) — workflows: [`workflows/api-analysis/_index.md`](workflows/api-analysis/_index.md) |
 | Clean up imports | [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md) |
 | Split a large screen into `part` files | [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md) |
 | Link this toolkit into an app (submodule) | [`workflows/integration/link-ai-toolkit.md`](workflows/integration/link-ai-toolkit.md) — setup: [`setup/per-app-integration.md`](setup/per-app-integration.md) |

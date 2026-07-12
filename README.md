@@ -38,6 +38,7 @@ Section overviews: [`setup/_index.md`](setup/_index.md), [`workflows/README.md`]
 - Dependency upgrade: use [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) and relevant setup notes.
 - BRD or product-source analysis: use [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) and the [`templates/brd/`](templates/brd/_index.md) skeletons.
 - Figma / design analysis (screens, flows, nav graph): use [`workflows/product-analysis/figma-analysis.md`](workflows/product-analysis/figma-analysis.md) and the [`templates/design/`](templates/design/_index.md) skeletons.
+- API collection analysis (Postman / Apidog / OpenAPI) and collection handoff: use [`workflows/api-analysis/_index.md`](workflows/api-analysis/_index.md) and [`templates/api/`](templates/api/_index.md).
 - Commit or PR prep: use [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) and [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md).
 - Dart import cleanup: use [`patterns/dart/absolute-imports.md`](patterns/dart/absolute-imports.md).
 - Build runner, generated files, or json_serializable: load [`rules/tooling/build-runner.md`](rules/tooling/build-runner.md) and [`patterns/data/json-models-json-serializable.md`](patterns/data/json-models-json-serializable.md) when available.
@@ -90,7 +91,7 @@ Each app should keep its own product-specific docs outside this toolkit:
 
 - `ai_docs/architecture.md`: app-specific core and feature boundaries.
 - `ai_docs/conventions.md`: naming, folders, and app-level exceptions.
-- `ai_specs/`: app-specific spec workspace. Prefer `ai_specs/INDEX.md`; per feature use `ai_specs/features/<feature>/README.md` (requirements) and `plan.md` (phased plan + progress). BRD in `ai_specs/brd/`; design/Figma contracts in `ai_specs/design/`. Plan with [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md); implement with [`implement-phase.md`](workflows/feature-delivery/implement-phase.md). Optional per app: `fixes/`, `integrations/`, `archive/`. Refactors/tooling: [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) + `ai_docs/`.
+- `ai_specs/`: app-specific spec workspace. Prefer `ai_specs/INDEX.md`; per feature use `ai_specs/features/<feature>/README.md` (requirements) and `plan.md` (phased plan + progress). BRD in `ai_specs/brd/`; design/Figma contracts in `ai_specs/design/`; API collection KB in `ai_specs/api/` (send `COLLECTION_HANDOFF.md` to collection owners). Plan with [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md); implement with [`implement-phase.md`](workflows/feature-delivery/implement-phase.md). Optional per app: `fixes/`, `integrations/`, `archive/`. Refactors/tooling: [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) + `ai_docs/`.
 - **Cursor Agent Skills** (optional): portable templates under [`reference/agent-skills/`](reference/agent-skills/) — copy into `.agents/skills/<name>/` in each app repo so Cursor can discover them. Keep long-form guidance in `ai_toolkit/patterns/` and `ai_toolkit/rules/`; skills should stay short and link there.
 
 The toolkit should not contain secrets, environment URLs, client IDs, or product-only architecture prose.

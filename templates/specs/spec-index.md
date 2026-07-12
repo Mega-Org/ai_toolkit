@@ -8,6 +8,7 @@ Start here before creating or loading app-specific specs.
 |------|---------|---------------|
 | `brd/` | Stable business truth from BRDs and product documents. | `brd/INDEX.md`, `analysis/`, `app_surfaces/`, `features/`, `source/` |
 | `design/` | Stable UI/nav truth from Figma (screens, flows, graph). | `design/INDEX.md`, `analysis/`, `features/`, `flows/`, `screens/`, `app_surfaces/`, `source/` |
+| `api/` | API collection truth (Postman/Apidog/OpenAPI), gaps, collection handoff. | `api/INDEX.md`, `COLLECTION_HANDOFF.md`, `analysis/`, `features/`, `source/`, `history/` |
 | `features/` | Feature requirements + execution plans. | `features/<feature>/README.md`, `features/<feature>/plan.md` |
 | `fixes/` | Optional bug investigations (per app). | `fixes/YYYY-MM-DD-short-slug/README.md` |
 | `integrations/` | Optional cross-feature external services. | `integrations/<service>/README.md` |
@@ -35,7 +36,8 @@ Last updated: YYYY-MM-DD
 
 ## Loading Rules
 
-1. Feature work: this file → `brd/INDEX.md` (if present) → `design/INDEX.md` (if present, for UI) → `features/<feature>/README.md` → `features/<feature>/plan.md`.
+1. Feature work: this file → `brd/INDEX.md` (if present) → `design/INDEX.md` (if present, for UI) → `api/INDEX.md` (if present, for HTTP contracts) → `features/<feature>/README.md` → `features/<feature>/plan.md`.
 2. Design-only UI intake: `design/INDEX.md` → glossary → feature design / screens / navigation-graph (see [`figma-analysis`](../../workflows/product-analysis/figma-analysis.md)).
-3. Fixes (optional): `fixes/.../README.md` → related feature `README.md` + BRD + design when UI-related.
-4. Mark unknowns as `TBD(owner): note`.
+3. API collection intake / handoff: `api/INDEX.md` → feature `edit-brief.md` → pack [`COLLECTION_HANDOFF.md`](../api/collection-handoff.md) (see [`api-analysis`](../../workflows/api-analysis/_index.md)).
+4. Fixes (optional): `fixes/.../README.md` → related feature `README.md` + BRD + design when UI-related.
+5. Mark unknowns as `TBD(owner): note`.
