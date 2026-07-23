@@ -15,7 +15,7 @@ Outputs live under `ai_specs/api/`. Playbooks stay in `ai_toolkit/`.
 ## Inputs
 
 1. **Snapshot** — run [`ingest-collection.md`](ingest-collection.md) first if `source/snapshot.json` is missing or stale.
-2. **App context** — `ai_docs/`, `ai_specs/INDEX.md`, `ai_specs/brd/` and `ai_specs/features/` when present (for “service not found” vs product).
+2. **App context** — `ai_docs/`, `ai_specs/INDEX.md`, `ai_specs/brd/`, `ai_specs/design/` when present, and root `ai_specs/features/` when present (for “service not found” vs product / build specs).
 3. **Templates** — [`../../templates/api/`](../../templates/api/_index.md).
 
 ## Output Shape
