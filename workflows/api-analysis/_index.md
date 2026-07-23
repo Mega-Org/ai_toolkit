@@ -2,7 +2,7 @@
 
 ## Purpose
 
-**API collection analysis and handoff**: ingest Postman, Apidog, or local OpenAPI/collection snapshots; analyze gaps per feature; reanalyze when collections change; pack one **collection handoff** file (questions + **collection edits**).
+**API collection analysis and handoff**: ingest Postman, Apidog, or local OpenAPI/collection snapshots; analyze gaps per feature; reanalyze when collections change; pack one **collection handoff** file (questions + **collection edits**); and, once endpoints are callable, **test and capture** real response examples back into the collection.
 
 Reusable playbooks and templates stay in `ai_toolkit/`. Project facts live in each app's `ai_specs/api/`.
 
@@ -15,6 +15,9 @@ Reusable playbooks and templates stay in `ai_toolkit/`. Project facts live in ea
 | One feature only | [`feature-api-report.md`](feature-api-report.md) |
 | Ingest / refresh snapshot only | [`ingest-collection.md`](ingest-collection.md) |
 | Build file to send to collection owners | [`pack-collection-handoff.md`](pack-collection-handoff.md) |
+| Run endpoints + save real response examples | [`test-and-capture.md`](test-and-capture.md) |
+
+Full end-to-end order (sources → build): [`../full-pipeline.md`](../full-pipeline.md).
 
 ### Typical loop
 
@@ -23,6 +26,7 @@ Reusable playbooks and templates stay in `ai_toolkit/`. Project facts live in ea
 3. **Pack** → `ai_specs/api/COLLECTION_HANDOFF.md` ← **send this one file**
 4. Owners answer questions + apply **collection** edits in Apidog/Postman
 5. **Reanalyze** → pack again to confirm gaps closed
+6. **Test & capture** (once endpoints are callable) → save real success/error examples into the collection + a redacted log under `features/*/captured/`
 
 ### Where the handoff file is
 
@@ -49,12 +53,14 @@ ai_specs/api/features/<feature>/edit-brief.md
 | [`reanalyze-collection.md`](reanalyze-collection.md) | Diff-driven update when the collection changes |
 | [`feature-api-report.md`](feature-api-report.md) | Deep dive / refresh for one feature |
 | [`pack-collection-handoff.md`](pack-collection-handoff.md) | Merge edit-briefs into `COLLECTION_HANDOFF.md` |
+| [`test-and-capture.md`](test-and-capture.md) | Run endpoints, capture real success/error responses, save examples into the collection |
 
 ## References
 
 - Templates: [`../../templates/api/`](../../templates/api/_index.md)
 - App README skeleton: [`../../templates/api/api-readme.md`](../../templates/api/api-readme.md)
 - BRD cross-check: [`../product-analysis/brd-analysis.md`](../product-analysis/brd-analysis.md)
+- Expected needs input (Service-not-found detection): [`../product-analysis/screen-data-analysis.md`](../product-analysis/screen-data-analysis.md) → `ai_specs/api/screen-requirements/`
 - Build specs (separate): root `ai_specs/features/<feature>/` via [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md) — do not put `plan.md` under `api/features/`.
 - Layer map: [`../../templates/specs/spec-index.md`](../../templates/specs/spec-index.md)
 - Workflow layout: [`../README.md`](../README.md)

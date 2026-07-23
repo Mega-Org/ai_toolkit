@@ -43,6 +43,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 
 | Task | Start with |
 |------|------------|
+| Understand the whole flow (sources → build) | [`workflows/full-pipeline.md`](workflows/full-pipeline.md) — new-user end-to-end map (BRD → Figma → screen data → API → build) |
 | Start or resume a session | [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md) |
 | Plan a feature from a spec | [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md) — **ask-before-proceed** on gaps/conflicts; preflight: [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`make-plan --no-commits`** to skip) |
 | Implement one phase | [`workflows/feature-delivery/implement-phase.md`](workflows/feature-delivery/implement-phase.md) — **ask-before-proceed** on phase blockers; preflight: [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), then [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`implement-phase --no-commits`** to skip Git preflight only) |
@@ -59,7 +60,9 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Show open TODOs | [`workflows/worklog/todo-list.md`](workflows/worklog/todo-list.md) |
 | Analyze a BRD or product source | [`workflows/product-analysis/brd-analysis.md`](workflows/product-analysis/brd-analysis.md) — templates: [`templates/brd/_index.md`](templates/brd/_index.md) |
 | Analyze Figma / design for screens, flows, and nav graph | [`workflows/product-analysis/figma-analysis.md`](workflows/product-analysis/figma-analysis.md) — templates: [`templates/design/_index.md`](templates/design/_index.md) |
+| Derive what each screen needs from the API (design → API bridge) | [`workflows/product-analysis/screen-data-analysis.md`](workflows/product-analysis/screen-data-analysis.md) → `ai_specs/api/screen-requirements/` (planning-only; not loaded during implementation) |
 | Analyze / reanalyze API collection (Postman, Apidog, OpenAPI) | [`workflows/api-analysis/_index.md`](workflows/api-analysis/_index.md) — full: [`analyze-collection.md`](workflows/api-analysis/analyze-collection.md); update: [`reanalyze-collection.md`](workflows/api-analysis/reanalyze-collection.md); pack handoff: [`pack-collection-handoff.md`](workflows/api-analysis/pack-collection-handoff.md) — templates: [`templates/api/_index.md`](templates/api/_index.md) |
+| Run endpoints + save real response examples into the collection | [`workflows/api-analysis/test-and-capture.md`](workflows/api-analysis/test-and-capture.md) — after API is callable; safety-gated (non-prod default, redact secrets/PII) |
 | Create or configure a Flutter app | [`setup/new-flutter-app.md`](setup/new-flutter-app.md) |
 | Work in a Melos repo | [`setup/melos-monorepo.md`](setup/melos-monorepo.md) |
 | Configure CI | [`setup/ci-github-gitlab.md`](setup/ci-github-gitlab.md) |

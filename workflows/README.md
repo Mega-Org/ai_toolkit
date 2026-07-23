@@ -4,14 +4,16 @@
 
 **Ordered playbooks** for sessions, feature delivery, maintenance, and git-aligned commits. This folder uses **`workflows/`** (not `commands/`) so naming stays tool-neutral; intent matches command-style playbooks in some AI products. Task routing tables also appear in [`INDEX.md`](../INDEX.md).
 
+**New here? Start with the end-to-end map:** [`full-pipeline.md`](full-pipeline.md) — how every workflow fits together, in order (BRD → Figma → screen data → API → build), with the exact phrase to say at each step.
+
 ## Subfolders by intent
 
 | Subfolder | Role | Overview |
 |-----------|------|----------|
 | [`session/`](session/_index.md) | Start or resume a session; load context in a fixed order | [`session/_index.md`](session/_index.md) |
 | [`feature-delivery/`](feature-delivery/_index.md) | Spec-driven planning, phased implementation, verify / PR — writes **build** layer `ai_specs/features/` | [`feature-delivery/_index.md`](feature-delivery/_index.md) |
-| [`product-analysis/`](product-analysis/_index.md) | Turn BRDs, Figma, and product sources into app-specific AI-readable specs (`brd/`, `design/`) | [`product-analysis/_index.md`](product-analysis/_index.md) |
-| [`api-analysis/`](api-analysis/_index.md) | Ingest/analyze/reanalyze API collections; pack collection handoff (questions + collection edits) | [`api-analysis/_index.md`](api-analysis/_index.md) |
+| [`product-analysis/`](product-analysis/_index.md) | Turn BRDs, Figma, and product sources into app-specific AI-readable specs (`brd/`, `design/`, `api/screen-requirements/`) | [`product-analysis/_index.md`](product-analysis/_index.md) |
+| [`api-analysis/`](api-analysis/_index.md) | Ingest/analyze/reanalyze API collections; pack collection handoff (questions + collection edits); test & capture real response examples | [`api-analysis/_index.md`](api-analysis/_index.md) |
 | [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades, normalize assets | [`maintenance/_index.md`](maintenance/_index.md) |
 | [`git/`](git/_index.md) | Commit before plan/phase work; commits after phases | [`git/_index.md`](git/_index.md) |
 | [`worklog/`](worklog/README.md) | Daily worklog, TODOs, management reports | [`worklog/README.md`](worklog/README.md) |

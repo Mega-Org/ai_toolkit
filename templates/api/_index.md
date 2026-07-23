@@ -20,8 +20,12 @@ Reusable skeletons for app-specific API **collection** knowledge bases. Copy int
 | [`edit-brief.md`](edit-brief.md) | Per-feature **collection** edits + questions (pack source) |
 | [`collection-handoff.md`](collection-handoff.md) | Single file sent to collection owners |
 | [`reanalysis-delta.md`](reanalysis-delta.md) | History entry after reanalyze |
+| [`response-capture-log.md`](response-capture-log.md) | Per-feature log of real captured responses (from test-and-capture) |
+| [`screen-requirement.md`](screen-requirement.md) | Per-screen expected data + API needs (design → API bridge; planning-only) |
 
 ## References
 
 - Workflows: [`../../workflows/api-analysis/_index.md`](../../workflows/api-analysis/_index.md)
 - Pack handoff: [`../../workflows/api-analysis/pack-collection-handoff.md`](../../workflows/api-analysis/pack-collection-handoff.md)
+- Test & capture: [`../../workflows/api-analysis/test-and-capture.md`](../../workflows/api-analysis/test-and-capture.md)
+- Screen data analysis (design → API): [`../../workflows/product-analysis/screen-data-analysis.md`](../../workflows/product-analysis/screen-data-analysis.md)
