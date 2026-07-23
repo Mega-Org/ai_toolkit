@@ -12,7 +12,7 @@
 | [`feature-delivery/`](feature-delivery/_index.md) | Spec-driven planning, phased implementation, verify / PR — writes **build** layer `ai_specs/features/` | [`feature-delivery/_index.md`](feature-delivery/_index.md) |
 | [`product-analysis/`](product-analysis/_index.md) | Turn BRDs, Figma, and product sources into app-specific AI-readable specs (`brd/`, `design/`) | [`product-analysis/_index.md`](product-analysis/_index.md) |
 | [`api-analysis/`](api-analysis/_index.md) | Ingest/analyze/reanalyze API collections; pack collection handoff (questions + collection edits) | [`api-analysis/_index.md`](api-analysis/_index.md) |
-| [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades | [`maintenance/_index.md`](maintenance/_index.md) |
+| [`maintenance/`](maintenance/_index.md) | Bugs, refactors, dependency upgrades, normalize assets | [`maintenance/_index.md`](maintenance/_index.md) |
 | [`git/`](git/_index.md) | Commit before plan/phase work; commits after phases | [`git/_index.md`](git/_index.md) |
 | [`worklog/`](worklog/README.md) | Daily worklog, TODOs, management reports | [`worklog/README.md`](worklog/README.md) |
 | [`integration/`](integration/_index.md) | Cross-cutting integrations (Firebase RC store-ops, etc.) | [`integration/_index.md`](integration/_index.md) |

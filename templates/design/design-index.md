@@ -11,18 +11,19 @@
 
 1. Start here before planning or implementing UI for a feature.
 2. Load `analysis/glossary.md` when naming screens, routing, or matching Figma frame labels.
-3. Load `analysis/navigation-graph.md` when adding or changing routes.
-4. Load the routed feature design file, relevant screen nodes, and flow files.
-5. Load BRD (`ai_specs/brd/`) for business rules; do not treat design files as business policy.
-6. Treat this knowledge base as UI/nav truth unless a newer approved design or user decision overrides it.
-7. Report conflicts, extensions, and missing frames before implementation.
-8. Do not implement edges marked `assumed` or `broken` unless the user accepts them.
+3. Load `analysis/icons-catalog.md` / `analysis/images-catalog.md` when choosing assets (description + use when / avoid).
+4. Load `analysis/navigation-graph.md` when adding or changing routes.
+5. Load the routed feature design file, relevant screen nodes, and flow files.
+6. Load BRD (`ai_specs/brd/`) for business rules; do not treat design files as business policy.
+7. Treat this knowledge base as UI/nav truth unless a newer approved design or user decision overrides it.
+8. Report conflicts, extensions, and missing frames before implementation.
+9. Do not implement edges marked `assumed` or `broken` unless the user accepts them.
 
 ## Knowledge Map
 
 ### Cross-Cutting Analysis
 
-- Link glossary, design-system, navigation-graph, coverage, and optional figma-hygiene.
+- Link glossary, design-system, navigation-graph, coverage, optional figma-hygiene, and asset catalogs (`icons-catalog.md`, `images-catalog.md`) when present.
 
 ### Feature Design Contracts
 

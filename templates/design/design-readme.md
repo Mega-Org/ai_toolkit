@@ -14,7 +14,8 @@ UI, screen inventory, navigation graph, and feature-clustered design contracts f
 
 1. Read [`INDEX.md`](INDEX.md) for task routing.
 2. Load `analysis/glossary.md` and `analysis/navigation-graph.md` when naming or routing.
-3. Load the feature design file and only the screen nodes needed for the task.
+3. Load `analysis/icons-catalog.md` / `analysis/images-catalog.md` when choosing assets (see toolkit `normalize-assets` workflow).
+4. Load the feature design file and only the screen nodes needed for the task.
 
 ## Source
 

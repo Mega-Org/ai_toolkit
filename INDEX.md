@@ -50,6 +50,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Fix a bug | [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md) — Modes: chat (`bugfix:`), QA intake (`bugfix from tester report`), resume fix folder; persists `ai_specs/fixes/.../request.md` |
 | Refactor existing code | [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) |
 | Upgrade dependencies | [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) |
+| Normalize icons / images (scoped rename + catalogs) | [`workflows/maintenance/normalize-assets.md`](workflows/maintenance/normalize-assets.md) — catalogs → `ai_specs/design/analysis/icons-catalog.md` / `images-catalog.md` |
 | Commit before plan or phase | [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) |
 | Commit after a phase | [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) |
 | Setup daily worklog | [`workflows/worklog/setup-worklog.md`](workflows/worklog/setup-worklog.md) — templates: [`templates/worklog/_index.md`](templates/worklog/_index.md) |
@@ -94,7 +95,7 @@ Structured map of all rule areas: [`rules/_index.md`](rules/_index.md).
 | Theme (`ThemeManager`, tokens, `MaterialApp`) | [`rules/core/theme.md`](rules/core/theme.md); color naming on `AppTheme`: [`rules/core/app-theme-color-tokens.md`](rules/core/app-theme-color-tokens.md) |
 | Typography (`TextStyles`) | [`rules/core/text-styles.md`](rules/core/text-styles.md) |
 | Router | [`rules/core/router.md`](rules/core/router.md) |
-| Values, dimensions, flutter_gen, constants, responsive numbers, **`assets/icons/`** filenames (`*_ic.svg`) | [`rules/core/config.md`](rules/core/config.md); layout wiring: [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
+| Values, dimensions, flutter_gen, constants, responsive numbers, **`assets/icons/`** filenames (`*_ic.svg` / `*-ic.svg`) | [`rules/core/config.md`](rules/core/config.md); normalize + catalogs: [`workflows/maintenance/normalize-assets.md`](workflows/maintenance/normalize-assets.md); layout wiring: [`patterns/flutter/responsive-and-layout.md`](patterns/flutter/responsive-and-layout.md) |
 | `Async<T>` presentation state; **`final`** on submit/param arguments where not reassigned | [`rules/core/async.md`](rules/core/async.md) |
 | Localization | [`rules/core/localization.md`](rules/core/localization.md) |
 | Services and utilities | [`rules/core/services.md`](rules/core/services.md), [`rules/core/utils.md`](rules/core/utils.md) |

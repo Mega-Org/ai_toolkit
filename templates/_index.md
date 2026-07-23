@@ -9,7 +9,7 @@ Reusable Markdown skeletons for app-specific specs and documentation. Templates 
 | Folder | Topic |
 |--------|-------|
 | [`brd/`](brd/_index.md) | BRD knowledge base, feature business contract, and app-surface spec templates |
-| [`design/`](design/_index.md) | Figma/design knowledge base, navigation graph, screen nodes, and feature design templates |
+| [`design/`](design/_index.md) | Figma/design knowledge base, navigation graph, screen nodes, feature design templates, icon/image catalogs |
 | [`api/`](api/_index.md) | API collection KB, per-feature gaps/edit-briefs, and collection handoff template |
 | [`specs/`](specs/_index.md) | Root `ai_specs/` README + INDEX, feature **build** specs, fix, and integration templates |
 | [`worklog/`](worklog/_index.md) | Root `ai_worklog/` daily tracking, TODOs, and saved reports |

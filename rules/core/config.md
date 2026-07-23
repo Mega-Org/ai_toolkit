@@ -66,17 +66,27 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 
 These rules apply to **new** icons added under **`assets/icons/`** (vector or raster UI icons). Other trees (**`popular_sites_icons/`**, **`launcher_icon/`**, **`native_splash/`**, etc.) keep their own conventions unless this app standardizes them separately.
 
+**Separator style:** pick **one** per app and lock it in **`ai_docs/conventions.md`**:
+
+| Style | SVG pattern | Examples |
+|-------|-------------|----------|
+| **Snake** (toolkit default) | **`<name>_ic.svg`** — `name` uses **`_`** only | **`home_ic.svg`**, **`chevron_right_ic.svg`**, **`home_01_ic.svg`** |
+| **Kebab** (allowed if the app locks it) | **`<name>-ic.svg`** — `name` uses **`-`** only | **`home-ic.svg`**, **`chevron-right-ic.svg`**, **`home-01-ic.svg`** |
+
 | Format | Filename rule |
 |--------|----------------|
-| **SVG** | **Must** be **`<name>_ic.svg`**: **`name`** is **snake_case**, ASCII **`a-z`**, **`0-9`**, **`_`** only (no spaces). Examples: **`home_ic.svg`**, **`chevron_right_ic.svg`**. |
-| **PNG** | **Prefer** the same pattern: **`<name>_ic.png`** when the file is a **bitmap icon** (same role as an SVG icon). **May** use a different **snake_case** name only when it stays **clear and stable** (e.g. **`notification_badge_small.png`**) — avoid vague names like **`icon1.png`**. |
+| **SVG** | **Must** end with the icon suffix (**`_ic.svg`** or **`-ic.svg`** per app lock). **`name`** is lowercase ASCII **`a-z`**, **`0-9`**, and only the locked separator (no spaces). |
+| **PNG** | **Prefer** the same pattern when the file is a **bitmap icon** (same role as an SVG icon). **May** use a different stable lowercase name only when clear (e.g. **`notification_badge_small.png`**) — avoid vague names like **`icon1.png`**. |
+
+**Images** (not icons): under **`assets/images/<area>/`**, use meaningful lowercase names **without** the icon suffix — see [`../../workflows/maintenance/normalize-assets.md`](../../workflows/maintenance/normalize-assets.md).
 
 **Must-not**
 
-- Do not omit the **`_ic`** suffix on **SVG** files in **`assets/icons/`**.
-- Do not use **PascalCase**, **camelCase**, or **mixed-case** in filenames (flutter_gen and imports stay predictable with **snake_case**).
+- Do not omit the icon suffix (**`_ic`** / **`-ic`**) on **SVG** files in **`assets/icons/`**.
+- Do not mix kebab and snake in the same app’s `assets/icons/` tree.
+- Do not use **PascalCase**, **camelCase**, or **mixed-case** in filenames (e.g. **`…-Ic.svg`**).
 
-After adding or renaming files here, run codegen and expose symbols only through **`assets_getters.dart`** as usual.
+After adding or renaming files here, run codegen and expose symbols only through **`assets_getters.dart`** as usual. For scoped renames + AI catalogs: [`../../workflows/maintenance/normalize-assets.md`](../../workflows/maintenance/normalize-assets.md) → `ai_specs/design/analysis/icons-catalog.md`.
 
 ### flutter_gen (behind `assets_getters.dart`)
 
@@ -115,5 +125,5 @@ Run from the **app repo root** (where **`pubspec.yaml`** lives). Fix **`pubspec`
 - **Do not** hand-edit **`assets.gen.dart`**.
 - **Do not** use raw asset path **strings** in UI when an **`assets_getters.dart`** entry exists or should be added for that file.
 - **Do not** import or reference **generated** asset classes from **`assets.gen.dart`** in feature code — only **`assets_getters.dart`** getters (**`AppIcons`**, **`AppImages`**, …).
-- **New SVG icons** under **`assets/icons/`** must follow **`<name>_ic.svg`** (see [Icon files under `assets/icons/`](#icon-files-under-assetsicons)).
+- **New SVG icons** under **`assets/icons/`** must follow the app-locked **`<name>_ic.svg`** or **`<name>-ic.svg`** pattern (see [Icon files under `assets/icons/`](#icon-files-under-assetsicons)).
 - Prefer **tokens** (**`Dimensions`**, **`TextStyles`**, **`AppColors`**) over magic numbers and inline **`TextStyle(...)`** duplicates.

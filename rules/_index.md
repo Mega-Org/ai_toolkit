@@ -37,7 +37,7 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Theme (`ThemeManager`, `AppTheme`, `MaterialApp`) | [`core/theme.md`](core/theme.md); **`AppTheme` color naming** — [`core/app-theme-color-tokens.md`](core/app-theme-color-tokens.md) |
 | Typography (`TextStyles`, `AppFonts`) | [`core/text-styles.md`](core/text-styles.md); surface with dimensions — [`core/config.md`](core/config.md) |
 | Router | [`core/router.md`](core/router.md) |
-| Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md) (includes **`assets/icons/`** naming: **`*_ic.svg`** / prefer **`*_ic.png`**); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
+| Values, dimensions, assets, constants, responsive tiers | [`core/config.md`](core/config.md) (includes **`assets/icons/`** naming: **`*_ic.svg`** or **`*-ic.svg`**); normalize + catalogs: [`../workflows/maintenance/normalize-assets.md`](../workflows/maintenance/normalize-assets.md); [`patterns/flutter/responsive-and-layout.md`](../patterns/flutter/responsive-and-layout.md) |
 | Localization | [`core/localization.md`](core/localization.md) |
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
 | Broadcast observer hub (singleton updater + observers; not a global event bus) | [`../patterns/state/broadcast-observer-hub.md`](../patterns/state/broadcast-observer-hub.md); **presentation only** — [`architecture/observer-presentation-only.md`](architecture/observer-presentation-only.md) |

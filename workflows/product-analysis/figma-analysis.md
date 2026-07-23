@@ -35,6 +35,8 @@ ai_specs/design/
     navigation-graph.md
     coverage.md
     figma-hygiene.md          # optional; design-facing backlog
+    icons-catalog.md          # optional; from normalize-assets workflow
+    images-catalog.md         # optional; from normalize-assets workflow
   features/
   flows/
   screens/
