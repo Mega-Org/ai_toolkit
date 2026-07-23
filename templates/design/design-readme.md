@@ -7,7 +7,7 @@ UI, screen inventory, navigation graph, and feature-clustered design contracts f
 ## Not This Folder
 
 - Business rules, eligibility, MVP product scope → `ai_specs/brd/` when present.
-- Implementation requirements, APIs, Bloc/Cubit, phased plans → `ai_specs/features/<feature>/`.
+- **Build** layer (implementation requirements, APIs, Bloc/Cubit, phased plans) → root `ai_specs/features/<feature>/` (`README.md` + `plan.md`) — not this folder’s `features/<slug>.md`.
 - Flutter widgets, token Dart code, and layout trees → app source; map from design-system notes at implement time.
 
 ## Start Here

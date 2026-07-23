@@ -37,7 +37,7 @@ If a referenced path has not been created yet, treat the path as the intended co
 4. Load enforceable rules from `ai_toolkit/rules/`.
 5. Load implementation examples from `ai_toolkit/patterns/`.
 6. Load command aliases from `ai_toolkit/alias/` only when running commands.
-7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/INDEX.md` first, then `ai_specs/features/<feature>/README.md` and `plan.md` for feature delivery; BRD under `ai_specs/brd/` when product rules apply; design under `ai_specs/design/` when UI/Figma contracts apply; API under `ai_specs/api/` when collection/OpenAPI contracts apply (`COLLECTION_HANDOFF.md` for collection owners). For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
+7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/README.md` (layer map) and `ai_specs/INDEX.md` (feature matrix) first, then `ai_specs/features/<feature>/README.md` and `plan.md` for **build** / feature delivery; BRD under `ai_specs/brd/` when product rules apply; design under `ai_specs/design/` when UI/Figma contracts apply; API under `ai_specs/api/` when collection/OpenAPI contracts apply (`COLLECTION_HANDOFF.md` for collection owners). Do not confuse analysis `*/features/` trees with root `ai_specs/features/` (implementation + progress). For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
 
 ## Task routing
 

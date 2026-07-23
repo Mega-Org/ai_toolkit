@@ -24,13 +24,13 @@ Use **lite** or **full** bootstrap as described in `INDEX.md`. Full bootstrap is
 4. **Patterns** — Load `patterns/_index.md`, then the subfolder `_index.md` (for example `patterns/data/_index.md`) and leaf files for the stack areas in play.
 5. **Aliases** — Read `alias/_index.md` and the linked alias files only when you will run shell commands that rely on those shortcuts.
 6. **App docs** — If the repo has `ai_docs/` (for example `ai_docs/architecture.md`, `ai_docs/conventions.md`), read them before changing boundaries between core and features or naming conventions.
-7. **Active feature spec** — For spec-driven feature work, load from the app repo (not this toolkit): `ai_specs/INDEX.md` (if present) → BRD `ai_specs/brd/INDEX.md` when business rules apply → design `ai_specs/design/INDEX.md` when UI/Figma applies → `ai_specs/features/<feature>/README.md` → `ai_specs/features/<feature>/plan.md`. Use `plan.md` for the current phase and progress; use `README.md` for requirements and contracts. For design-only intake, use [`../product-analysis/figma-analysis.md`](../product-analysis/figma-analysis.md).
+7. **Active feature spec** — For spec-driven feature work, load from the app repo (not this toolkit): `ai_specs/README.md` (optional layer map) → `ai_specs/INDEX.md` (if present; feature matrix) → BRD `ai_specs/brd/INDEX.md` when business rules apply → design `ai_specs/design/INDEX.md` when UI/Figma applies → API `ai_specs/api/INDEX.md` when HTTP contracts apply → **build** `ai_specs/features/<feature>/README.md` → `ai_specs/features/<feature>/plan.md`. Use `plan.md` for the current phase and progress; use `README.md` for requirements and contracts. Root `features/` is the build layer — not `brd/features/`, `design/features/`, or `api/features/`. For design-only intake, use [`../product-analysis/figma-analysis.md`](../product-analysis/figma-analysis.md).
 8. **Worklog (optional, read-only)** — If `ai_worklog/` exists: `ai_worklog/INDEX.md` → today's `ai_worklog/daily/YYYY-MM-DD.md` → `ai_worklog/TODOS.md`. Update only when the user asks (`update worklog`, report commands) or when the active workflow requires it (`make-plan`, `implement-phase`).
 
 ### Resume mid-task
 
 - Re-read `INDEX.md` and [`README.md`](../../README.md) for defaults and boundaries.
-- Re-open the workflow from step 2 above and the active feature’s `README.md` + `plan.md` under `ai_specs/features/<feature>/`.
+- Re-open the workflow from step 2 above and the active feature’s **build** `README.md` + `plan.md` under `ai_specs/features/<feature>/`.
 - Pull in additional rules (`rules/_index.md`) or patterns (`patterns/_index.md`) only when the task expands into new areas.
 
 ### Missing paths

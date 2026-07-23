@@ -4,6 +4,8 @@
 
 **Product and design-source analysis**: turn durable sources such as BRDs and Figma files into small, AI-readable contracts that app teams can use during planning and implementation.
 
+These workflows write **analysis truth** under `ai_specs/brd/` and `ai_specs/design/`. Flutter **build** specs (`README.md` + `plan.md`) stay under root `ai_specs/features/` via [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md).
+
 ## Contents
 
 | File | Topic |
@@ -15,6 +17,6 @@
 
 - BRD templates: [`../../templates/brd/`](../../templates/brd/)
 - Design templates: [`../../templates/design/`](../../templates/design/)
-- App specs live under each repo's `ai_specs/` (not in this toolkit).
+- App specs live under each repo's `ai_specs/` (not in this toolkit). Layer map: [`../../templates/specs/spec-index.md`](../../templates/specs/spec-index.md).
 - Workflow layout: [`../README.md`](../README.md)
-- Feature handoff: [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md)
+- Feature handoff (build layer): [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md)

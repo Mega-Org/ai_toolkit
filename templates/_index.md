@@ -11,7 +11,7 @@ Reusable Markdown skeletons for app-specific specs and documentation. Templates 
 | [`brd/`](brd/_index.md) | BRD knowledge base, feature business contract, and app-surface spec templates |
 | [`design/`](design/_index.md) | Figma/design knowledge base, navigation graph, screen nodes, and feature design templates |
 | [`api/`](api/_index.md) | API collection KB, per-feature gaps/edit-briefs, and collection handoff template |
-| [`specs/`](specs/_index.md) | Root `ai_specs/` routing, feature implementation, fix, change, and integration spec templates |
+| [`specs/`](specs/_index.md) | Root `ai_specs/` README + INDEX, feature **build** specs, fix, and integration templates |
 | [`worklog/`](worklog/_index.md) | Root `ai_worklog/` daily tracking, TODOs, and saved reports |
 | [`tooling/rc-admin/`](tooling/rc-admin/README.md) | Local Firebase RC admin scaffold (store review + updater) |
 | [`docs/integration-manifest.md`](docs/integration-manifest.md) | App integration manifest for RC store-ops |

@@ -55,4 +55,9 @@ ai_specs/api/features/<feature>/edit-brief.md
 - Templates: [`../../templates/api/`](../../templates/api/_index.md)
 - App README skeleton: [`../../templates/api/api-readme.md`](../../templates/api/api-readme.md)
 - BRD cross-check: [`../product-analysis/brd-analysis.md`](../product-analysis/brd-analysis.md)
+- Build specs (separate): root `ai_specs/features/<feature>/` via [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md) — do not put `plan.md` under `api/features/`.
+- Layer map: [`../../templates/specs/spec-index.md`](../../templates/specs/spec-index.md)
 - Workflow layout: [`../README.md`](../README.md)
+
+**Naming:** `ai_specs/api/analysis/workflows.md` = API **journeys**. This folder (`workflows/api-analysis/`) = agent **playbooks**.
+

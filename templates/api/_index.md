@@ -12,7 +12,7 @@ Reusable skeletons for app-specific API **collection** knowledge bases. Copy int
 | [`api-index.md`](api-index.md) | Master index, collection IDs, feature map |
 | [`snapshot-meta.md`](snapshot-meta.md) | Snapshot source metadata + hash |
 | [`inventory.md`](inventory.md) | Flat operation inventory |
-| [`workflows.md`](workflows.md) | Multi-step API journeys |
+| [`workflows.md`](workflows.md) | Multi-step **API journeys** → `analysis/workflows.md` (not agent playbooks) |
 | [`gaps-index.md`](gaps-index.md) | Rollup of gaps by feature |
 | [`feature-overview.md`](feature-overview.md) | Per-feature overview |
 | [`feature-endpoints.md`](feature-endpoints.md) | Per-feature endpoint table |

@@ -2,8 +2,9 @@
 
 Status: draft
 Type: feature
-Related BRD: `ai_specs/brd/features/<feature>.md`
-Related design: `ai_specs/design/features/<feature>.md`
+Related BRD: `ai_specs/brd/features/<feature>.md` or `none`
+Related design: `ai_specs/design/features/<feature>.md` or `none`
+Related API: `ai_specs/api/features/<feature>/` or `none`
 Surfaces: customer | provider | admin
 Owner: product | design | backend | frontend
 Last updated: YYYY-MM-DD

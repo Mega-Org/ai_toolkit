@@ -24,8 +24,8 @@ ai_specs/api/
   INDEX.md                  ← collection IDs + feature map
   COLLECTION_HANDOFF.md     ← ★ send THIS (collection-scoped)
   source/snapshot.json      ← local OpenAPI/collection (usually not for owners)
-  analysis/                 ← inventory, gaps-index, workflows
-  features/<feature>/       ← team + AI; edit-brief.md feeds the pack
+  analysis/                 ← inventory, gaps-index, journeys (`workflows.md` = API journeys, not agent playbooks)
+  features/<feature>/       ← collection KB for this slug (not root `ai_specs/features/` build specs)
   history/                  ← reanalysis deltas
   handoff/                  ← optional dated copies of handoff
 ```
