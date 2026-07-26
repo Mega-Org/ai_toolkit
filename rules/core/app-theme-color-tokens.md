@@ -28,7 +28,7 @@ Define **how to name and place new colors** in `lib/core/configs/theme/values/ap
 
 4. **Text / foreground neutrals**
    - Theme-driven copy: keep using **`text`**, **`text1`**, **`text2`**, **`text3`**, **`hintColor`** when they match.
-   - Additional grey steps: use a **numeric tone ladder** — **`textTone550`**, **`textTone600`**, **`textTone700`**, … — where **higher = stronger / typically darker** body contrast on light surfaces. Extend the ladder as needed; do not skip numbers arbitrarily without checking Figma.
+   - Additional muted / inactive greys: use **`unactive`**, **`secondary*`**, or **`neutral*`** stops. Prefer an existing scale stop over inventing a one-off tone name.
 
 5. **Palette scales** (primary, secondary, success, red, warning, …)
    - Insert intermediate steps as **`success450`**, **`primary350`**, etc., **between** existing stops when design lands between two shades.
@@ -38,7 +38,7 @@ Define **how to name and place new colors** in `lib/core/configs/theme/values/ap
    - If a token must differ by theme, use **`abstract final`** in `AppTheme` and implement in `LightTheme` / `DarkTheme`. Static finals stay identical across themes until you split them.
 
 7. **File organization**
-   - Keep **`app_theme.dart`** grouped: abstract semantic colors → shared `final` scales (secondary greys, reds, success, …) → **app-wide static tokens** (background steps, `surfaceDark`, `textTone*`) → gradients.
+   - Keep **`app_theme.dart`** grouped: abstract semantic colors → shared `final` scales (secondary greys, reds, success, …) → **app-wide static tokens** (background steps, `surfaceDark`, `unactive`) → gradients.
    - Short section comments are encouraged; avoid duplicating long essays in multiple repos—link here instead.
 
 ## Checklist before merging a new color
