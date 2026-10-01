@@ -10,6 +10,28 @@ It does not load `TEAM_GUIDE.md` or `examples/`.
 
 Pending work comes from grepping `^Status:` in the plan. It does not read the whole plan to find progress. Primary plans are `ai_specs/features/<feature>/plan.md`.
 
+A Cursor plan (YAML `todos:`) also loads `features/cursor-plans.md`. Feature plans do not.
+
+## Cursor plans
+
+`/autopilot-plan` also accepts `~/.cursor/plans/*.plan.md` or `.cursor/plans/*.plan.md`. Those runs follow `features/cursor-plans.md` instead of Status, the phase context pack, and memory.
+
+Optional tags sit in the to-do `content`:
+
+| Tag | Meaning |
+|-----|---------|
+| `[light]`, `[standard]`, `[deep]` | Effort, mapped with `autopilot_models`. No tag counts as `standard`. Up to 3 consecutive `[light]` to-dos share one subagent (Direct and Safe). |
+| `[load: ui, nav]` | LOADMAP tags when the to-do touches `lib/`. No tag: the child loads no toolkit cards beyond the core digest. |
+| `[see: ## heading]` | Plan section the child reads. No tag: the Decisions section plus the section that mentions the to-do id or its main file path. A plan body over 8 KB is not sent whole. |
+| `[skip]` | Leave the to-do for you (a manual check, for example). |
+
+```yaml
+todos:
+  - id: install-script
+    content: "[deep] [load: data] [see: ## 2. New apps and reinstalls] Create setup/install-vscode-search.sh ..."
+    status: pending
+```
+
 ## Phase child
 
 Each launch gets a context pack: phase number, `Load`, `Inputs` (including reply `#ID`s), `Touches`, and the feature `memory.md` path. The child uses the lean implement-phase loader with `--no-commits`, runs the analyzer on `Touches`, and returns 10 lines or fewer: status, files, analyzer, new memory facts, blockers.

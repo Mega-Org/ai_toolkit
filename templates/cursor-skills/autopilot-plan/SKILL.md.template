@@ -21,6 +21,7 @@ Implements: ai_toolkit/workflows/feature-delivery/autopilot-phases.md
 |------|-------------|
 | `direct` (default) | `modes/direct-mode.md` only |
 | `safe` or `cloud` | that mode file + `features/commit-strategies.md` |
+| Cursor plan (YAML `todos:`) | also `features/cursor-plans.md` |
 
 `features/merge-strategies.md` and `features/conflict-detection.md` only if the user later asks to merge, and only in Safe or Cloud.
 
@@ -30,7 +31,7 @@ Implements: ai_toolkit/workflows/feature-delivery/autopilot-phases.md
 /autopilot-plan <feature|plan-path> [direct|safe|cloud]
 ```
 
-Autopilot is for `ai_specs` feature plans only: `ai_specs/features/<feature>/plan.md`. Example: `/autopilot-plan ai_specs/features/orders/plan.md direct`. Given a `~/.cursor/plans/*.plan.md`, stop and point to Cursor's Build button. Missing path → stop and ask.
+Feature plans use the rules below. A Cursor plan (YAML `todos:`) also loads `features/cursor-plans.md` and follows it instead of Status, Context pack and Memory. Example: `/autopilot-plan ai_specs/features/orders/plan.md direct`. Missing path → stop and ask.
 
 Named mode skips the menu. Otherwise show this and wait. Do not assume Safe or Cloud.
 

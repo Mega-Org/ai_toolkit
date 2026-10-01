@@ -39,6 +39,48 @@ else
   warn ".cursorindexingignore missing (run ai_toolkit/setup/install-ignore.sh)"
 fi
 
+# --- search.exclude keys from templates/vscode/search-exclude.json ---
+if [ ! -f "ai_toolkit/templates/vscode/search-exclude.json" ]; then
+  warn "ai_toolkit/templates/vscode/search-exclude.json missing"
+elif [ ! -f "ai_toolkit/setup/install-vscode-search.sh" ]; then
+  warn "ai_toolkit/setup/install-vscode-search.sh missing"
+else
+  if ! search_report=$(bash "ai_toolkit/setup/install-vscode-search.sh" --check); then
+    warn ".vscode/settings.json search.exclude check failed (run ai_toolkit/setup/install-vscode-search.sh)"
+  else
+    missing_keys=""
+    saw_ok=0
+    while IFS= read -r line; do
+      [ -z "$line" ] && continue
+      case "$line" in
+        ok) saw_ok=1 ;;
+        absent)
+          warn ".vscode/settings.json missing (run ai_toolkit/setup/install-vscode-search.sh)"
+          ;;
+        unsafe)
+          warn ".vscode/settings.json search.exclude could not be read (run ai_toolkit/setup/install-vscode-search.sh)"
+          ;;
+        missing$'\t'*)
+          key="${line#missing$'\t'}"
+          if [ -n "$missing_keys" ]; then
+            missing_keys="$missing_keys, $key"
+          else
+            missing_keys="$key"
+          fi
+          ;;
+        *)
+          warn "search.exclude check: $line"
+          ;;
+      esac
+    done <<< "$search_report"
+    if [ -n "$missing_keys" ]; then
+      warn ".vscode/settings.json missing search.exclude keys: $missing_keys (run ai_toolkit/setup/install-vscode-search.sh)"
+    elif [ "$saw_ok" -eq 1 ]; then
+      echo "✅ .vscode/settings.json search.exclude"
+    fi
+  fi
+fi
+
 # --- Always-on budget (4 KB) ---
 always_on=0
 for f in AGENTS.md CLAUDE.md; do

@@ -10,9 +10,10 @@ This file, then **one** mode file under the skill `modes/` directory. Do not loa
 
 - **Direct:** `modes/direct-mode.md` only.
 - **Safe or Cloud:** that mode file plus `features/commit-strategies.md`.
+- **Cursor plan** (YAML `todos:`): also `features/cursor-plans.md`. Do not load it for a feature plan.
 - Merge and conflict files only if the user later asks to merge, and only in Safe or Cloud.
 
-Autopilot is for `ai_specs` feature plans only: `ai_specs/features/<feature>/plan.md`. Given a `~/.cursor/plans/*.plan.md`, stop and point to Cursor's Build button. Per-phase work: [`implement-phase.md`](implement-phase.md) with `--no-commits`. The phase child lists memory facts and does not write them.
+Feature plans use the rules below. A Cursor plan (YAML `todos:`) also loads `features/cursor-plans.md` and follows it instead of Status, Context pack and Memory. Per-phase work: [`implement-phase.md`](implement-phase.md) with `--no-commits`. The phase child lists memory facts and does not write them.
 
 ## Parent
 

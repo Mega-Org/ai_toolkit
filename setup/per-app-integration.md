@@ -27,6 +27,8 @@ git add .gitmodules ai_toolkit CLAUDE.md AGENTS.md .cursor/rules ai_docs
 git commit -m "Add ai_toolkit submodule and AI seed files"
 ```
 
+`install.sh` also sets up editor search exclusions in `.vscode/settings.json`.
+
 After the submodule exists, prefer:
 
 ```bash

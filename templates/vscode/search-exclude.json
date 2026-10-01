@@ -1,0 +1,10 @@
+{
+  "**/ai_specs/**": true,
+  "**/ai_docs/**": true,
+  "**/ai_worklog/**": true,
+  "**/ai_worklog/TODOS.md": false,
+  "**/ai_toolkit/templates/**": true,
+  "**/ai_toolkit/docs/**": true,
+  "**/ai_toolkit/bin/**": true,
+  "**/ai_toolkit/reference/**": true
+}

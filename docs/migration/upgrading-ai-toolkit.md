@@ -22,7 +22,13 @@ From the project root:
 bash ai_toolkit/setup/install.sh
 ```
 
-That creates `.cursor/skills`, `.cursor/rules`, and `.cursor/plans` when missing, copies the four skill templates and the thirteen rule templates, then runs [`../../setup/verify-setup.sh`](../../setup/verify-setup.sh).
+That creates `.cursor/skills`, `.cursor/rules`, and `.cursor/plans` when missing, copies the skill and rule templates, merges search exclusions, then runs [`../../setup/verify-setup.sh`](../../setup/verify-setup.sh).
+
+Existing apps can apply only the search exclusions, or rerun `install.sh`:
+
+```bash
+bash ai_toolkit/setup/install-vscode-search.sh
+```
 
 Skills and rules only:
 
@@ -30,6 +36,7 @@ Skills and rules only:
 bash ai_toolkit/setup/install-skills.sh
 bash ai_toolkit/setup/install-rules.sh
 bash ai_toolkit/setup/install-ignore.sh
+bash ai_toolkit/setup/install-vscode-search.sh
 bash ai_toolkit/setup/verify-setup.sh
 ```
 

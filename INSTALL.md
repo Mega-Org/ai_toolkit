@@ -43,7 +43,10 @@ If the script is executable, this is the same entry point:
 3. Runs `ai_toolkit/setup/install-skills.sh`.
 4. Runs `ai_toolkit/setup/install-rules.sh`.
 5. Runs `ai_toolkit/setup/install-ignore.sh` (creates or merges `.cursorignore` and `.cursorindexingignore` at the project root).
-6. Runs `ai_toolkit/setup/verify-setup.sh`.
+6. Runs `ai_toolkit/setup/install-vscode-search.sh`. It merges missing `search.exclude` keys from [`templates/vscode/search-exclude.json`](templates/vscode/search-exclude.json) into `.vscode/settings.json`. Editor search then skips `ai_specs/`, `ai_docs/`, `ai_worklog/` except `TODOS.md`, and these `ai_toolkit` folders: `templates`, `docs`, `bin`, and `reference`. The files still show in the Explorer, and agents can still read every file. Keys already in `search.exclude` are left unchanged. If the script cannot place the keys safely, it changes nothing, prints a snippet to paste, and exits 0 so install continues.
+7. Runs `ai_toolkit/setup/verify-setup.sh`.
+
+In the search panel, turn off the gear icon **Use Exclude Settings** for a one-off search that includes the excluded paths.
 
 ### Skills
 
@@ -116,7 +119,7 @@ The installer leaves application source, `ai_specs/`, and `ai_docs/` unchanged. 
 `bash ai_toolkit/setup/install.sh` runs without the execute bit. `./ai_toolkit/setup/install.sh` needs it. If the shell reports `Permission denied`, use the `bash` form, or mark the scripts executable:
 
 ```bash
-chmod +x ai_toolkit/setup/install.sh ai_toolkit/setup/install-skills.sh ai_toolkit/setup/install-rules.sh ai_toolkit/setup/install-ignore.sh ai_toolkit/setup/verify-setup.sh
+chmod +x ai_toolkit/setup/install.sh ai_toolkit/setup/install-skills.sh ai_toolkit/setup/install-rules.sh ai_toolkit/setup/install-ignore.sh ai_toolkit/setup/install-vscode-search.sh ai_toolkit/setup/verify-setup.sh
 ```
 
 `install.sh` invokes the other setup scripts through `bash`, so they do not need the execute bit when you start from `install.sh`.

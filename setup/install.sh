@@ -27,6 +27,9 @@ bash "$TOOLKIT_DIR/setup/install-rules.sh"
 echo "🚫 Installing Cursor ignore files..."
 bash "$TOOLKIT_DIR/setup/install-ignore.sh"
 
+echo "🔎 Applying search exclusions..."
+bash "$TOOLKIT_DIR/setup/install-vscode-search.sh"
+
 echo "🔍 Verifying..."
 bash "$TOOLKIT_DIR/setup/verify-setup.sh"
 
