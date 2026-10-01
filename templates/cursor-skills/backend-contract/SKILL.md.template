@@ -1,0 +1,45 @@
+---
+name: backend-contract
+description: >-
+  Backend contract kit: request, check, apply, intake. Writes
+  ai_specs/api/contracts/ folders and the register. Lean loader,
+  25 KB request budget, never commits unless --commit (asks first).
+  Use for /backend-contract, API contract request, check a reply,
+  apply an agreed reply, or intake a backend markdown file.
+---
+
+## Workflow Reference
+Implements: ai_toolkit/workflows/api-analysis/backend-contract.md
+
+# Backend contract
+
+**Follow the workflow file verbatim.** Specs and register only — no app code, no Cursor plan.
+
+## Args
+
+```text
+request <feature> [topic] [+figma] [--commit]
+check <contract-folder> [--commit]
+apply <contract-folder> [--commit]
+intake <file> [--commit]
+```
+
+Four modes. **Commit:** false unless `--commit` (then ask). `--no-commits` = default.
+
+Phrases: `/backend-contract request …`, check a reply, apply contract, intake backend MD.
+
+## Load (once; no toolkit INDEX.md)
+
+1. `ai_toolkit/workflows/api-analysis/backend-contract.md`
+2. Matching template under `ai_toolkit/templates/api/` (`backend-request.md` / `backend-reply.md` / `backend-gaps.md` / `contracts-index.md`)
+3. `ai_specs/api/contracts/INDEX.md` when present
+4. Mode load list in the workflow (request: README logic/UI + design; check: IDs + matrix only; apply: Contract + Inputs + gaps + feature `memory.md` contract section; intake: headings/paths + feature map)
+
+Lite bootstrap. Read-once. Broad search → `explore` subagent. Request ≤ 25 KB. Figma only with `+figma` for named screens. Do not invent JSON. **apply** replaces the feature `memory.md` contract row (≤ 3 KB); do not append.
+
+## Modes
+
+- **request** — folder + `request.md` (verbatim reply rules, Arabic ملخص, L + D tables, all IDs). Register `draft`. Ask only scope and open questions.
+- **check** — missing IDs and incomplete `Different` → `gaps-N.md`. No apply if incomplete.
+- **apply** — README Contract, plan Inputs, append-only `gaps.md`, register `agreed`, replace the contract row in feature `memory.md` (≤ 3 KB; create from the template if missing).
+- **intake** — one-line header, register row, README links; reply → check. Never rename/move/rewrite the file body.

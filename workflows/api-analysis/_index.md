@@ -15,7 +15,7 @@ Reusable playbooks and templates stay in `ai_toolkit/`. Project facts live in ea
 | One feature only | [`feature-api-report.md`](feature-api-report.md) |
 | Ingest / refresh snapshot only | [`ingest-collection.md`](ingest-collection.md) |
 | Build file to send to collection owners | [`pack-collection-handoff.md`](pack-collection-handoff.md) |
-| Run endpoints + save real response examples | [`test-and-capture.md`](test-and-capture.md) |
+| Backend contract (`/backend-contract` request / check / apply / intake) | [`backend-contract.md`](backend-contract.md) — skill `/backend-contract`. Register: `ai_specs/api/contracts/INDEX.md`. |
 
 Full end-to-end order (sources → build): [`../full-pipeline.md`](../full-pipeline.md).
 
@@ -23,7 +23,7 @@ Full end-to-end order (sources → build): [`../full-pipeline.md`](../full-pipel
 
 1. **Ingest** (or skip if analyze does it) → `ai_specs/api/source/`
 2. **Analyze** or **reanalyze** → `features/*/gaps.md` + `edit-brief.md`
-3. **Pack** → `ai_specs/api/COLLECTION_HANDOFF.md` ← **send this one file**
+3. **Pack** → dated archive under `handoff/` + 3-line pointer in `COLLECTION_HANDOFF.md` ← **send the archive**
 4. Owners answer questions + apply **collection** edits in Apidog/Postman
 5. **Reanalyze** → pack again to confirm gaps closed
 6. **Test & capture** (once endpoints are callable) → save real success/error examples into the collection + a redacted log under `features/*/captured/`
@@ -31,10 +31,10 @@ Full end-to-end order (sources → build): [`../full-pipeline.md`](../full-pipel
 ### Where the handoff file is
 
 ```text
-<app-repo>/ai_specs/api/COLLECTION_HANDOFF.md
+<app-repo>/ai_specs/api/handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md
 ```
 
-Optional dated copy: `ai_specs/api/handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md`
+Pointer only: `ai_specs/api/COLLECTION_HANDOFF.md` (3 lines, never a full copy).
 
 That file is **collection-specific** (names the Apidog module / Postman collection). Listed edits are **collection/doc changes**, not a blanket “change API server code” request. Questions may still need real API or product answers — each question says so.
 
@@ -52,8 +52,9 @@ ai_specs/api/features/<feature>/edit-brief.md
 | [`analyze-collection.md`](analyze-collection.md) | Full analysis, feature map, gaps, edit-briefs |
 | [`reanalyze-collection.md`](reanalyze-collection.md) | Diff-driven update when the collection changes |
 | [`feature-api-report.md`](feature-api-report.md) | Deep dive / refresh for one feature |
-| [`pack-collection-handoff.md`](pack-collection-handoff.md) | Merge edit-briefs into `COLLECTION_HANDOFF.md` |
+| [`pack-collection-handoff.md`](pack-collection-handoff.md) | Dated archive + 3-line pointer in `COLLECTION_HANDOFF.md` |
 | [`test-and-capture.md`](test-and-capture.md) | Run endpoints, capture real success/error responses, save examples into the collection |
+| [`backend-contract.md`](backend-contract.md) | `/backend-contract` request / check / apply / intake |
 
 ## References
 

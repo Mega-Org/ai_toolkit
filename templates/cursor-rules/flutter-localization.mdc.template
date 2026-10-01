@@ -1,0 +1,9 @@
+---
+description: Localization—no hardcoded user-facing strings; use AppLocalizations or appLocalizer
+globs: lib/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# Localization (this app — Arabic-first, gen-l10n)
+
+Follow `ai_toolkit/rules/core/localization.md` and `ai_toolkit/rules/dart/enums-l10n.md`. RTL intent: `figma-arabic-rtl.mdc` → `ai_toolkit/rules/flutter/design-direction-and-localization.md`.

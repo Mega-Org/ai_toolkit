@@ -1,0 +1,10 @@
+---
+description: Ask vs continue (retired always-on; see core-digest)
+alwaysApply: false
+---
+
+# Agent decision gates (ask vs continue)
+
+Replaced as always-on by `core-digest.mdc`. This file is not installed into `.cursor/rules/`.
+
+**Prefer uninterrupted implementation** applies only inside **implement-phase** and **autopilot**, after that phase’s `Inputs` suffice. It is not a global rule. Ask vs continue: `core-digest.mdc`. Checklists: `ai_toolkit/workflows/feature-delivery/implement-phase.md`.

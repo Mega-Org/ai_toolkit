@@ -1,0 +1,9 @@
+---
+description: Dart imports—always absolute (package:), never relative
+globs: lib/**/*.dart, test/**/*.dart
+alwaysApply: false
+---
+
+# Dart imports (this app)
+
+Follow `ai_toolkit/patterns/dart/absolute-imports.md`. `part` / `part of` stay relative — `ai_toolkit/rules/dart/part-part-of.md`.

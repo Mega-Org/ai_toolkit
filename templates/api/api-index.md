@@ -25,7 +25,8 @@ Copy to: `ai_specs/api/INDEX.md`
 | Inventory | [`analysis/inventory.md`](analysis/inventory.md) |
 | Gaps rollup | [`analysis/gaps-index.md`](analysis/gaps-index.md) |
 | Workflows | [`analysis/workflows.md`](analysis/workflows.md) |
-| Collection handoff (send this) | [`COLLECTION_HANDOFF.md`](COLLECTION_HANDOFF.md) |
+| Collection handoff (send the dated archive) | pointer [`COLLECTION_HANDOFF.md`](COLLECTION_HANDOFF.md) → `handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md` |
+| Contracts register | [`contracts/INDEX.md`](contracts/INDEX.md) |
 | Feature `<name>` | `features/<name>/` |
 
 ## Feature map

@@ -1,0 +1,9 @@
+---
+description: Flutter product flavors — entrypoints, duplication, native config, Makefile
+globs: lib/main_*.dart, lib/apps/**, android/**, ios/**, Makefile
+alwaysApply: false
+---
+
+# Flutter flavors (this app)
+
+Follow `ai_toolkit/setup/flavors.md`. App matrix: `ai_docs/architecture.md`, `ai_specs/features/flutter-flavors/README.md`. Makefile first (`make client run`, …); do not open-code `flutter run`/`build --flavor` when a target exists.

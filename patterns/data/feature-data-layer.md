@@ -1,3 +1,39 @@
+## Agent card
+
+**LOADMAP tags:** `data`
+**Read rest of this file:** no, unless adding local persistence (split `datasources/remote` vs `local`) or renaming injectable bindings.
+
+### Must
+- Feature `data/`: `api/` (URL builders only), `datasources/`, `models/` (DTOs), `repository/` (`*RepositoryImpl`).
+- While remote-only, keep datasources **flat** under `datasources/`. Split remote/local folders when local IO appears.
+- Same file: `abstract class XxxDataSource` + `XxxDataSourceImpl` with `@Injectable(as: TheAbstract)`.
+- Datasource methods take use-case `*Params` (or no args for `NoParams`); call `params.toMap` inside the datasource.
+- Inline `DioHelper` + JSON unwrap in each **public** method (see remote-data-sources card).
+- `final` on formal parameters that are not reassigned. Regenerate DI after `@injectable` moves/renames.
+
+### Must not
+- Put observer hubs in `data/` or `domain/`.
+- Duplicate HTTP paths in cubits/pages; one `api/` surface per feature.
+- Let the repository own raw path strings.
+- Extract single-use `_unwrap*` / `_paginatedPayload` helpers.
+
+### When to load the rest
+- Local datasource split or the observer/DI reminder bullets.
+
+### Related (cards first)
+- `rules/flutter/remote-data-sources.md`, `rules/core/network.md`; `+observer` if fan-out after success.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Feature data layer layout
 
 ## Purpose

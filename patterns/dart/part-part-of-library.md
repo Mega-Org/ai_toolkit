@@ -1,3 +1,34 @@
+## Agent card
+
+**LOADMAP tags:** `parts`
+**Read rest of this file:** yes if splitting a large page (file tree, private widgets across parts, cubit+state exception).
+
+### Must
+- Use `part` libraries for one route with many **private** widgets/helpers, not for reusable multi-feature widgets.
+- All `package:` imports on the host; relative `part` paths; `part of '../host.dart'` in children.
+- Keep one import surface and shared private `_` symbols across parts.
+
+### Must not
+- Use parts for domain/data (cubit+state pair may be a separate small library pair — see rest of file).
+- Put `part of` package URIs. Add imports inside part files.
+
+### When to load the rest
+- Dummy bookings layout, formatter/token parts, when **not** to use parts.
+
+### Related (cards first)
+- `rules/dart/part-part-of.md`; `+ui` page shell; `+stepped` for wizard steps.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Dart `part` / `part of` library (feature UI)
 
 ## Purpose

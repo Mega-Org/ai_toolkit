@@ -8,8 +8,8 @@ Entry point for branch, commit message, and review conventions aligned with `wor
 
 ## References
 - `rules/_index.md` (all rule areas)
-- `workflows/git/commit-before-work.md` — default commit-first before plan/phase; `--no-commits` opt-out
-- `workflows/git/commit-after-phase.md`
+- `workflows/git/commit-before-work.md` — opt-in; commit dirty tree before work only if asked; show files + message; wait for yes
+- `workflows/git/commit-after-phase.md` — opt-in after a phase; `--commit` asks first; `--no-commits` = default (skip)
 
 ## Content
 <!-- Fill in later. Leave empty if unknown. -->

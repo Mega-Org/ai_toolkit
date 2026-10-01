@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how this app uses **`TextStyles`** in **`lib/core/configs/values/text_styles.dart`** (`part of core`): the shared **font family**, **size**, and **weight** scale for UI copy. Use this file when adding tokens, styling **`Text`**, or aligning typography with **`ThemeData`**.
+Define how this app uses **`TextStyles`** in **`lib/core/configs/values/text_styles.dart`** (`part of core`): the shared **size** and **weight** scale for UI copy. **Font family** lives on **`ThemeData.fontFamily`** (`AppFonts.mainFont` via **`AppTheme.fontFamily`**). Use this file when adding tokens, styling **`Text`**, or aligning typography with **`ThemeData`**.
 
 **Spacing and dimensions** — [`config.md`](config.md). **Semantic colors** — [`theme.md`](theme.md), [`app-theme-color-tokens.md`](app-theme-color-tokens.md).
 
@@ -18,8 +18,8 @@ Define how this app uses **`TextStyles`** in **`lib/core/configs/values/text_sty
 ## Why prefer `TextStyles`
 
 1. **Single scale** — One named ladder (`regular14`, `medium16`, …) matches design reviews and refactors; avoids scattered magic **`fontSize`** / **`fontWeight`** pairs.
-2. **Consistent font** — **`AppFonts.elMessiri`** is set on every token; **`copyWith`** should not re-specify **`fontFamily`** unless intentionally overriding.
-3. **Aligned with theme** — **`LightTheme` / `DarkTheme`** build **`ThemeData`** fragments from **`TextStyles.*`** (hints, labels, app bar titles). Widgets that use the same tokens stay visually aligned with Material chrome.
+2. **Consistent font** — tokens omit **`fontFamily`**; **`LightTheme` / `DarkTheme`** set **`ThemeData.fontFamily`** (and **`textTheme.apply(fontFamily: …)`**) so **`Text`** inherits it. Do not re-specify **`fontFamily`** on **`copyWith`** unless intentionally overriding (e.g. the Riyal icon face).
+3. **Aligned with theme** — **`LightTheme` / `DarkTheme`** set **`ThemeData.fontFamily`** and wrap chrome tokens with **`AppTheme.themedTextStyle`** (hints, labels, app bar titles). Widgets that use the same tokens inherit the face from **`DefaultTextStyle`**.
 4. **Shared widgets** — **`AppButton`**, **`AppTextFormField`**, and other **`material/`** defaults assume **`TextStyles`** as baselines.
 5. **Maintainability** — Global typography tweaks stay in **`text_styles.dart`** (and theme files), not across hundreds of widgets.
 
@@ -27,7 +27,7 @@ Prefer **`TextStyles` + `copyWith(color: …)`** over ad-hoc **`TextStyle(fontSi
 
 ## How to use
 
-1. **Pick the nearest token** — Match Figma (or spec) **size + weight** to **`light*`** / **`regular*`** / **`medium*`** / **`semiBold*`** / **`bold*`**. Snap to the closest step; avoid one-off sizes unless adding a new stable token (see below).
+1. **Pick the nearest token** — Match Figma (or spec) **size + weight** to **`light*`** / **`regular*`** / **`medium*`** / **`semiBold*`** / **`bold*`** / **`extraBold*`** / **`black*`**. Snap to the closest step; avoid one-off sizes unless adding a new stable token (see below).
 
 2. **Apply color with `copyWith`** — Tokens do not encode semantic color:
 
@@ -50,9 +50,12 @@ Pattern: **`{weightLabel}{fontSize}`** (e.g. **`medium16`** → **`FontWeight.w5
 | **`light`** | `w300` |
 | **`regular`** | `w400` |
 | **`medium`** | `w500` |
-| **`semiBold`**, **`bold`** | `w700` in code (naming is product-facing; see **`text_styles.dart`** for exact weights) |
+| **`semiBold`** | `w600` |
+| **`bold`** | `w700` |
+| **`extraBold`** | `w800` |
+| **`black`** | `w900` |
 
-New tokens must follow the same scheme and live only in **`text_styles.dart`**.
+Exact weights live in **`text_styles.dart`** (must match registered faces in **`pubspec.yaml`**).
 
 ## When to add a new entry vs reuse
 

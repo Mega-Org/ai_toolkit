@@ -16,6 +16,8 @@
 | [`remote-config-store-ops.md`](remote-config-store-ops.md) | Store review, force update, local RC admin panel |
 | [`per-app-integration.md`](per-app-integration.md) | Add/sync/pull/push this toolkit as a git submodule (Mac + Windows) |
 | [`scripts/bootstrap-rc-admin.sh`](scripts/bootstrap-rc-admin.sh) | Copy rc-admin template, npm install, print URL |
+| [`install.sh`](install.sh) | Skills + rules + ignore files + verify |
+| [`install-ignore.sh`](install-ignore.sh) | Merge `.cursorignore` / `.cursorindexingignore` into the app root |
 
 ## References
 

@@ -1,3 +1,37 @@
+## Agent card
+
+**LOADMAP tags:** `stepped`
+**Read rest of this file:** yes if implementing step enums, drafts, back-to-previous-step, or the step-switcher `part` library.
+
+### Must
+- One route + Cubit-owned step/tab navigation for wizards (register, onboarding, multi-frame same route).
+- Layout: `<flow>_page.dart` + cubit/state; optional `enums/`, presentation-only `models/` drafts; `steps/` as parts of `widgets/<flow>_step_switcher.dart`.
+- Step widgets are private; switch with `AnimatedSwitcher` + step enum.
+- Keep API/domain types out of `presentation/<flow>/models/` — those belong in domain/data.
+- Pair large UI with `+parts`. Do not force this on a simple one-screen form.
+
+### Must not
+- Put persisted domain entities in presentation `models/`.
+- Host `part of` on the cubit for step widgets (switcher or page is the UI library host).
+- Split too early (one screen, no back-through-steps behavior).
+
+### When to load the rest
+- Draft indexing, validation per step, submit mapping, back behavior.
+
+### Related (cards first)
+- `+parts`; `+state` cubit; `+domain` for submit params.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Stepped Page Flow
 
 ## Purpose

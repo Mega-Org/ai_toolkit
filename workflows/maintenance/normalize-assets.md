@@ -1,5 +1,7 @@
 # Normalize assets workflow
 
+**Commit:** false (default). `--commit` after work asks first. `--no-commits` = default. Dry-run never commits.
+
 ## Purpose
 
 Selectively rename and standardize **referenced** app assets (icons, images, optionally illustrations), then write or update design-side catalogs so agents and Figma/MCP sessions use stable filenames, getters, descriptions, and usage guidance.
@@ -35,7 +37,8 @@ Selectively rename and standardize **referenced** app assets (icons, images, opt
 | `normalize-assets images --area onboarding` | Mode B — scan one images area folder |
 | `normalize-assets icons --dry-run: …` | Propose renames + catalog rows; **do not** rename or codegen |
 | `normalize-assets catalog-only icons` | Mode C — refresh catalog from disk + code usages; no renames |
-| `normalize-assets --no-commits` | Skip commit-before-work |
+| `normalize-assets --commit` | After work: show files + message; commit only after yes |
+| `normalize-assets --no-commits` | Same as default (no commit) |
 
 Always name the **kind** (`icons` | `images` | `illustrations`). Never imply “all of `assets/`” unless the user explicitly asks for a full-tree pass for one kind.
 
@@ -123,7 +126,7 @@ Any mode with `--dry-run`: print proposed renames, getter impact, and catalog di
 ## Preflight
 
 1. **Bootstrap** — Lite for a short explicit list; Full if many renames or Dart call-site churn ([`../session/bootstrap-session.md`](../session/bootstrap-session.md)).
-2. **Commit before work** — [`../git/commit-before-work.md`](../git/commit-before-work.md) unless `--no-commits` or dry-run.
+2. **Commit** — Default none. Do not run [`../git/commit-before-work.md`](../git/commit-before-work.md). If `--commit` after work: [`../git/commit-after-phase.md`](../git/commit-after-phase.md). Skip git on dry-run.
 3. **Load rules** — [`../../rules/core/config.md`](../../rules/core/config.md); app `ai_docs/conventions.md` for separator style and SVG wrapper.
 4. **Confirm kind + scope** — If the user said “all assets” without a kind, ask once: icons, images, or both (separate passes).
 

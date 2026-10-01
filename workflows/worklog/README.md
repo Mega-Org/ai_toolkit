@@ -28,7 +28,7 @@ Ask the agent naturally:
 | Command | Behavior |
 |---------|----------|
 | `setup-worklog` | Create `ai_worklog/` from [templates](../../templates/worklog/_index.md) |
-| `update worklog` | Append **Done**, **TODO**, and **Blockers** to today's daily file; sync `TODOS.md` |
+| `update worklog` | One append to today's **Done** list (no reads of other worklog files) |
 | `record TODO for backend: …` | Add `TODO-YYYY-MM-DD-###` to daily file and global index |
 | `close TODO-YYYY-MM-DD-001` | Mark a TODO done, set `Closed`, and move it to `Done` |
 | `reopen TODO-YYYY-MM-DD-001` | Move a TODO back to the matching `Active` subsection |

@@ -1,3 +1,40 @@
+## Agent card
+
+**LOADMAP tags:** `l10n`
+**Read rest of this file:** no, unless changing language cache, `MaterialApp` builder, or `LocalizationContainer` startup.
+
+### Must
+- Add user-visible strings with `make l10n-add` (dry-run preview, then `--apply`) so keys land at the end of the feature’s `@-SECTION-` in both ARBs; then gen-l10n.
+- In widgets with `BuildContext`, use `AppLocalizations.of(context).key` (inline; local `l10n` only if many keys).
+- In context-less code, use `appLocalizer.key` (DI-backed container). Never thread `BuildContext` only for strings.
+- Enum display copy: getters on the enum body with `appLocalizer` — see `enums-l10n` card.
+- `MaterialApp.builder` must call `setLocalizer(context)` so `appLocalizer` matches locale.
+- Language persistence goes through language use cases → cache repository → data source, not raw prefs in UI.
+
+### Must not
+- Hardcode UI copy from Figma.
+- Read `SharedPreferences` from `LocalizationContainer` / language cubit directly.
+- Put enum labels on an `extension` or take `BuildContext` on enum APIs.
+- Duplicate a second l10n pipeline besides gen-l10n + container.
+
+### When to load the rest
+- Touching `AppLanguageCubit`, change-language sheet, or cache use cases.
+- Need the full path table or restart/`ValueKey` behavior.
+
+### Related (cards first)
+- `rules/dart/enums-l10n.md`; `+figma` for RTL; `+di` for injector init.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Localization in core
 
 ## Purpose
@@ -126,7 +163,7 @@ Use cases may expose **`getInstance()`** factories for legacy or static entry po
 
 ## Integration checklist (for agents)
 
-- New user-facing string: add to **all** locale ARBs under the correct section; run analyzer / app build so gen-l10n updates.
+- New user-facing string: `make l10n-add` (or `./ai_toolkit/bin/l10n-add`) — dry-run once per phase, apply after yes. Docs: [`../../docs/tooling/l10n-add.md`](../../docs/tooling/l10n-add.md).
 - New language: extend **`AppLanguageEnum`**, **`supportedLocales` / delegates** (via generated **`AppLocalizations`**), ARB + **`l10n.yaml`** if needed, and cubit/UI that switches language.
 - Never read cached language only from cubit without ensuring DI **`LocalizationContainer.init()`** has completed where **`getLang`** is required before **`runApp`** (this template resolves that via **`initializeDependencies()`** in **`main`** before **`runApp`**).
 - Clearing stored language (**`ClearLanguageCacheUseCase`**): also update **`LocalizationContainer`** / **`AppLanguageCubit`** state (or restart from a known default) so memory, prefs, and **`MaterialApp.locale`** stay aligned.

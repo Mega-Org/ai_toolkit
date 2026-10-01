@@ -1,0 +1,8 @@
+# Copied from ai_toolkit/templates/cursor-ignore. Reinstall appends missing lines only.
+app_localizations*.dart
+*.g.dart
+*.config.dart
+build/
+.dart_tool/
+ios/Pods/
+android/.gradle/

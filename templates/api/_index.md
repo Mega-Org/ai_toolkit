@@ -9,6 +9,10 @@ Reusable skeletons for app-specific API **collection** knowledge bases. Copy int
 | File | Topic |
 |------|--------|
 | [`api-readme.md`](api-readme.md) | How to use / update / send collection handoff (app `README.md`) |
+| [`contracts-index.md`](contracts-index.md) | Register: `ai_specs/api/contracts/INDEX.md` (contracts + intake docs) |
+| [`backend-request.md`](backend-request.md) | Contract request (`request.md`) — locked section order, stable IDs, ≤ 25 KB |
+| [`backend-reply.md`](backend-reply.md) | Contract reply (`reply.md`) — answer matrix first |
+| [`backend-gaps.md`](backend-gaps.md) | Contract check output (`gaps-N.md`) |
 | [`api-index.md`](api-index.md) | Master index, collection IDs, feature map |
 | [`snapshot-meta.md`](snapshot-meta.md) | Snapshot source metadata + hash |
 | [`inventory.md`](inventory.md) | Flat operation inventory |
@@ -18,7 +22,7 @@ Reusable skeletons for app-specific API **collection** knowledge bases. Copy int
 | [`feature-endpoints.md`](feature-endpoints.md) | Per-feature endpoint table |
 | [`feature-gaps.md`](feature-gaps.md) | Per-feature gap list |
 | [`edit-brief.md`](edit-brief.md) | Per-feature **collection** edits + questions (pack source) |
-| [`collection-handoff.md`](collection-handoff.md) | Single file sent to collection owners |
+| [`collection-handoff.md`](collection-handoff.md) | Dated archive under `handoff/`; `COLLECTION_HANDOFF.md` is a pointer |
 | [`reanalysis-delta.md`](reanalysis-delta.md) | History entry after reanalyze |
 | [`response-capture-log.md`](response-capture-log.md) | Per-feature log of real captured responses (from test-and-capture) |
 | [`screen-requirement.md`](screen-requirement.md) | Per-screen expected data + API needs (design → API bridge; planning-only) |
@@ -26,6 +30,7 @@ Reusable skeletons for app-specific API **collection** knowledge bases. Copy int
 ## References
 
 - Workflows: [`../../workflows/api-analysis/_index.md`](../../workflows/api-analysis/_index.md)
+- Backend contract: [`../../workflows/api-analysis/backend-contract.md`](../../workflows/api-analysis/backend-contract.md)
 - Pack handoff: [`../../workflows/api-analysis/pack-collection-handoff.md`](../../workflows/api-analysis/pack-collection-handoff.md)
 - Test & capture: [`../../workflows/api-analysis/test-and-capture.md`](../../workflows/api-analysis/test-and-capture.md)
 - Screen data analysis (design → API): [`../../workflows/product-analysis/screen-data-analysis.md`](../../workflows/product-analysis/screen-data-analysis.md)

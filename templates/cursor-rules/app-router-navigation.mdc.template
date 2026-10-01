@@ -1,0 +1,8 @@
+---
+description: Navigation—prefer AppRouter over raw Navigator (this app)
+alwaysApply: false
+---
+
+# Imperative navigation (`AppRouter`)
+
+Follow `ai_toolkit/rules/core/router.md`. Always-on defaults: `core-digest.mdc`.

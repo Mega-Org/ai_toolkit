@@ -1,38 +1,38 @@
 # Bootstrap session
 
-## Purpose
-Neutral, ordered playbook for starting or resuming an AI session: read `INDEX.md`, load aliases when running commands, load stack patterns, open active `ai_specs/` for feature work, optional `ai_docs/`.
+**Default: lite.** Full only when the user asks or passes `--full` on a skill that has its own loader.
 
-## Fill when
-- When session load order or optional steps change.
+Guide: [`../../docs/workflows/overview.md`](../../docs/workflows/overview.md). LOADMAP: [`../../LOADMAP.md`](../../LOADMAP.md).
 
-## References
-- `ai_toolkit/INDEX.md`
-- `ai_toolkit/workflows/session/_index.md`
-- `ai_toolkit/rules/_index.md`
-- `ai_toolkit/patterns/_index.md`
+## Lite (default)
 
-## Content
+1. Do **not** open `INDEX.md` or section `_index.md` files.
+2. Open the **task workflow checklist** named by the skill.
+3. Open `LOADMAP.md` only to resolve tags.
+4. App files only as that workflow’s load list (plan live part, README Contract, Inputs).
+5. Aliases only when you will run matching shell commands.
 
-Use **lite** or **full** bootstrap as described in `INDEX.md`. Full bootstrap is for new features, refactors, multi-file work, architecture changes, unclear-scope debugging, and PR preparation.
+## Full
 
-### Steps (full bootstrap)
+Use when the user asks for a full session, or the task has no skill loader (unknown-scope debug, architecture change, PR prep).
 
-1. **Entrypoint** — Read `ai_toolkit/INDEX.md` first (section overviews table points to each folder’s `_index.md` / `workflows/README.md`).
-2. **Task workflow** — If the task maps to a workflow in `INDEX.md` → `Task Routing`, open that workflow next (for example feature planning uses `workflows/feature-delivery/make-plan.md`). Subfolder maps: `workflows/feature-delivery/_index.md`, `workflows/maintenance/_index.md`, `workflows/git/_index.md`. For **`make-plan`** or **`implement-phase`**, the workflow includes Git preflight via [`../git/commit-before-work.md`](../git/commit-before-work.md) unless the user passes **`--no-commits`**.
-3. **Rules** — Load `rules/_index.md` for a full map, then `_index.md` under each rules subfolder you touch, then linked leaf files.
-4. **Patterns** — Load `patterns/_index.md`, then the subfolder `_index.md` (for example `patterns/data/_index.md`) and leaf files for the stack areas in play.
-5. **Aliases** — Read `alias/_index.md` and the linked alias files only when you will run shell commands that rely on those shortcuts.
-6. **App docs** — If the repo has `ai_docs/` (for example `ai_docs/architecture.md`, `ai_docs/conventions.md`), read them before changing boundaries between core and features or naming conventions.
-7. **Active feature spec** — For spec-driven feature work, load from the app repo (not this toolkit): `ai_specs/README.md` (optional layer map) → `ai_specs/INDEX.md` (if present; feature matrix) → BRD `ai_specs/brd/INDEX.md` when business rules apply → design `ai_specs/design/INDEX.md` when UI/Figma applies → API `ai_specs/api/INDEX.md` when HTTP contracts apply → **build** `ai_specs/features/<feature>/README.md` → `ai_specs/features/<feature>/plan.md`. Use `plan.md` for the current phase and progress; use `README.md` for requirements and contracts. Root `features/` is the build layer — not `brd/features/`, `design/features/`, or `api/features/`. For design-only intake, use [`../product-analysis/figma-analysis.md`](../product-analysis/figma-analysis.md).
-8. **Worklog (optional, read-only)** — If `ai_worklog/` exists: `ai_worklog/INDEX.md` → today's `ai_worklog/daily/YYYY-MM-DD.md` → `ai_worklog/TODOS.md`. Update only when the user asks (`update worklog`, report commands) or when the active workflow requires it (`make-plan`, `implement-phase`).
+1. [`INDEX.md`](../../INDEX.md) → task routing row → workflow checklist.
+2. Needed section `_index.md` then **leaf** files (or LOADMAP `--full` cards).
+3. `ai_docs/` when changing core vs feature boundaries or naming.
+4. Spec **indexes** only when choosing a feature — never during implement-phase.
 
-### Resume mid-task
+## Resume
 
-- Re-read `INDEX.md` and [`README.md`](../../README.md) for defaults and boundaries.
-- Re-open the workflow from step 2 above and the active feature’s **build** `README.md` + `plan.md` under `ai_specs/features/<feature>/`.
-- Pull in additional rules (`rules/_index.md`) or patterns (`patterns/_index.md`) only when the task expands into new areas.
+Re-open the skill workflow and the active `plan.md` live part (or fix folder). Do not re-read INDEX.
 
-### Missing paths
+## Autopilot
 
-If `ai_docs/`, `ai_specs/`, `ai_worklog/`, or a referenced toolkit file does not exist yet, treat the path as the intended contract and continue with the nearest existing guidance in `INDEX.md` or the relevant section `_index.md`.
+If `.cursor/skills/autopilot-plan/SKILL.md` exists, follow it. Else offer `bash ai_toolkit/setup/install-skills.sh`. Do not invent a parallel flow.
+
+## Missing paths
+
+Treat as the intended contract; continue with the nearest existing file. Do not browse indexes to “discover” it.
+
+## Git
+
+**Commit:** false (default). Do not run [`../git/commit-before-work.md`](../git/commit-before-work.md) or [`../git/commit-after-phase.md`](../git/commit-after-phase.md) unless the user asked. `--commit` on a skill means after the work: show files + message, wait for yes. `--no-commits` = default.

@@ -1,0 +1,413 @@
+#!/usr/bin/env python3
+"""Insert ARB keys at the end of a mirrored @-SECTION- in app_en.arb and app_ar.arb.
+
+Always dry-runs unless --apply. Placeholders are written to the English file only.
+Does not reformat existing ARB content.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any
+
+SECTION_RE = re.compile(r'^\s*"(@-[A-Z][A-Z0-9_]*-)"\s*:')
+MESSAGE_KEY_RE = re.compile(r'^\s*"((?:@)?[A-Za-z_][A-Za-z0-9_]*)"\s*:')
+
+
+class L10nError(Exception):
+    pass
+
+
+def find_app_root(start: Path) -> Path:
+    cur = start.resolve()
+    for candidate in [cur, *cur.parents]:
+        if (candidate / "l10n.yaml").is_file() or (candidate / "pubspec.yaml").is_file():
+            return candidate
+    raise L10nError("could not find app root (l10n.yaml or pubspec.yaml)")
+
+
+def parse_l10n_yaml(app_root: Path) -> tuple[Path, str]:
+    arb_dir = app_root / "lib" / "core" / "localization" / "l10n"
+    template = "app_en.arb"
+    yaml_path = app_root / "l10n.yaml"
+    if not yaml_path.is_file():
+        return arb_dir, template
+    for raw in yaml_path.read_text(encoding="utf-8").splitlines():
+        line = raw.split("#", 1)[0].strip()
+        if line.startswith("arb-dir:"):
+            arb_dir = app_root / line.split(":", 1)[1].strip()
+        elif line.startswith("template-arb-file:"):
+            template = line.split(":", 1)[1].strip()
+    return arb_dir, template
+
+
+def normalize_section(name: str) -> str:
+    name = name.strip()
+    if name.startswith("@-") and name.endswith("-"):
+        inner = name[2:-1]
+    else:
+        inner = name.strip("-")
+    inner = inner.upper().replace(" ", "_")
+    if not re.fullmatch(r"[A-Z][A-Z0-9_]*", inner):
+        raise L10nError(f"invalid section name: {name}")
+    return f"@-{inner}-"
+
+
+def json_str(value: str) -> str:
+    return json.dumps(value, ensure_ascii=False)
+
+
+def placeholder_block(key: str, placeholders: dict[str, Any]) -> list[str]:
+    dumped = json.dumps({"placeholders": placeholders}, indent=2, ensure_ascii=False)
+    lines = dumped.splitlines()
+    out = [f'  "@{key}": {{']
+    for line in lines[1:-1]:
+        out.append("  " + line)
+    out.append("  }")
+    return out
+
+
+def entry_en_lines(key: str, en: str, placeholders: dict[str, Any] | None) -> list[str]:
+    line = f"  {json_str(key)}: {json_str(en)}"
+    if placeholders:
+        return [line + ",", *placeholder_block(key, placeholders)]
+    return [line]
+
+
+def entry_ar_lines(key: str, ar: str) -> list[str]:
+    return [f"  {json_str(key)}: {json_str(ar)}"]
+
+
+def parse_sections(text: str) -> list[tuple[str, int]]:
+    found: list[tuple[str, int]] = []
+    for i, line in enumerate(text.splitlines()):
+        m = SECTION_RE.match(line)
+        if m:
+            found.append((m.group(1), i))
+    return found
+
+
+def existing_keys(text: str) -> set[str]:
+    keys: set[str] = set()
+    for line in text.splitlines():
+        m = MESSAGE_KEY_RE.match(line)
+        if m:
+            keys.add(m.group(1))
+    return keys
+
+
+def insert_index(text: str, section: str) -> int:
+    """Line index at which new keys should be inserted (before next section or closing brace)."""
+    lines = text.splitlines()
+    sections = parse_sections(text)
+    names = [n for n, _ in sections]
+    if section not in names:
+        raise L10nError(f"section {section} not found")
+    idx = names.index(section)
+    if idx + 1 < len(sections):
+        return sections[idx + 1][1]
+    # Last section: insert before the root closing `}`.
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].strip() == "}":
+            return i
+    raise L10nError("could not find ARB closing brace")
+
+
+def with_commas(chunks: list[list[str]], last_needs_comma: bool) -> list[str]:
+    """Join chunks; every chunk except possibly the last gets a trailing comma on its last line."""
+    out: list[str] = []
+    n = len(chunks)
+    for i, chunk in enumerate(chunks):
+        need = last_needs_comma or i < n - 1
+        for j, line in enumerate(chunk):
+            is_last = j == len(chunk) - 1
+            if is_last and need and not line.rstrip().endswith(","):
+                out.append(line + ",")
+            else:
+                out.append(line)
+    return out
+
+
+def ensure_prev_comma(lines: list[str], insert_at: int) -> None:
+    i = insert_at - 1
+    while i >= 0 and not lines[i].strip():
+        i -= 1
+    if i < 0:
+        return
+    stripped = lines[i].rstrip()
+    if stripped.endswith(",") or stripped in ("{", "["):
+        return
+    lines[i] = stripped + ","
+
+
+def apply_insert(text: str, section: str, new_lines: list[str]) -> str:
+    lines = text.splitlines()
+    at = insert_index(text, section)
+    ensure_prev_comma(lines, at)
+    # Preserve a trailing newline if the original file had one.
+    result = lines[:at] + new_lines + lines[at:]
+    ending = "\n" if text.endswith("\n") else ""
+    return "\n".join(result) + ending
+
+
+def append_new_section(text: str, section: str, new_lines: list[str]) -> str:
+    lines = text.splitlines()
+    close = None
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].strip() == "}":
+            close = i
+            break
+    if close is None:
+        raise L10nError("could not find ARB closing brace")
+    ensure_prev_comma(lines, close)
+    header = [
+        f"  {json_str(section)}: {{",
+        f'    "description": "----------------- {section[2:-1]} Localizations -----------------"',
+        "  },",
+    ]
+    result = lines[:close] + header + new_lines + lines[close:]
+    ending = "\n" if text.endswith("\n") else ""
+    return "\n".join(result) + ending
+
+
+def load_batches(args: argparse.Namespace) -> list[dict[str, Any]]:
+    batches: list[dict[str, Any]] = []
+    if args.file:
+        raw = json.loads(Path(args.file).read_text(encoding="utf-8"))
+        if isinstance(raw, list):
+            batches.extend(raw)
+        elif isinstance(raw, dict) and "entries" in raw:
+            batches.append(raw)
+        elif isinstance(raw, dict) and "batches" in raw:
+            batches.extend(raw["batches"])
+        else:
+            raise L10nError("batch JSON must be {section, entries} or a list of those")
+    if args.key:
+        if not args.section:
+            raise L10nError("--section is required with --key")
+        placeholders: dict[str, Any] | None = None
+        if args.placeholder:
+            placeholders = {}
+            for item in args.placeholder:
+                if ":" not in item:
+                    raise L10nError(f"--placeholder must be name:Type (got {item})")
+                name, typ = item.split(":", 1)
+                placeholders[name] = {"type": typ}
+        batches.append(
+            {
+                "section": args.section,
+                "entries": [
+                    {
+                        "key": args.key,
+                        "en": args.en,
+                        "ar": args.ar,
+                        "placeholders": placeholders or None,
+                    }
+                ],
+            }
+        )
+    if not batches:
+        raise L10nError("provide --key/--en/--ar or --file")
+    for batch in batches:
+        if not batch.get("section") and args.section:
+            batch["section"] = args.section
+        if not batch.get("section"):
+            raise L10nError("each batch needs a section")
+        batch["section"] = normalize_section(str(batch["section"]))
+        entries = batch.get("entries") or []
+        if not entries:
+            raise L10nError(f"no entries for {batch['section']}")
+        for e in entries:
+            if not e.get("key") or e.get("en") is None or e.get("ar") is None:
+                raise L10nError("each entry needs key, en, and ar")
+    return batches
+
+
+def preview_lines(label: str, lines: list[str]) -> str:
+    body = "\n".join("+" + ln for ln in lines)
+    return f"{label}:\n{body}"
+
+
+def run_gen_l10n(app_root: Path) -> int:
+    cmd = ["flutter", "gen-l10n"]
+    print("→", " ".join(cmd), flush=True)
+    proc = subprocess.run(cmd, cwd=app_root)
+    return proc.returncode
+
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        description="Add ARB keys at the end of a mirrored @-SECTION- (dry-run default)."
+    )
+    p.add_argument("--section", help="Section name, e.g. BUTTONS or @-BUTTONS-")
+    p.add_argument("--key", help="Message key (camelCase)")
+    p.add_argument("--en", help="English string")
+    p.add_argument("--ar", help="Arabic string")
+    p.add_argument(
+        "--placeholder",
+        action="append",
+        default=[],
+        help="English metadata only: name:Type (repeatable)",
+    )
+    p.add_argument("--file", help="Batch JSON path")
+    p.add_argument("--apply", action="store_true", help="Write files and run flutter gen-l10n")
+    p.add_argument(
+        "--confirm-new-section",
+        action="store_true",
+        help="Allow creating a section that does not exist yet",
+    )
+    p.add_argument("--list-sections", action="store_true", help="Print mirrored section names")
+    p.add_argument("--arb-dir", help="Override arb directory")
+    p.add_argument("--no-gen-l10n", action="store_true", help="Skip flutter gen-l10n after --apply")
+    return p
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if not args.list_sections and not args.file and not args.key:
+        parser.print_help()
+        return 0
+    try:
+        app_root = find_app_root(Path.cwd())
+        arb_dir, template_name = parse_l10n_yaml(app_root)
+        if args.arb_dir:
+            arb_dir = Path(args.arb_dir)
+            if not arb_dir.is_absolute():
+                arb_dir = app_root / arb_dir
+        en_path = arb_dir / template_name
+        ar_name = "app_ar.arb" if template_name == "app_en.arb" else template_name.replace("_en", "_ar")
+        ar_path = arb_dir / ar_name
+        if not en_path.is_file() or not ar_path.is_file():
+            raise L10nError(f"ARB files not found: {en_path} / {ar_path}")
+
+        en_text = en_path.read_text(encoding="utf-8")
+        ar_text = ar_path.read_text(encoding="utf-8")
+        en_sections = [n for n, _ in parse_sections(en_text)]
+        ar_sections = [n for n, _ in parse_sections(ar_text)]
+
+        if args.list_sections:
+            if en_sections != ar_sections:
+                print("warning: section lists differ between en and ar", file=sys.stderr)
+            for name in en_sections:
+                print(name)
+            print(f"# {len(en_sections)} sections in {en_path.relative_to(app_root)}")
+            return 0
+
+        batches = load_batches(args)
+        en_keys = existing_keys(en_text)
+        ar_keys = existing_keys(ar_text)
+        pending_keys: set[str] = set()
+
+        planned: list[tuple[str, bool, list[str], list[str]]] = []
+        for batch in batches:
+            section = batch["section"]
+            new_section = section not in en_sections
+            if new_section and section in ar_sections:
+                raise L10nError(f"{section} exists in ar but not en")
+            if not new_section and section not in ar_sections:
+                raise L10nError(f"{section} exists in en but not ar")
+            if new_section and not args.confirm_new_section:
+                raise L10nError(
+                    f"{section} does not exist. Re-run with --confirm-new-section after you confirm."
+                )
+
+            en_chunks: list[list[str]] = []
+            ar_chunks: list[list[str]] = []
+            for e in batch["entries"]:
+                key = str(e["key"])
+                if key in en_keys or key in ar_keys or key in pending_keys:
+                    raise L10nError(f"duplicate key: {key}")
+                meta = f"@{key}"
+                if meta in en_keys or meta in pending_keys:
+                    raise L10nError(f"duplicate metadata key: {meta}")
+                pending_keys.add(key)
+                ph = e.get("placeholders") or None
+                if isinstance(ph, dict) and not ph:
+                    ph = None
+                en_chunks.append(entry_en_lines(key, str(e["en"]), ph))
+                ar_chunks.append(entry_ar_lines(key, str(e["ar"])))
+
+            if new_section:
+                last_needs_comma = False
+            else:
+                at = insert_index(en_text, section)
+                last_needs_comma = en_text.splitlines()[at].strip() != "}"
+
+            planned.append(
+                (
+                    section,
+                    new_section,
+                    with_commas(en_chunks, last_needs_comma),
+                    with_commas(ar_chunks, last_needs_comma),
+                )
+            )
+
+        print("DRY RUN" if not args.apply else "APPLY")
+        print(f"en: {en_path}")
+        print(f"ar: {ar_path}")
+        print("Placeholders: English file only")
+        print()
+        for section, new_section, en_lines, ar_lines in planned:
+            kind = "NEW SECTION" if new_section else "end of section"
+            print(f"## {section} ({kind})")
+            print(preview_lines("app_en.arb", en_lines if not new_section else [
+                f'  "{section}": {{',
+                f'    "description": "----------------- {section[2:-1]} Localizations -----------------"',
+                "  },",
+                *en_lines,
+            ]))
+            print(preview_lines("app_ar.arb", ar_lines if not new_section else [
+                f'  "{section}": {{',
+                f'    "description": "----------------- {section[2:-1]} Localizations -----------------"',
+                "  },",
+                *ar_lines,
+            ]))
+            print()
+
+        if not args.apply:
+            print("No files written. Re-run with --apply after the preview is approved.")
+            print("Agent: one preview per phase, then --apply only after the user says yes.")
+            return 0
+
+        new_en, new_ar = en_text, ar_text
+        # Apply last-to-first would be safer for indexes; we rewrite from original each time
+        # by folding in file order (sections only grow at their ends).
+        for section, new_section, en_lines, ar_lines in planned:
+            if new_section:
+                new_en = append_new_section(new_en, section, en_lines)
+                new_ar = append_new_section(new_ar, section, ar_lines)
+            else:
+                new_en = apply_insert(new_en, section, en_lines)
+                new_ar = apply_insert(new_ar, section, ar_lines)
+
+        en_path.write_text(new_en, encoding="utf-8")
+        ar_path.write_text(new_ar, encoding="utf-8")
+
+        def rel(path: Path) -> str:
+            try:
+                return str(path.relative_to(app_root))
+            except ValueError:
+                return str(path)
+
+        print(f"wrote {rel(en_path)}")
+        print(f"wrote {rel(ar_path)}")
+
+        if args.no_gen_l10n:
+            print("skipped flutter gen-l10n (--no-gen-l10n)")
+            return 0
+        code = run_gen_l10n(app_root)
+        if code != 0:
+            print("flutter gen-l10n failed", file=sys.stderr)
+        return code
+    except L10nError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

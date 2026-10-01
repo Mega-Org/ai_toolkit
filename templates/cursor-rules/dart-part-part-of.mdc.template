@@ -1,0 +1,9 @@
+---
+description: Dart part/part of—split large screens (library + widgets/ parts, relative part of, formatters part)
+globs: lib/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# Dart `part` / `part of` (feature UI)
+
+Follow `ai_toolkit/rules/dart/part-part-of.md` and `ai_toolkit/patterns/dart/part-part-of-library.md`.

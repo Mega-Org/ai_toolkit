@@ -1,0 +1,9 @@
+---
+description: Flutter—page = StatelessWidget + BlocProvider + private _View; controller naming
+globs: lib/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# Page shell + feature-scoped Bloc/Cubit (this app)
+
+Follow `ai_toolkit/patterns/flutter/page-bloc-provider.md`, `ai_toolkit/patterns/flutter/presentation-field-naming.md`, `ai_toolkit/rules/flutter/widgets-and-performance.md`.

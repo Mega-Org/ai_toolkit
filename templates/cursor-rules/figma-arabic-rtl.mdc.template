@@ -1,0 +1,8 @@
+---
+description: Figma and UI—Arabic copy, RTL-first, defaults before explicit alignment (this app)
+alwaysApply: false
+---
+
+# Design language (Figma → code)
+
+Follow `ai_toolkit/rules/flutter/design-direction-and-localization.md` and `ai_docs/conventions.md` (Design / Figma). Always-on defaults: `core-digest.mdc`.

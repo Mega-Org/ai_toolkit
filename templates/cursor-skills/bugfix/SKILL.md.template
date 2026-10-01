@@ -1,0 +1,39 @@
+---
+name: bugfix
+description: >-
+  Diagnoses and fixes bugs with the lean bugfix loader and LOADMAP tags.
+  Persists ai_specs/fixes/<slug>/, minimal diff, analyzer on touched
+  files, no tests unless asked. Replaces app-wide gotcha rows in
+  ai_docs/memory.md (4 KB, no append). Does not commit unless --commit (asks
+  first). Use for bugfix, crash, regression, wrong UI, bad API handling,
+  or a tester/QA report.
+---
+
+## Workflow Reference
+Implements: ai_toolkit/workflows/maintenance/bugfix.md
+
+# Bugfix
+
+**Follow the workflow file verbatim.**
+
+## Args
+
+```text
+<feature|plan-path> [phase|next] [+tag -tag] [--load=a,b] [--full] [--commit]
+```
+
+Slug or `ai_specs/fixes/<folder>/`. Tags = suspected domain. **Commit:** false unless `--commit`. `--no-persist` skips the fix folder (discouraged). `--no-commits` = default.
+
+Phrases: `bugfix: …` (chat), `bugfix from tester report`, `bugfix from ai_specs/fixes/<slug>/`.
+
+## Load (once; no INDEX.md)
+
+1. `ai_toolkit/workflows/maintenance/bugfix.md`
+2. `ai_toolkit/LOADMAP.md` cards for tags / `--load=` / `--full`
+3. Fix folder when resuming; feature README Contract if a slug is named
+4. `ai_docs/memory.md` once before replacing an app-wide gotcha
+5. Screen file before Figma if visual
+
+Lite bootstrap. Read-once. Broad search → `explore` subagent. Skip tests. Analyzer on touched files. Handoff ≤10 lines with Context used.
+
+Intake → reproduce → isolate → minimal fix → verify → write README + `request.md`. App-wide gotcha: replace the matching row in `ai_docs/memory.md` (≤ 4 KB). Do not append. Feature-only notes stay out of that file.

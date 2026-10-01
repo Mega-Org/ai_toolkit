@@ -1,0 +1,9 @@
+---
+description: Remote data sources — inline DioHelper calls, maps from params, no request prints
+globs: lib/**/*remote_data_source*.dart, lib/**/*_remote_data_source*.dart
+alwaysApply: false
+---
+
+# Remote data source implementations (`*RemoteDataSourceImpl`)
+
+Follow `ai_toolkit/rules/flutter/remote-data-sources.md` and `ai_toolkit/patterns/data/remote-data-source-inline.md`. Request logging: `no-request-prints.mdc`.

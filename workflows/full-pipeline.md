@@ -27,7 +27,8 @@ Each stage writes to its **own folder** in the app repo's `ai_specs/`, so nothin
         ▼   (send needs to backend so the API can be built/documented)
  4. ingest-collection     →  ai_specs/api/source/snapshot.json
  5. analyze-collection    →  ai_specs/api/features/*/gaps.md + edit-brief.md
- 6. pack-collection-handoff → ai_specs/api/COLLECTION_HANDOFF.md   ← send THIS to backend
+ 6. pack-collection-handoff → ai_specs/api/handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md
+        (COLLECTION_HANDOFF.md is a 3-line pointer — send the dated archive)
         │
         ▼   (backend answers questions + fixes the collection)
  7. reanalyze-collection  →  updated gaps (should shrink)
@@ -50,14 +51,14 @@ Steps 1–3 can run in any order (they are independent sources). Steps 4–8 are
 | 3 | What each screen needs from the API | `Screen data analysis` | [`product-analysis/screen-data-analysis.md`](product-analysis/screen-data-analysis.md) | `ai_specs/api/screen-requirements/` |
 | 4 | Import the API collection | `Ingest API collection` | [`api-analysis/ingest-collection.md`](api-analysis/ingest-collection.md) | `ai_specs/api/source/` |
 | 5 | Full API gap analysis | `Analyze API collection` | [`api-analysis/analyze-collection.md`](api-analysis/analyze-collection.md) | `ai_specs/api/features/` |
-| 6 | Build the file for backend | `Pack collection handoff` | [`api-analysis/pack-collection-handoff.md`](api-analysis/pack-collection-handoff.md) | `ai_specs/api/COLLECTION_HANDOFF.md` |
+| 6 | Build the file for backend | `Pack collection handoff` | [`api-analysis/pack-collection-handoff.md`](api-analysis/pack-collection-handoff.md) | dated `api/handoff/COLLECTION_HANDOFF-*.md` (pointer in `COLLECTION_HANDOFF.md`) |
 | 7 | Recheck after backend fixes | `Reanalyze API collection` | [`api-analysis/reanalyze-collection.md`](api-analysis/reanalyze-collection.md) | updated `api/features/` |
 | 8 | Run endpoints + save real examples | `Test and capture API responses` | [`api-analysis/test-and-capture.md`](api-analysis/test-and-capture.md) | `api/features/*/captured/` + collection |
 | 9 | Plan a feature to build | `make-plan feature <slug>` | [`feature-delivery/make-plan.md`](feature-delivery/make-plan.md) | `ai_specs/features/<slug>/` |
 | 10 | Build one phase | `implement-phase` | [`feature-delivery/implement-phase.md`](feature-delivery/implement-phase.md) | code |
 | 11 | Verify + open PR | `verify and PR` | [`feature-delivery/verify-and-pr.md`](feature-delivery/verify-and-pr.md) | PR |
 
-Supporting workflows you can run anytime: [`session/bootstrap-session.md`](session/bootstrap-session.md) (load context), [`git/commit-before-work.md`](git/commit-before-work.md), [`worklog/update-worklog.md`](worklog/update-worklog.md), [`maintenance/bugfix.md`](maintenance/bugfix.md).
+Supporting workflows you can run anytime: [`session/bootstrap-session.md`](session/bootstrap-session.md) (load context), [`git/commit-after-phase.md`](git/commit-after-phase.md) (opt-in; `--commit` asks first), [`worklog/update-worklog.md`](worklog/update-worklog.md), [`maintenance/bugfix.md`](maintenance/bugfix.md).
 
 ## The API loop (steps 4–8), in detail
 
@@ -86,7 +87,7 @@ Because several folders use the same feature slug, agents follow a strict priori
 | During... | Load (truth) | Do NOT load |
 |-----------|--------------|-------------|
 | UI implementation | `design/` (screens, nav, components) | `api/screen-requirements/` |
-| Data/integration implementation | `api/features/` (real endpoints) + captured examples | `api/screen-requirements/` |
+| Data/integration implementation | Agreed contract reply, then `api/features/` + captured examples | `api/screen-requirements/` |
 | Any feature build | `features/<slug>/README.md` + `plan.md` (build contract) | analysis `*/features/` as a substitute |
 
 `api/screen-requirements/` is **planning-only** (expected needs). Once `api/features/<feature>/` documents the real endpoints, the screen-requirement for that feature is **superseded** (mark `covered` or archive). This is why "what does this page need?" analysis never leaks a *guessed* endpoint into real code.
@@ -111,7 +112,8 @@ ai_specs/
     screen-requirements/   ← step 3  (expected needs; planning only)
     source/snapshot.json   ← step 4
     features/<slug>/        ← steps 5,7,8 (real endpoints, gaps, captured examples)
-    COLLECTION_HANDOFF.md   ← step 6  (send to backend)
+    COLLECTION_HANDOFF.md   ← pointer to handoff/COLLECTION_HANDOFF-*.md (step 6)
+    contracts/              ← backend contract register (optional `/backend-contract`)
   features/<slug>/         ← steps 9–11 (README.md + plan.md = build layer)
 ```
 

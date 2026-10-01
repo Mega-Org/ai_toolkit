@@ -1,6 +1,7 @@
 # Collection handoff (Apidog / Postman)
 
-Copy to: `ai_specs/api/COLLECTION_HANDOFF.md` (optional dated copy under `handoff/`).
+Copy to: `ai_specs/api/handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md`.  
+`ai_specs/api/COLLECTION_HANDOFF.md` is a **3-line pointer** to that archive, never a full copy.
 
 **Send this file to the collection owners (usually backend).**  
 It is a **collection** maintenance brief — not a generic “change the API code” ticket.
@@ -70,13 +71,23 @@ Do **not** treat every line as “implement new backend code.” Prefer updating
 
 ---
 
-## 4. Assumptions we did not invent
+## 4. Collection lags reply
+
+> Collection snapshot vs agreed contract. Not a new question.
+
+| Feature | Operation | Collection today | Agreed reply | Contract |
+|---------|-----------|------------------|--------------|----------|
+| | | | | |
+
+---
+
+## 5. Assumptions we did not invent
 
 - …
 
 ---
 
-## 5. Out of scope / Flutter-only (ignore for collection)
+## 6. Out of scope / Flutter-only (ignore for collection)
 
 - …
 

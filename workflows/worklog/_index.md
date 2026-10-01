@@ -11,14 +11,13 @@
 | File | Topic |
 |------|--------|
 | [`setup-worklog.md`](setup-worklog.md) | Generate `ai_worklog/` from templates |
-| [`update-worklog.md`](update-worklog.md) | Record done work, TODOs, blockers after sessions |
+| [`update-worklog.md`](update-worklog.md) | One append to today's daily file; no reads |
 | [`daily-report.md`](daily-report.md) | Generate chat or saved reports (EN / AR) |
 | [`todo-list.md`](todo-list.md) | List and triage open TODOs |
 
 ## Integration
 
-- **make-plan** — step 7 in [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md)
-- **implement-phase** — step 7 in [`../feature-delivery/implement-phase.md`](../feature-delivery/implement-phase.md)
+- **make-plan** / **implement-phase** / **bugfix** — append-only step in those checklists
 
 ## Templates
 

@@ -2,7 +2,7 @@
 
 Copy to: `ai_specs/api/features/<feature>/edit-brief.md`
 
-Source for packing `COLLECTION_HANDOFF.md`.  
+Source for packing the dated collection handoff archive (`COLLECTION_HANDOFF.md` is a pointer).  
 **Edits = Apidog/Postman collection changes.** Questions = what owners must answer (may or may not need real API work).
 
 | Field | Value |
@@ -53,6 +53,14 @@ Source for packing `COLLECTION_HANDOFF.md`.
 - `TBD(collection): …`
 - `TBD(backend-api): …`
 - `TBD(product): …`
+
+## Collection lags reply
+
+> Filled by reanalyze when the **collection snapshot differs** from an **agreed** contract reply. Not a new gap or question. Pack includes this so collection owners can catch up.
+
+| Operation | Collection today | Agreed reply | Contract |
+|-----------|------------------|--------------|----------|
+| | | | |
 
 ## Resolved (optional)
 

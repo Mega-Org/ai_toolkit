@@ -1,3 +1,36 @@
+## Agent card
+
+**LOADMAP tags:** `nav`
+**Read rest of this file:** no, unless adding a shared transition type or changing `navigatorKey` / observers.
+
+### Must
+- Use `AppRouter` static helpers (`push`, `pushNamed`, `pop`, `popUntil`, `getCurrentRoute`) instead of parallel `Navigator.of` wrappers.
+- Pass local `BuildContext` into `pop` / `popUntil` when you have one; `appContext` only for context-less sites with a mounted navigator.
+- One global `appNavigatorKey` on root `MaterialApp`. Shared transitions live in `animated_routes.dart`.
+- Route names from router/feature constants — no magic strings. Typed `push<T>` / `pop<T>(result:)`.
+
+### Must not
+- Invent per-feature `PageRoute` subclasses; extend `animated_routes.dart`.
+- Hard-code route names if constants exist.
+- Use `appContext` when a real `BuildContext` is available.
+
+### When to load the rest
+- `pushWithTransition` / `RouteAware` observer wiring, responsive shell note.
+
+### Related (cards first)
+- Core digest already covers `AppRouter` call-site rules; this leaf is the toolkit source.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Router
 
 ## Purpose

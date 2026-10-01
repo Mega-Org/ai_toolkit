@@ -1,0 +1,3 @@
+# Index skip only. Handoff MD under ai_specs stays indexed (intake / contracts link to it).
+ai_specs/api/source/snapshot.json
+ai_specs/brd/source/*.pdf

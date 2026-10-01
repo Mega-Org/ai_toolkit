@@ -4,19 +4,68 @@ Reusable, Flutter-first guidance for AI-assisted work across apps. This repo kee
 
 Per-app files such as `CLAUDE.md`, `AGENTS.md`, and `.cursor/rules` should stay thin. They should point agents to this toolkit, usually starting with `ai_toolkit/INDEX.md` and the session bootstrap workflow at `ai_toolkit/workflows/session/bootstrap-session.md`.
 
-## Layout
+## Quick start
+
+1. Put `ai_toolkit/` at the project root (copy or [submodule](#how-to-use-in-an-app-submodule)).
+2. From the project root, install Cursor skills and rules:
+
+```bash
+bash ai_toolkit/setup/install.sh
+```
+
+3. Open [`INDEX.md`](INDEX.md) for session bootstrap and task routing.
+4. Use the five skills: `feature-make-plan`, `feature-implement-phase`, `bugfix`, `autopilot-plan`, `backend-contract`.
+
+Full install steps: [`INSTALL.md`](INSTALL.md). New project: [`docs/installation/new-project-setup.md`](docs/installation/new-project-setup.md). Upgrade: [`docs/migration/upgrading-ai-toolkit.md`](docs/migration/upgrading-ai-toolkit.md).
+
+## What's included
+
+| Area | What you get |
+|------|----------------|
+| Workflows | Make-plan, implement-phase, autopilot, bugfix, plus analysis and git playbooks |
+| Cursor templates | Five skills and Cursor rules under [`templates/cursor-skills/`](templates/cursor-skills/) and [`templates/cursor-rules/`](templates/cursor-rules/) |
+| Install scripts | [`setup/install.sh`](setup/install.sh) copies skills/rules into `.cursor/` and merges ignore files at the app root |
+| Rules and patterns | Stack guidance under [`rules/`](rules/) and [`patterns/`](patterns/) |
+| Docs | [`docs/`](docs/) — installation, workflows, rules, tooling, migration |
+
+## Documentation
+
+| Doc | Purpose |
+|-----|---------|
+| [`INSTALL.md`](INSTALL.md) | Prerequisites, install, verify, troubleshooting |
+| [`docs/workflows/overview.md`](docs/workflows/overview.md) | The four feature/maintenance workflows |
+| [`docs/rules/overview.md`](docs/rules/overview.md) | Cursor rule templates by category |
+| [`docs/migration/upgrading-ai-toolkit.md`](docs/migration/upgrading-ai-toolkit.md) | Existing-project upgrade |
+| [`docs/tooling/l10n-add.md`](docs/tooling/l10n-add.md) | Section-aware ARB inserts (`make l10n-add`) |
+| [`docs/tooling/cursor-plugins.md`](docs/tooling/cursor-plugins.md) | Disable unused / duplicate Figma plugins |
+| [`CHANGELOG.md`](CHANGELOG.md) | Release notes |
+| [`templates/cursor-skills/autopilot-plan/TEAM_GUIDE.md.template`](templates/cursor-skills/autopilot-plan/TEAM_GUIDE.md.template) | Autopilot for the team (install renames to `TEAM_GUIDE.md`) |
+
+## Structure overview
 
 - `INDEX.md`: the AI entrypoint. Read this first in every session.
 - `bin/toolkit`: repo-local CLI to add/sync/pull/push the toolkit submodule in each app.
+- `bin/l10n-add`: section-aware ARB inserts (dry-run default). Docs: [`docs/tooling/l10n-add.md`](docs/tooling/l10n-add.md).
 - `alias/`: shell aliases and command shortcuts — overview [`alias/_index.md`](alias/_index.md).
-- `setup/`: project setup checklists and bootstrapping — overview [`setup/_index.md`](setup/_index.md).
+- `setup/`: install scripts (`install.sh`, skills, rules, ignore files, verify) plus project checklists — overview [`setup/_index.md`](setup/_index.md).
 - `rules/`: short must / must-not guidance — overview [`rules/_index.md`](rules/_index.md).
 - `patterns/`: implementation examples and conventions — overview [`patterns/_index.md`](patterns/_index.md).
-- `workflows/`: ordered playbooks — layout [`workflows/README.md`](workflows/README.md).
-- `templates/`: reusable spec and documentation skeletons — overview [`templates/_index.md`](templates/_index.md). Includes [`templates/app-seed/`](templates/app-seed/README.md) for per-app bootstrap files.
+- `workflows/`: ordered playbooks — layout [`workflows/README.md`](workflows/README.md). Autopilot: [`workflows/feature-delivery/autopilot-phases.md`](workflows/feature-delivery/autopilot-phases.md).
+- `templates/`: spec skeletons, app-seed files, and Cursor skill/rule templates — overview [`templates/_index.md`](templates/_index.md).
+- `docs/`: human guides for install, workflows, rules, tooling, and migration.
 - `reference/`: supporting checklists and notes — overview [`reference/_index.md`](reference/_index.md).
 
 This toolkit uses `workflows/`, not `commands/`. The intent is the same as command-style playbooks in some AI tools, but "workflow" better matches phased, multi-step work and keeps the naming tool-neutral.
+
+## Installation
+
+From a project root that already contains `ai_toolkit/`:
+
+```bash
+bash ai_toolkit/setup/install.sh
+```
+
+The script creates `.cursor/skills`, `.cursor/rules`, and `.cursor/plans`, copies the four skill templates and thirteen rule templates, and runs verify. Same-named files under `.cursor/skills/` and `.cursor/rules/` are overwritten. Details: [`INSTALL.md`](INSTALL.md).
 
 ## Bootstrap Modes
 
@@ -91,7 +140,7 @@ Each app should keep its own product-specific docs outside this toolkit:
 
 - `ai_docs/architecture.md`: app-specific core and feature boundaries.
 - `ai_docs/conventions.md`: naming, folders, and app-level exceptions.
-- `ai_specs/`: app-specific spec workspace. Prefer `ai_specs/README.md` (layer map) and `ai_specs/INDEX.md` (feature matrix + load order). Per feature **build** specs: `ai_specs/features/<feature>/README.md` (requirements) and `plan.md` (phased plan + progress). Analysis truth: BRD in `ai_specs/brd/`; design/Figma in `ai_specs/design/`; API collection KB in `ai_specs/api/` (send `COLLECTION_HANDOFF.md` to collection owners). Same feature slug may appear under `brd/features/`, `design/features/`, `api/features/`, and root `features/` — different ownership, not duplicates. Plan with [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md); implement with [`implement-phase.md`](workflows/feature-delivery/implement-phase.md). Optional per app: `fixes/`, `integrations/`, `archive/`. Refactors/tooling: [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) + `ai_docs/`.
+- `ai_specs/`: app-specific spec workspace. Prefer `ai_specs/README.md` (layer map) and `ai_specs/INDEX.md` (feature matrix + load order). Per feature **build** specs: `ai_specs/features/<feature>/README.md` (requirements) and `plan.md` (phased plan + progress). Analysis truth: BRD in `ai_specs/brd/`; design/Figma in `ai_specs/design/`; API collection KB in `ai_specs/api/` (send the dated archive named in `COLLECTION_HANDOFF.md`; contracts register `api/contracts/INDEX.md`). Same feature slug may appear under `brd/features/`, `design/features/`, `api/features/`, and root `features/` — different ownership, not duplicates. Plan with [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md); implement with [`implement-phase.md`](workflows/feature-delivery/implement-phase.md). Optional per app: `fixes/`, `integrations/`, `archive/`. Refactors/tooling: [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) + `ai_docs/`.
 - **Cursor Agent Skills** (optional): portable templates under [`reference/agent-skills/`](reference/agent-skills/) — copy into `.agents/skills/<name>/` in each app repo so Cursor can discover them. Keep long-form guidance in `ai_toolkit/patterns/` and `ai_toolkit/rules/`; skills should stay short and link there.
 
 The toolkit should not contain secrets, environment URLs, client IDs, or product-only architecture prose.

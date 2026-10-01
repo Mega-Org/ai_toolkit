@@ -1,0 +1,44 @@
+---
+name: feature-make-plan
+description: >-
+  Plans a Flutter feature: writes specs only under
+  ai_specs/features/<feature>/ (README.md + plan.md + empty memory.md).
+  Loads slug BRD,
+  design, API, and contracts register rows. Coverage check. Suggests
+  /backend-contract request when a contract is missing. Does not commit
+  unless --commit (asks first). Use for make-plan or plan a feature.
+---
+
+## Workflow Reference
+Implements: ai_toolkit/workflows/feature-delivery/make-plan.md
+
+# Make plan
+
+**Follow the workflow file verbatim.** Specs only — no app code, no Cursor plan.
+
+## Args
+
+```text
+<feature|plan-path> [phase|next] [+tag -tag] [--load=a,b] [--full] [--commit]
+```
+
+`phase` / `next` unused. **Commit:** false unless `--commit` (then ask). `--no-commits` = default.
+
+## Load (once; skip missing; no indexes)
+
+1. `ai_toolkit/workflows/feature-delivery/make-plan.md`
+2. LOADMAP cards for tags / `--full`
+3. `ai_specs/brd/features/<feature>.md`
+4. `ai_specs/design/features/<feature>.md` + named screens
+5. `ai_specs/api/features/<feature>/`
+6. `ai_specs/api/contracts/INDEX.md` rows for this slug
+7. `ai_docs/architecture.md`, `ai_docs/conventions.md` when present
+8. Existing feature `README.md`
+
+Every phase gets `Load`, `Inputs`, `Touches`, `Effort`. Coverage: every requirement, endpoint, and screen maps to a phase. Missing contract → `/backend-contract request <feature> [topic]` — do not invent. Create `memory.md` from `ai_toolkit/templates/specs/feature-memory.md` when missing (empty sections, ≤ 3 KB). If it exists, leave it — do not append.
+
+End with exact:
+
+```text
+/feature-implement-phase <feature> next
+```

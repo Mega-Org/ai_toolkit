@@ -24,7 +24,9 @@ Outputs live under `ai_specs/api/`. Playbooks stay in `ai_toolkit/`.
 ai_specs/api/
   README.md
   INDEX.md
-  COLLECTION_HANDOFF.md       # create/update via pack workflow; optional at end of full analyze
+  COLLECTION_HANDOFF.md       # 3-line pointer after pack (never a full copy)
+  handoff/                    # dated COLLECTION_HANDOFF-YYYY-MM-DD.md archives
+  contracts/                  # register + folders — created by /backend-contract, not this workflow
   source/
     snapshot.json
     snapshot.meta.md
@@ -90,8 +92,8 @@ When the app has root `ai_specs/INDEX.md`, add/update an **API** area entry poin
    - `edit-brief.md` — **Collection edits** (Apidog/Postman docs/examples/responses/folders) + **Questions** (stable IDs `Q-<feature>-NN`; note if follow-up is collection-only vs real API)
 9. **Gaps index** — Roll up counts by feature and severity in `analysis/gaps-index.md`.
 10. **History** — Write `history/YYYY-MM-DD-full-analysis.md` with snapshot hash and high-level counts.
-11. **Pack (recommended)** — Run [`pack-collection-handoff.md`](pack-collection-handoff.md) so `COLLECTION_HANDOFF.md` is ready to send.
-12. **Report to user** — Summarize feature count, blocker count, path to `COLLECTION_HANDOFF.md`, and open question count. Remind them edits are **collection-scoped**.
+11. **Pack (recommended)** — Run [`pack-collection-handoff.md`](pack-collection-handoff.md) so the dated archive is ready to send (`COLLECTION_HANDOFF.md` is a pointer).
+12. **Report to user** — Summarize feature count, blocker count, path to the dated handoff archive, and open question count. Remind them edits are **collection-scoped**.
 
 ## Quality Rules
 
@@ -118,4 +120,4 @@ When the app has root `ai_specs/INDEX.md`, add/update an **API** area entry poin
 
 - Inventory + feature map + gaps-index exist.
 - Every feature with APIs (and `_orphan` if used) has `edit-brief.md` with Collection edits and/or Questions sections.
-- User knows where `COLLECTION_HANDOFF.md` is (after pack) or is told to run pack next.
+- User knows the dated archive path (after pack) or is told to run pack next.

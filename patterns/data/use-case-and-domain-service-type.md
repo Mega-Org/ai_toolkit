@@ -1,3 +1,36 @@
+## Agent card
+
+**LOADMAP tags:** `domain`
+**Read rest of this file:** yes if implementing a new use case/`*Params`/`toMap`/`queryParameters` or sealed input variants.
+
+### Must
+- Class: `MyActionUseCase extends IUseCase<SuccessType, MyActionParams>` with `@Injectable()`, inject repository interface.
+- `call` delegates to the repository and returns its `DomainServiceType`.
+- Prefer `XxxUseCase` first, then `XxxParams` in the **same file**.
+- `DomainServiceType<T>` is the only typedef for this shape — do not alias it again.
+- Keep one style per file (`DomainServiceType` vs expanded `Future<Either<…>>`).
+
+### Must not
+- Inject Dio into a use case. Introduce a second typedef for `Future<Either<Failure, T>>`.
+- Put presentation controllers or `BuildContext` on params.
+
+### When to load the rest
+- Sealed `*Input` variants, query maps, `NoParams` vs primitive pass-through, repository signatures.
+
+### Related (cards first)
+- `rules/core/foundation.md` (must/must-not); `+state` cubit-and-use-case for `fold`.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Use cases, params, and `DomainServiceType`
 
 ## Purpose

@@ -2,14 +2,14 @@
 
 ## Purpose
 
-**Commit cadence and messages** aligned with phased plans and conventional commits—not full Git tutorials.
+**Opt-in commit cadence** aligned with phased plans and conventional commits—not full Git tutorials. Default everywhere is **no commit**.
 
 ## Contents
 
 | File | Topic |
 |------|--------|
-| [`commit-before-work.md`](commit-before-work.md) | **Before** `make-plan` or `implement-phase`: check git; default **commit first** with AI message; **`--no-commits`** to skip |
-| [`commit-after-phase.md`](commit-after-phase.md) | **After** completing a plan phase: conventional commit |
+| [`commit-before-work.md`](commit-before-work.md) | **Opt-in.** Commit a dirty tree **before** a task only if the user asked. Show files + message; wait for yes. `--no-commits` = skip (default). |
+| [`commit-after-phase.md`](commit-after-phase.md) | **Opt-in.** After a phase/task only with `--commit` or an explicit ask. Show files + message; wait for yes. |
 
 ## References
 

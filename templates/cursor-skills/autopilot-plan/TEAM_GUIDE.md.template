@@ -1,0 +1,261 @@
+# Autopilot plan — team guide
+
+This guide is for people running autopilot. Agents do not load this file or `examples/`. The procedure is `SKILL.md`. Commands use `/autopilot-plan` plus a plan path.
+
+## Introduction
+
+Autopilot reads a plan and implements each unfinished phase in order. Every phase starts in a new agent session so the context stays limited to that phase. The next phase starts only after the current one finishes and the plan status is updated.
+
+Use it when a plan already exists and you want the remaining phases run under one git policy.
+
+Use it when:
+
+- A feature `plan.md` has several pending phases and you want them done in order.
+- A Cursor plan (YAML todos) lists phases you want executed one by one.
+- A previous run stopped and you want the next unfinished phase, not a restart from phase 1.
+
+Do the phase yourself, or run a single implement-phase, when you only want one phase, or when you expect to answer contract questions between phases and would rather drive each step.
+
+Autopilot does not invent product or API contracts. If a phase hits missing information, it stops and asks. It does not skip ahead.
+
+Three modes control git. The mode that matches this repo's current live skill is **Direct**: stay on your branch and do not commit.
+
+| Mode | Branch | Commits |
+|------|--------|---------|
+| Direct | Current branch | None. Working tree stays dirty. |
+| Safe | One new branch from current HEAD | One commit at the end, only if you confirm. |
+| Cloud | A new branch per phase, each from the previous phase branch | One commit per successful phase after you confirm files + message. |
+
+No mode pushes. No mode merges onto your branch unless you choose merge after a conflict check. A failed phase stops the run.
+
+## Quick start
+
+### Finish a plan on the current branch
+
+You are on the branch that should receive the edits. You will review the diff and commit yourself.
+
+```
+/autopilot-plan @ai_specs/features/client_profile/plan.md direct
+```
+
+The agent implements each pending phase, updates the plan, and leaves the files uncommitted. Your branch name does not change.
+
+### Isolate work on a temp branch
+
+You want the run off your current branch, with one commit after every phase succeeds.
+
+```
+/autopilot-plan @ai_specs/features/client_profile/plan.md safe
+```
+
+The agent creates `autopilot/client-profile-plan` from your current HEAD, runs every phase there, then asks before the single commit. It does not push. If a phase fails, it stops on that branch and does not commit or merge.
+
+### One branch per phase
+
+You want each phase committed on its own branch (after you confirm) so you can inspect phase 2 without phase 3 mixed in.
+
+```
+/autopilot-plan @.cursor/plans/client_profile_make-plan_0f5b3327.plan.md cloud
+```
+
+Phase 1 is `autopilot/client-profile-make-plan-0f5b3327/phase-1` from your current HEAD. Phase 2 branches from phase 1, and so on. Each successful phase gets a commit on its branch **after you confirm**. Your original branch is unchanged until you choose to merge.
+
+### Omit the mode
+
+```
+/autopilot-plan @ai_specs/features/client_profile/plan.md
+```
+
+The agent asks:
+
+```
+Autopilot mode?
+1. Direct — current branch, no commits
+2. Safe — temp branch, one commit at the end (asks first)
+3. Cloud — per-phase branches, ask before each phase commit
+```
+
+Reply with `1`, `2`, `3`, or the mode name. It waits. It does not commit while it waits.
+
+## All modes explained
+
+### Direct
+
+Work happens on the branch you have checked out. The agent does not create a branch and does not commit. Phase implementation is called with `--no-commits`, so the phase's own commit-before-work and commit-after-phase steps do not run.
+
+At the end you have a dirty working tree and an updated plan. You commit, split commits, or discard changes with your normal git workflow.
+
+Direct is the right mode when the branch is already the integration branch for this work (a feature branch you own) and you want to read the full diff before any commit.
+
+### Safe
+
+The agent creates one branch, `autopilot/<plan-slug>`, from the current HEAD. `<plan-slug>` is the plan filename without its extension, lowercased, with punctuation turned into hyphens. When the file is named `plan.md`, the slug is `<feature>-plan` (for example `client-profile-plan`) so two features do not share a branch. Every phase is implemented on that branch with no per-phase commit.
+
+If all phases succeed, the agent asks whether to create one commit that contains the whole run. Decline, and the branch stays dirty with no commit. Accept, and there is one commit on the temp branch. That confirmation is not a merge. Your original branch stays where it was. Nothing is pushed.
+
+If a phase fails, the agent stops on the temp branch, reports the failure, and does not make the batch commit or merge.
+
+Safe is the right mode when you want a single reviewable commit and a simple way to abandon the run by leaving or deleting the temp branch.
+
+### Cloud
+
+Each phase has its own branch. Phase 1 is created from the HEAD you started on. Phase 2 is created from phase 1's branch after phase 1 is committed. After a phase succeeds, the agent shows the files and a proposed message and waits. It commits only after you say yes, and only on that phase branch.
+
+Your checked-out branch is not updated. The agent does not push. It does not merge into your branch unless you say so, and only after it checks for conflicts.
+
+If phase 4 fails, phases 1–3 remain committed on their branches. Phase 4 is not committed. Phase 5 does not start. Nothing is merged.
+
+Cloud is the right mode when you want to review, cherry-pick, or stop at a phase boundary without unpicking one large diff.
+
+## Complete usage examples
+
+**Feature plan, Direct, full run**
+
+```
+/autopilot-plan @ai_specs/features/orders/plan.md direct
+```
+
+Eight pending phases become eight agent sessions. After phase 3 the plan shows phase 3 done and phase 4 not started. When phase 8 succeeds, the plan is fully done and `git status` still shows uncommitted files.
+
+**Cursor plan path without `@`**
+
+```
+/autopilot-plan .cursor/plans/client_profile_make-plan_0f5b3327.plan.md safe
+```
+
+Same Safe behavior as the `@` form. The `@` only attaches the file in chat. The path is the argument.
+
+**Safe, then commit, no merge**
+
+```
+/autopilot-plan @ai_specs/features/orders/plan.md safe
+```
+
+When the agent asks to batch-commit, answer yes. It commits on `autopilot/orders-plan` and stops. Your previous branch does not contain that commit until you merge it yourself or choose merge from the menu the agent offers.
+
+**Cloud, stop at a failure**
+
+```
+/autopilot-plan @ai_specs/features/orders/plan.md cloud
+```
+
+Phase 2's agent reports a failure. You are left on `autopilot/orders-plan/phase-2` with that phase uncommitted. `phase-1` has its commit if you confirmed it. The agent does not open phase 3 and does not merge.
+
+**Resume**
+
+A plan whose YAML todos are half `completed` and half `pending`:
+
+```
+/autopilot-plan @.cursor/plans/client_profile_make-plan_0f5b3327.plan.md
+```
+
+The agent reports the completed prefix and asks whether to continue the next pending phase in the same mode. Answer yes to continue. Answer that you want a restart only if you intend completed phases to be done again.
+
+## Best practices
+
+- Name the mode in the command when you already know it. The menu is for when you do not.
+- Start from a clean working tree when you can. Direct will mix any existing uncommitted edits with phase work. Safe and Cloud branch from current HEAD, so committed history is included; uncommitted edits are not automatically carried onto the new branch.
+- Read the plan statuses after each phase if you are watching the run. The agent writes them before it starts the next phase.
+- Prefer Safe when you want one commit message for the whole plan. Prefer Cloud when later phases might fail and you still want the earlier phases saved as commits.
+- Prefer Direct on a feature branch you already created. Direct on a shared branch leaves a dirty tree there; commit or stash before anyone else uses that checkout.
+- Let a failed phase stay stopped. Fix the cause, then run autopilot again. Resume will offer the unfinished phase.
+- Confirm the batch commit only after you have looked at the diff. Confirm merge separately, after you have seen the conflict check.
+
+## Rules and guidelines
+
+- One phase at a time. The next phase starts after the current phase's status is updated.
+- A new agent session for every phase.
+- Stop on the first failure. Do not continue.
+- Direct does not commit. The agent passes `--no-commits` so phase implementation does not commit either.
+- Safe does not commit until you confirm, and then it commits once.
+- Cloud asks before each successful phase commit on that phase's branch. The phase agent itself is still told not to commit; the parent agent makes that commit after yes.
+- Do not push.
+- Do not merge onto your original branch unless you choose merge. The agent checks for conflicts first. If the check finds conflicts, it stops and asks. It does not resolve them itself.
+- Merge menu choices are merge, review the diff, or abort. Abort leaves the branches in place.
+- Never force-push. Never skip git hooks. Never amend a commit unless you asked for an amend and the commit is still local, created by the agent, and unpushed.
+- Do not rewrite the plan's phase list. The agent updates statuses, plus a mode note so a later resume can see what you chose.
+
+## Troubleshooting
+
+**The agent asked for a mode and stopped.**  
+You omitted the mode. Reply `direct`, `safe`, or `cloud` (or `1`, `2`, `3`). It will not pick Safe or Cloud for you.
+
+**It wants to continue instead of starting at phase 1.**  
+The plan already has completed or `in_progress` phases. That is resume detection. Continue to run the next unfinished phase. Say you want a restart if you really want earlier phases run again.
+
+**Direct finished and git shows a large dirty tree.**  
+Expected. Direct does not commit. Review `git diff` and commit the way you usually do, or discard what you do not want.
+
+**Safe finished, you said yes to the commit, and your original branch is unchanged.**  
+Expected. The commit is on `autopilot/<plan-slug>`. Merge only if you want those commits on the branch you started from. Use the menu, or merge yourself.
+
+**A phase failed in the middle of Cloud.**  
+Earlier phase branches still have their commits. The failed phase branch has no commit for that phase. Do not look for a merge commit on your original branch. Fix the phase and resume.
+
+**The run paused with a question about an API field or a product rule.**  
+The phase hit a blocker and stopped for a decision. Answer it. Autopilot does not fill in the contract and does not start the next phase while the question is open.
+
+**Conflict check refused to merge.**  
+The temp or phase branch and your original branch both changed the same lines. Choose review diff or abort. Resolving the conflicts is a separate step you do on purpose. The agent does not auto-resolve.
+
+**Statuses in the plan did not match the files on disk.**  
+Tell the agent to stop. Fix the plan statuses so `completed` / `done` means that phase's work is actually in the tree. Resume from the first phase that is still pending or in progress.
+
+## FAQ
+
+**Does `/autopilot-plan` commit by default?**  
+No. With no mode named, it asks. The behavior of the current live skill, and option 1 on the menu, is Direct: no commits.
+
+**Can I pass a feature `plan.md` and a Cursor `.plan.md`?**  
+Yes. Both are plan path arguments. Feature plans go through implement-phase. Other plans are implemented from the phase text in the file.
+
+**Does `@` change the mode?**  
+No. `@` only references the file. `direct`, `safe`, and `cloud` select the mode.
+
+**Will it push a merge request?**  
+No. It does not push. Opening a merge request is a separate step after you have the commits you want.
+
+**What if I already have local commits on my branch?**  
+Direct adds uncommitted edits on top of them. Safe and Cloud branch from that HEAD, so those commits are ancestors of the autopilot branch. They are not rewritten.
+
+**Can I resume in a different mode?**  
+Only if you say so. The resume question is about continuing in the same mode. Switching mode mid-plan can mix an uncommitted Direct tree with a new branch. Decide that explicitly.
+
+**Who writes the commit message?**  
+The agent writes it for Safe (after you confirm) and for each Cloud phase commit. Messages describe why the phase exists. You can reject the Safe commit and commit yourself instead.
+
+## Command reference
+
+```
+/autopilot-plan @<plan-file-path>
+/autopilot-plan @<plan-file-path> direct
+/autopilot-plan @<plan-file-path> safe
+/autopilot-plan @<plan-file-path> cloud
+/autopilot-plan <plan-file-path> [direct|safe|cloud]
+```
+
+| Argument | Required | Meaning |
+|----------|----------|---------|
+| plan path | Yes | Feature `plan.md` or another phase plan. `@` optional. |
+| mode | No | `direct`, `safe`, or `cloud`. Omitted → menu. |
+
+There is no flag to push, force-push, skip hooks, or merge silently. Those actions are outside this command.
+
+Related detail for agents lives next to the skill: `modes/`, `features/`, and `examples/complete-scenarios.md`.
+
+## Team workflows
+
+**Feature branch, one developer.**  
+Create or check out the feature branch yourself. Run Direct. When the plan is done, review the dirty tree, commit in the slices you want, then push with your normal remote workflow.
+
+**Keep `main` clean while a plan runs.**  
+Stay on `main` only long enough to start Safe from a clean HEAD. The run proceeds on `autopilot/<plan-slug>`. After you confirm the batch commit, review that branch. Merge it through the menu or a merge request you open yourself. Do not run Direct on `main`.
+
+**Review each phase before the next one lands.**  
+Use Cloud. Read `autopilot/<plan-slug>/phase-N` after each commit. If a phase is wrong, stop there. Later phases will not exist yet. Cherry-pick or merge the phase branches you accept.
+
+**Handoff between people.**  
+The plan holds the statuses and the recorded mode. The next person runs the same `/autopilot-plan` command with the same plan path. The agent should detect the partial progress and ask to continue. Tell them the mode if the plan note is missing. Do not start a second Safe or Cloud branch for the same plan unless the first run was abandoned.
+
+**Failed phase.**  
+Whoever picks up the work reads the report, fixes the blocker, and runs autopilot again on the same plan. Continue. Do not delete earlier Cloud phase branches unless the team agrees the commits are unwanted.

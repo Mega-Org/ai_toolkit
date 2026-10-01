@@ -1,3 +1,35 @@
+## Agent card
+
+**LOADMAP tags:** `observer`
+**Read rest of this file:** no — this file is the full rule. Load the pattern card for how to build a hub.
+
+### Must
+- Define `*Observer` / `*ObserverUpdater` / mixins only under presentation (or presentation-only `utils/<domain>_observer/`).
+- `notify…` / attach / detach only from pages, widgets, sheets, presentation cubits.
+- After use case/repository success, return `Either`/entities; **presentation** calls `ObserverUpdater.notify…`.
+
+### Must not
+- Import observer types in feature `domain/` or `data/`, or in core domain/data modules.
+- Call `notify…` / attach / detach from repositories, datasources, entities, or use cases.
+- Use hubs instead of repository results, streams, or app-wide auth/locale blocs.
+
+### When to load the rest
+- Review checklist only (zero refs in domain/data).
+
+### Related (cards first)
+- `patterns/state/broadcast-observer-hub.md` for anatomy and variants.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Observer hubs — presentation layer only
 
 ## Purpose

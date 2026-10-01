@@ -1,8 +1,10 @@
-# Commit after phase
+# Commit after phase (opt-in)
+
+**Commit:** false (default). Run only when the user passed `--commit` on this run, or asked to commit after the work. `--no-commits` skips (same as default).
 
 ## Purpose
 
-After **completing** work for a plan phase, create a **conventional commit** so history stays readable and reviews stay scoped. This is separate from **commit-before-work**, which runs **before** you start planning or implementing.
+Optional conventional commit of **this run’s** files after make-plan, implement-phase, bugfix, verify-and-pr, or backend-contract. Never implied by those checklists.
 
 ## Fill when
 
@@ -10,15 +12,20 @@ After **completing** work for a plan phase, create a **conventional commit** so 
 
 ## References
 
-- **Before** plan/phase work (dirty tree): [`commit-before-work.md`](commit-before-work.md)
+- Before work (dirty tree, only if asked): [`commit-before-work.md`](commit-before-work.md)
 - Git rules: [`../../rules/git/_index.md`](../../rules/git/_index.md)
 - Phase workflow: [`../feature-delivery/implement-phase.md`](../feature-delivery/implement-phase.md)
 
-## Content
+## Agent steps
 
-1. Ensure the phase’s verification steps have passed (tests, analyzer, manual checks as defined in the plan).
-2. Stage only files that belong to this phase when possible; avoid mixing unrelated changes.
-3. Use a **conventional** message, scoped to the phase, for example:
-   - `feat(checkout): add cart repository and use cases`
-   - `feat(checkout): wire payment phase presentation`
-4. If the working tree still contains unrelated edits, prefer splitting commits or finishing [`commit-before-work.md`](commit-before-work.md) hygiene before merging the phase commit.
+1. If `--commit` was not passed and the user did not ask to commit → **stop**. Leave the working tree dirty.
+2. Show the files that would be staged and **one** proposed conventional message (scoped to this phase or task).
+3. Ask. **Commit only after an explicit yes.** On no: leave dirty; do not retry unless they ask again.
+4. Stage only this work. Do not mix unrelated edits. No secrets (`.env`, credentials, keystores). Hooks run. Do not push.
+5. Do not amend unless the user asked and the commit is local, agent-authored, and unpushed. If a hook rejects, fix and make a **new** commit.
+
+Examples:
+
+- `feat(checkout): add cart repository and use cases`
+- `docs(ai_specs): plan authentication phases`
+- `fix(login): restore OTP route after blank screen`

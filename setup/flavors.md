@@ -1,3 +1,37 @@
+## Agent card
+
+**LOADMAP tags:** `flavors`
+**Read rest of this file:** yes if adding a flavor (Gradle, xcconfig, Firebase paths, Makefile, icon/splash).
+
+### Must
+- Flavor enum + `lib/main_<flavor>.dart` (full bootstrap duplicate) + `lib/apps/_<flavor>_app.dart` complete shell.
+- Duplicate flavor shells on purpose — no shared `MyApp`. Prefix every flavor-scoped type with the flavor name.
+- Native Firebase only under `android/app/src/<flavor>/` and `ios/config/<flavor>/`. Commit generated `firebase_options_<flavor>.dart`.
+- Prefer repo **Makefile** targets over raw `flutter run --flavor`.
+- Keep this toolkit file generic; real bundle IDs live in app `ai_docs/`.
+
+### Must not
+- Deduplicate flavor shells into one shared widget. Share a `MainPage` base across flavors when the app forbids it.
+- Commit default `android/app/google-services.json` or `ios/Runner/GoogleService-Info.plist`.
+- Hardcode display title strings in the shell; read `EnvironmentsConfig` / l10n.
+
+### When to load the rest
+- Copy-paste Gradle/xcconfig snippets, icon yaml, add-flavor checklist.
+
+### Related (cards first)
+- App `ai_docs/architecture.md` / flavors feature spec when present (app repo, not this leaf).
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Flutter flavors setup template
 
 ## Purpose

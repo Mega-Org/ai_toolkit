@@ -1,3 +1,38 @@
+## Agent card
+
+**LOADMAP tags:** `state`
+**Read rest of this file:** no, unless copying the full `LoginCubit` / composite `RegisterCubit` samples.
+
+### Must
+- Emit loading before await (`Async.loading()` or `copyWith(submit: const Async.loading())`).
+- Map UI → domain `Params` in the Cubit (trim, entities, sealed variants). Then `await _useCase(params)`.
+- `result.fold`: failure → `Async.failure`; success → `Async.success` / `successWithoutData`.
+- Ephemeral flows: emit `Async.initial()` (or reset the slice) **after** the terminal emit so listeners do not stick.
+- Public API: `void submit(...)` (async body OK). `@Injectable()` + `BlocProvider(create: (_) => injector<…>())`.
+- After await, rely on `SafeEmitMixin`; do not add `if (isClosed) return` solely to guard `emit`.
+
+### Must not
+- Pass `BuildContext` or controllers into a use case.
+- Skip the post-success/failure reset on ephemeral submit flags.
+- Duplicate `isClosed` guards when the mixin already no-ops `emit`.
+
+### When to load the rest
+- Need the full Login vs Register snippets or DI notes at the end.
+
+### Related (cards first)
+- `+domain` for `IUseCase`/params; `+di` for `@Injectable` / `@factoryParam`.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Cubit calling `IUseCase`
 
 ## Purpose

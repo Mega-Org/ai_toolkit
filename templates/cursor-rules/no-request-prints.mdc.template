@@ -1,0 +1,9 @@
+---
+description: Never log HTTP requests/responses with print/debugPrint—rely on PrettyDioLogger
+globs: lib/**/*.dart, test/**/*.dart
+alwaysApply: false
+---
+
+# No `print` / `debugPrint` around HTTP requests
+
+Follow `ai_toolkit/rules/flutter/remote-data-sources.md` (logging) and `PrettyDioLogger` on `DioHelper`. Never `print`/`debugPrint` URLs, bodies, headers, or responses.

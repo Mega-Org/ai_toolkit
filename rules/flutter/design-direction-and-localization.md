@@ -1,3 +1,40 @@
+## Agent card
+
+**LOADMAP tags:** `figma`
+**Read rest of this file:** no, unless verifying mixed RTL/LTR, physical left/right exceptions, or the post-impl checklist.
+
+### Must
+- Detect direction once per screen: spec/Figma note → dominant copy → `ai_docs/conventions.md` default.
+- Treat Figma copy as **language intent**, not literal strings or ARB keys.
+- Prefer Flutter `Directionality` defaults; omit `textAlign` / extra alignment when defaults match.
+- When explicit direction is needed, use semantic APIs: `TextAlign.start`, `AlignmentDirectional`, `EdgeInsetsDirectional`, `PositionedDirectional`.
+- Map all user-visible Figma copy to l10n keys in every locale ARB.
+- Record `RTL`, `LTR`, or `mixed/TBD` in the spec or phase notes.
+
+### Must not
+- Add `textAlign: TextAlign.right`, `Alignment.centerRight`, `EdgeInsets.only(left/right)`, or `children.reversed` just to match an Arabic screenshot.
+- Infer direction from English title case alone.
+- Apply English title case to Arabic strings.
+- Hardcode Arabic or English from the mockup (stub placeholders excepted).
+- Use physical `left`/`right` unless the control must stay on that physical edge in all locales.
+
+### When to load the rest
+- Need the defaults table, mirroring of chevrons, or the agent checklist at the bottom.
+
+### Related (cards first)
+- `+l10n` for ARB / `appLocalizer`; `+ui` for wrappers.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Design direction and localization (Figma → Flutter)
 
 ## Purpose

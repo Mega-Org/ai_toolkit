@@ -1,0 +1,8 @@
+---
+description: Team-wide AI seed — canonical toolkit entry (retired always-on; see core-digest)
+alwaysApply: false
+---
+
+# AI toolkit seed
+
+Replaced as always-on by `core-digest.mdc`. Entry still `ai_toolkit/INDEX.md`; tagged leaves `ai_toolkit/LOADMAP.md`. This file is not installed into `.cursor/rules/`.

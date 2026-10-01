@@ -1,0 +1,102 @@
+---
+name: autopilot-plan
+description: >-
+  Runs every unfinished phase in an ai_specs plan. Loads only the chosen mode
+  file (commit files in Safe or Cloud). Greps Status lines. Parent writes
+  memory. Batches up to 3 light phases. Effort-to-model map once per plan.
+  Direct never commits. Safe and Cloud ask first. Nothing is pushed or merged.
+  Use for /autopilot-plan or resume.
+---
+
+## Workflow Reference
+Implements: ai_toolkit/workflows/feature-delivery/autopilot-phases.md
+
+# Autopilot
+
+**Commit:** false in Direct. Safe and Cloud ask before any commit. Children get `--no-commits`. Never push. Never merge in this run.
+
+**Load:** this file, then one mode file. Do not load `TEAM_GUIDE.md`, `examples/`, `features/auto-detection.md`, or `features/interactive-menu.md`. Do not follow links in the mode file.
+
+| Mode | Extra files |
+|------|-------------|
+| `direct` (default) | `modes/direct-mode.md` only |
+| `safe` or `cloud` | that mode file + `features/commit-strategies.md` |
+
+`features/merge-strategies.md` and `features/conflict-detection.md` only if the user later asks to merge, and only in Safe or Cloud.
+
+## Args
+
+```text
+/autopilot-plan <feature|plan-path> [direct|safe|cloud]
+```
+
+Primary plans: `ai_specs/features/<feature>/plan.md`. Example: `/autopilot-plan ai_specs/features/orders/plan.md direct`. A Cursor plan is secondary. Missing path → stop and ask.
+
+Named mode skips the menu. Otherwise show this and wait. Do not assume Safe or Cloud.
+
+```text
+1 Direct — current branch, no commits
+2 Safe — temp branch, one commit at the end (asks first)
+3 Cloud — per-phase branches, ask before each commit
+```
+
+Record `autopilot_mode` and `autopilot_base_branch` in the plan. Git steps are in the one mode file.
+
+## Status
+
+Grep `^Status:`. Do not read the plan to find progress. Skip `done` and `completed`. Next work is the first `pending` or `in-progress`. Resume continues there. Do not restart `done` phases unless asked.
+
+Read only that phase block: number, `Load`, `Inputs` (paths and reply `#ID`s), `Touches`, `Effort`.
+
+## Models (once per plan)
+
+No `autopilot_models` line yet → propose this and wait:
+
+```text
+light → fastest model in this session
+standard → session default
+deep → strongest reasoning model in this session
+```
+
+The user may replace the three names. Write the approved line on the plan. `default` → session default for every phase. Do not ask again on this plan.
+
+## Phases
+
+Up to 3 consecutive `Effort: light` phases share one subagent (Direct and Safe). `standard`, `deep`, and every Cloud phase are one subagent each. Fresh subagent after each return. Pass the approved model for that `Effort`.
+
+**Phase prompt** (one block per phase in a batch):
+
+```text
+Autopilot phase child. Do not commit, push, merge, or write memory.
+Plan: {path}
+Phase: {N} — {title}
+Load: {tags}
+Inputs: {paths and reply #IDs only}
+Touches: {paths}
+Memory (read only): ai_specs/features/{feature}/memory.md
+App memory (read only if app-memory is in Load): ai_docs/memory.md
+Lean loader: /feature-implement-phase --no-commits {N} {path}
+Skip test steps. Analyzer on Touches only.
+Report, 10 lines or fewer:
+Status: done | paused | failed
+Files:
+Analyzer:
+Memory facts:
+Blockers:
+```
+
+## After each subagent
+
+The parent is the only memory writer. Merge `Memory facts` before the next phase: replace the matching row in feature `memory.md` (≤ 3 KB) and shared facts in `ai_docs/memory.md` (≤ 4 KB). Do not append. Over budget → drop the oldest row in that section.
+
+On success set `Status: done`. Partway → `in-progress`.
+
+**Paused:** child returns `Status: paused` and blockers. Ask, then re-run that phase with the answer. Missing contract → suggest `/backend-contract request <feature> [topic]` and wait. Do not invent it. Do not start later phases.
+
+**Failed:** stop. No commit. No later phases. Safe or Cloud commit only after `done` and only after yes to the files + message. Direct never commits.
+
+## End
+
+`make analyze` once, after the last phase or when the run stops. Do not analyze per phase.
+
+Summary: phases done, any paused or failed phase, mode, nothing pushed or merged. Direct leaves a dirty tree.

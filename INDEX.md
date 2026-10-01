@@ -1,6 +1,6 @@
 # AI Toolkit Index
 
-Read this file first. It is the stable entrypoint for AI agents working in Flutter apps that share this toolkit.
+Stable map of this toolkit. **Skill runs (make-plan, implement-phase, bugfix) skip this file** and use [`LOADMAP.md`](LOADMAP.md) plus the workflow checklist. Open this INDEX for full sessions or when choosing a task.
 
 ## Toolkit sections
 
@@ -20,24 +20,29 @@ Stack defaults, per-app integration, and repository boundaries are documented in
 
 ## Session bootstrap
 
-Choose one mode:
+**Lite is the default** ([`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md)):
 
-- **Lite**: read this file, then only the rule, pattern, or workflow files needed for the task (use the section overviews above to find leaf files).
-- **Full**: read this file, then [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), relevant [`alias/`](alias/_index.md) files, app-specific `ai_docs/`, `ai_specs/INDEX.md` when present, and the active spec file when the task is spec-driven.
+- **Lite (default):** do **not** read this file during a skill run. Open the task workflow checklist, then [`LOADMAP.md`](LOADMAP.md) cards for tags, then the workflow’s app load list.
+- **Full:** read this file, then the bootstrap playbook, aliases when running commands, `ai_docs/`, and spec indexes **only when choosing a feature**. Use full when the user asks or the task has no skill loader.
 
-Use full bootstrap for new features, refactors, multi-file work, architecture changes, debugging with unknown scope, and PR preparation. Use lite bootstrap for small edits, targeted reviews, and quick fixes.
+If a referenced path has not been created yet, treat it as the intended contract and continue with the nearest existing file.
 
-If a referenced path has not been created yet, treat the path as the intended contract and continue with the nearest existing guidance.
+## Git
+
+**Default is no commit** in make-plan, implement-phase, bugfix, backend-contract, verify-and-pr, and autopilot Direct. Checklists open with `Commit: false (default)`. `--commit`: show files and a proposed message, ask, commit only after yes. `--no-commits` is an alias for the default. Playbooks are opt-in: [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md), [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md). Autopilot Safe/Cloud still **ask before** any commit.
+
+## LOADMAP
+
+Feature delivery and bugfix resolve toolkit leaves via [`LOADMAP.md`](LOADMAP.md) (`+tag` / `-tag` / `--load=` / `--full`). During a phase, do **not** browse this INDEX, section `_index.md` files, or spec indexes. Shared working rules: [`docs/workflows/working-rules.md`](docs/workflows/working-rules.md).
 
 ## Load order
 
-1. Start here: `ai_toolkit/INDEX.md`.
-2. When you need breadth before leaf files, open the relevant section overview (`rules/_index.md`, `patterns/_index.md`, `workflows/README.md`, `templates/_index.md`, etc.).
-3. Load the task workflow from `ai_toolkit/workflows/` (see [`workflows/README.md`](workflows/README.md)).
-4. Load enforceable rules from `ai_toolkit/rules/`.
-5. Load implementation examples from `ai_toolkit/patterns/`.
-6. Load command aliases from `ai_toolkit/alias/` only when running commands.
-7. Load app-specific `ai_docs/`, `ai_specs/`, and `ai_worklog/` from the app repo when they exist. Prefer `ai_specs/README.md` (layer map) and `ai_specs/INDEX.md` (feature matrix) first, then `ai_specs/features/<feature>/README.md` and `plan.md` for **build** / feature delivery; BRD under `ai_specs/brd/` when product rules apply; design under `ai_specs/design/` when UI/Figma contracts apply; API under `ai_specs/api/` when collection/OpenAPI contracts apply (`COLLECTION_HANDOFF.md` for collection owners). Do not confuse analysis `*/features/` trees with root `ai_specs/features/` (implementation + progress). For daily tracking, use `ai_worklog/INDEX.md` and today's `ai_worklog/daily/YYYY-MM-DD.md`.
+1. Skill run: workflow checklist → LOADMAP cards → that workflow’s load list. Otherwise start here.
+2. Breadth (full session only): section overviews (`rules/_index.md`, `patterns/_index.md`, `workflows/README.md`, `templates/_index.md`).
+3. Task workflow under `ai_toolkit/workflows/` ([`workflows/README.md`](workflows/README.md)).
+4. Enforceable rules / patterns: **tagged leaves** in LOADMAP, not the whole tree.
+5. Aliases from `ai_toolkit/alias/` only when running commands.
+6. App files as the workflow lists them. Build specs: `ai_specs/features/<feature>/` (`README.md` + `plan.md`). Analysis KBs by path convention (`brd/features/<slug>.md`, `design/features/<slug>.md`, `api/features/<slug>/`). Contracts register: `ai_specs/api/contracts/INDEX.md`. Worklog: append-only via [`workflows/worklog/update-worklog.md`](workflows/worklog/update-worklog.md).
 
 ## Task routing
 
@@ -45,15 +50,16 @@ If a referenced path has not been created yet, treat the path as the intended co
 |------|------------|
 | Understand the whole flow (sources → build) | [`workflows/full-pipeline.md`](workflows/full-pipeline.md) — new-user end-to-end map (BRD → Figma → screen data → API → build) |
 | Start or resume a session | [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md) |
-| Plan a feature from a spec | [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md) — **ask-before-proceed** on gaps/conflicts; preflight: [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`make-plan --no-commits`** to skip) |
-| Implement one phase | [`workflows/feature-delivery/implement-phase.md`](workflows/feature-delivery/implement-phase.md) — **ask-before-proceed** on phase blockers; preflight: [`workflows/session/bootstrap-session.md`](workflows/session/bootstrap-session.md), then [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) (use **`implement-phase --no-commits`** to skip Git preflight only) |
-| Verify work or draft a PR | [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md) — after phases `done` (or scoped review); lists open TBDs |
-| Fix a bug | [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md) — Modes: chat (`bugfix:`), QA intake (`bugfix from tester report`), resume fix folder; persists `ai_specs/fixes/.../request.md` |
+| Plan a feature from a spec | [`workflows/feature-delivery/make-plan.md`](workflows/feature-delivery/make-plan.md) — skill `/feature-make-plan`; specs only; creates empty `memory.md` when missing; args `<feature\|plan-path> [phase\|next] [+tag -tag] [--load=a,b] [--full] [--commit]`; coverage check; missing contract → `/backend-contract request` |
+| Implement one phase | [`workflows/feature-delivery/implement-phase.md`](workflows/feature-delivery/implement-phase.md) — skill `/feature-implement-phase`; **Agent mode only** (never a Cursor plan); same args; LOADMAP + phase Inputs; replaces `memory.md` rows at handoff; skip test steps |
+| Backend contract (request / check / apply / intake) | [`workflows/api-analysis/backend-contract.md`](workflows/api-analysis/backend-contract.md) — skill `/backend-contract`; args `request <feature> [topic]`, `check <contract-folder>`, `apply <contract-folder>`, `intake <file>`; register `ai_specs/api/contracts/INDEX.md`; `apply` replaces the feature memory contract row. **Commit:** false (default). |
+| Verify work or draft a PR | [`workflows/feature-delivery/verify-and-pr.md`](workflows/feature-delivery/verify-and-pr.md) — after phases `done` (or scoped review); lists open TBDs; **Commit:** false (default); `--commit` asks first |
+| Fix a bug | [`workflows/maintenance/bugfix.md`](workflows/maintenance/bugfix.md) — skill `/bugfix`; same args + LOADMAP; chat / tester report / resume fix folder; app-wide gotchas replace rows in `ai_docs/memory.md` |
 | Refactor existing code | [`workflows/maintenance/refactor.md`](workflows/maintenance/refactor.md) |
 | Upgrade dependencies | [`workflows/maintenance/dependency-upgrade.md`](workflows/maintenance/dependency-upgrade.md) |
 | Normalize icons / images (scoped rename + catalogs) | [`workflows/maintenance/normalize-assets.md`](workflows/maintenance/normalize-assets.md) — catalogs → `ai_specs/design/analysis/icons-catalog.md` / `images-catalog.md` |
-| Commit before plan or phase | [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) |
-| Commit after a phase | [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) |
+| Commit before work (opt-in) | [`workflows/git/commit-before-work.md`](workflows/git/commit-before-work.md) — only if the user asked to save a dirty tree first; show files + message; wait for yes |
+| Commit after a phase (opt-in) | [`workflows/git/commit-after-phase.md`](workflows/git/commit-after-phase.md) — `--commit` or explicit ask; show files + message; wait for yes |
 | Setup daily worklog | [`workflows/worklog/setup-worklog.md`](workflows/worklog/setup-worklog.md) — templates: [`templates/worklog/_index.md`](templates/worklog/_index.md) |
 | Update worklog after work | [`workflows/worklog/update-worklog.md`](workflows/worklog/update-worklog.md) |
 | Generate daily report | [`workflows/worklog/daily-report.md`](workflows/worklog/daily-report.md) |
@@ -72,6 +78,8 @@ If a referenced path has not been created yet, treat the path as the intended co
 | Split a large screen into `part` files | [`patterns/dart/part-part-of-library.md`](patterns/dart/part-part-of-library.md) |
 | Link this toolkit into an app (submodule) | [`workflows/integration/link-ai-toolkit.md`](workflows/integration/link-ai-toolkit.md) — setup: [`setup/per-app-integration.md`](setup/per-app-integration.md) |
 | Integrate store review + force update + RC admin | [`workflows/integration/remote-config-store-ops.md`](workflows/integration/remote-config-store-ops.md) |
+| Add ARB keys in a `@-SECTION-` | [`docs/tooling/l10n-add.md`](docs/tooling/l10n-add.md) — `make l10n-add` (dry-run, then `--apply`) |
+| Trim Cursor MCP / duplicate Figma | [`docs/tooling/cursor-plugins.md`](docs/tooling/cursor-plugins.md) — manual Settings step |
 
 ## Rule routing
 

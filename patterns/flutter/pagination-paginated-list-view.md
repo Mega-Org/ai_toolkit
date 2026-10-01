@@ -1,3 +1,37 @@
+## Agent card
+
+**LOADMAP tags:** `pagination`
+**Read rest of this file:** yes if sliver/grid, `BlocListener`+`Async` variant, Cubit-owned controller exception, or `addItems`/`refresh` details.
+
+### Must
+- Default: `PaginationController` on the private `_View` **State**, not on the Cubit.
+- Cubit/use case fetches a page; UI pushes results with `addItems` / `setError` (int keys: `addItems(PaginatedData<T>)`).
+- `initState`: `addPageRequestListener`; `dispose`: `controller.dispose()`.
+- Preferred wiring: page listener `await`s cubit `DomainServiceType` then `fold` → `addItems` / `setError`. Check `mounted`.
+- Keep filters/search in Cubit or page State; pass them into the listener. Do not duplicate the item list in Cubit state.
+
+### Must not
+- Treat the controller as a repository.
+- Put the controller on an injectable Cubit unless a documented exception (observer + PTR owned with fetch).
+- Forget `dispose` on the controller.
+
+### When to load the rest
+- `BlocListener` + `Async<PaginatedData<T>>` legacy path, sliver, dedupe, observer `updateItem`.
+
+### Related (cards first)
+- `+ui` page-bloc-provider; `+state` for thin cubit fetch; `+observer` if list sync from a hub.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Pagination: `PaginationController` + `PaginatedListView`
 
 ## Where it lives (this repo)

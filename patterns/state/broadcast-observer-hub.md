@@ -1,3 +1,35 @@
+## Agent card
+
+**LOADMAP tags:** `observer`
+**Read rest of this file:** yes if adding a new hub (observer + updater + mixin file split) or Cubit binding mixin.
+
+### Must
+- Use a hub when **more than one** listener must react to the same signal (shell tab, list sync after a sheet).
+- One hub per bounded concern. Three roles: Observer (callbacks, register/dispose), Updater (private singleton, `static notify…`), optional State/Cubit mixins.
+- Typical split: `*_observer.dart` library + `part` updater + `part` mixin. Presentation only.
+
+### Must not
+- Put definitions or `notify…` in `data/` or `domain/`.
+- Use a hub for single-owner Cubit state, parent→one-child callbacks, or app-wide auth/locale.
+- Grow one hub into a kitchen-sink event bus.
+
+### When to load the rest
+- Shell-tab vs list-sync variants, Cubit `close()` detach, naming (`*ObserverUpdater`).
+
+### Related (cards first)
+- `rules/architecture/observer-presentation-only.md` (must/must-not boundary).
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Broadcast observer hub
 
 Portable pattern for **imperative fan-out**: one place broadcasts a signal; several listeners react without threading the same callback through many constructors.

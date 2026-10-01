@@ -30,4 +30,4 @@ Analyze or refresh **one** API feature folder under `ai_specs/api/features/<feat
 ## Done When
 
 - That feature’s four files are current.
-- User has paths to `edit-brief.md` and, if packed, `COLLECTION_HANDOFF.md`.
+- User has paths to `edit-brief.md` and, if packed, the dated handoff archive.

@@ -42,6 +42,10 @@ Short **must / must-not** guidance for Dart, Flutter, tests, Git, tooling, Fireb
 | Services / utils | [`core/services.md`](core/services.md), [`core/utils.md`](core/utils.md) |
 | Broadcast observer hub (singleton updater + observers; not a global event bus) | [`../patterns/state/broadcast-observer-hub.md`](../patterns/state/broadcast-observer-hub.md); **presentation only** — [`architecture/observer-presentation-only.md`](architecture/observer-presentation-only.md) |
 
+## Feature delivery
+
+- Autopilot execution modes: [`feature-delivery/autopilot-execution-modes.md`](feature-delivery/autopilot-execution-modes.md)
+
 ## References
 
 - How-to examples (longer snippets): [`patterns/_index.md`](../patterns/_index.md)

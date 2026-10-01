@@ -3,7 +3,7 @@
 # Prefer: ./ai_toolkit/bin/toolkit <cmd>
 # After first submodule add, these targets work on Mac/Linux and Git Bash/WSL.
 
-.PHONY: toolkit-add toolkit-sync toolkit-pull toolkit-push toolkit-status
+.PHONY: toolkit-add toolkit-sync toolkit-pull toolkit-push toolkit-status l10n-add
 
 TOOLKIT_BIN := ./ai_toolkit/bin/toolkit
 
@@ -25,3 +25,7 @@ toolkit-push:
 
 toolkit-status:
 	@$(TOOLKIT_BIN) status
+
+# Dry-run by default. Docs: ai_toolkit/docs/tooling/l10n-add.md
+l10n-add:
+	@./ai_toolkit/bin/l10n-add $(ARGS)

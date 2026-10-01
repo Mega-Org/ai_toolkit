@@ -1,3 +1,37 @@
+## Agent card
+
+**LOADMAP tags:** `state`
+**Read rest of this file:** yes if implementing success-with-data vs `successWithoutData`, or reset/`isSuccess` listener rules.
+
+### Must
+- Mark Cubit/Bloc params `final` when never reassigned; keep param types immutable (`final` fields, `const` when possible).
+- `Async<T>` is **presentation** lifecycle: `initial`, `loading`, `success(data)`, `successWithoutData()`, `failure`.
+- Use `Async.success(data)` only when the UI must read non-null data from state.
+- Use `successWithoutData` for void / fire-and-forget success.
+- Domain/data return `DomainServiceType<T>` / `Either<Failure, T>` — never `Async`.
+
+### Must not
+- Use `Async<T>` on repository or use-case contracts.
+- Treat `isSuccess` as durable page data after an ephemeral reset to `initial`.
+- Invent extra loading flags beside `Async` for the same request.
+
+### When to load the rest
+- Copy examples (`TempItemsCubit`), failure mapping, or listener/`BlocConsumer` guidance.
+
+### Related (cards first)
+- `cubit-structure.md`, `cubit-and-use-case.md`; `+domain` for `Either`.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Async state
 
 ## Purpose

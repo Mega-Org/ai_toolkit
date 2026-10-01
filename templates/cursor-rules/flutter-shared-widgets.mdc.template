@@ -1,0 +1,9 @@
+---
+description: Flutter UI—use AppButton / AppImage / AppSvgIcon; SizedBox vs Container
+globs: lib/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# Shared UI wrappers (this app)
+
+Follow `ai_toolkit/rules/flutter/ui-composition.md` and `ai_docs/conventions.md`.

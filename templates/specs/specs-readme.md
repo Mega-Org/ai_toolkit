@@ -9,7 +9,7 @@ App-specific spec workspace. Shared playbooks stay in `ai_toolkit/workflows/`. P
 ```text
 Sources → Analysis KBs (truth)     → Build specs (delivery)   → Code
           brd/  design/  api/        features/<slug>/
-                                     README.md + plan.md
+                                     README.md + plan.md + memory.md
 ```
 
 | Folder | Role |
@@ -28,7 +28,7 @@ Sources → Analysis KBs (truth)     → Build specs (delivery)   → Code
 | `brd/features/<slug>.md` | Product rules |
 | `design/features/<slug>.md` | Screens / Figma |
 | `api/features/<slug>/` | Collection contracts / gaps |
-| `features/<slug>/` | What we implement + progress (`plan.md`) |
+| `features/<slug>/` | What we implement + progress (`plan.md`, `memory.md`) |
 
 Agents: start at [`INDEX.md`](INDEX.md). Do not confuse toolkit `workflows/` (playbooks) with `api/analysis/workflows.md` (API journeys).
 

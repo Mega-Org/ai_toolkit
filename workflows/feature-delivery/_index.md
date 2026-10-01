@@ -2,29 +2,29 @@
 
 ## Purpose
 
-**Spec-driven feature work**: planning from a spec, implementing phased checklists, verifying and drafting PR material.
+**Spec-driven feature work**. Checklists here; explanations in [`../../docs/workflows/`](../../docs/workflows/overview.md). Shared loader: [`../../docs/workflows/working-rules.md`](../../docs/workflows/working-rules.md).
 
-These playbooks write to the app's **build** layer: `ai_specs/features/<feature>/` (`README.md` + `plan.md`). Analysis truth stays in `ai_specs/brd/`, `design/`, and `api/` — see [`../../templates/specs/spec-index.md`](../../templates/specs/spec-index.md).
+Writes the **build** layer: `ai_specs/features/<feature>/` (`README.md` + `plan.md` + `history.md`). Analysis KBs stay in `brd/`, `design/`, `api/`.
 
 ## Contents
 
 | File | Topic |
 |------|--------|
-| [`make-plan.md`](make-plan.md) | Write/update `features/<feature>/README.md` + `plan.md`; **ask-before-proceed** on missing/conflicts (user decides or TBD); phased plan from spec or user message |
-| [`implement-phase.md`](implement-phase.md) | Execute one phase; **ask-before-proceed** on phase blockers; update `plan.md` progress |
-| [`verify-and-pr.md`](verify-and-pr.md) | Tests, checks, PR draft after phases `done`; surface open TBDs |
+| [`make-plan.md`](make-plan.md) | Specs only; Load/Inputs/Touches/Effort per phase; coverage check |
+| [`implement-phase.md`](implement-phase.md) | One phase; Agent mode; LOADMAP + Inputs; skip tests |
+| [`verify-and-pr.md`](verify-and-pr.md) | After phases `done`; surface open TBDs |
+
+Args: `<feature|plan-path> [phase|next] [+tag -tag] [--load=a,b] [--full] [--commit]`
 
 ## Worklog
 
-After planning or each implemented phase, update `ai_worklog/` when present — see [`../worklog/update-worklog.md`](../worklog/update-worklog.md).
+Append-only: [`../worklog/update-worklog.md`](../worklog/update-worklog.md).
 
-## Git preflight
+## Git
 
-Before planning or starting a phase, see [`../git/commit-before-work.md`](../git/commit-before-work.md) (`make-plan --no-commits`, `implement-phase --no-commits` to skip).
+**Commit:** false (default) on make-plan, implement-phase, bugfix, verify-and-pr, and autopilot Direct. `--commit` shows files + message, then waits. `--no-commits` = default. Opt-in playbooks: [`../git/commit-before-work.md`](../git/commit-before-work.md), [`../git/commit-after-phase.md`](../git/commit-after-phase.md).
 
 ## References
 
-- Per feature (build): `ai_specs/features/<feature>/README.md` + `plan.md` (not in this toolkit). Templates: [`../../templates/specs/_index.md`](../../templates/specs/_index.md).
-- Layer map / feature matrix: [`../../templates/specs/spec-index.md`](../../templates/specs/spec-index.md), [`../../templates/specs/specs-readme.md`](../../templates/specs/specs-readme.md).
-- Reference checklists: [`../../reference/_index.md`](../../reference/_index.md)
-- Workflow layout: [`../README.md`](../README.md)
+- Templates: [`../../templates/specs/_index.md`](../../templates/specs/_index.md)
+- LOADMAP: [`../../LOADMAP.md`](../../LOADMAP.md)

@@ -1,0 +1,42 @@
+---
+name: feature-implement-phase
+description: >-
+  Implements one phase from ai_specs/features/<feature>/plan.md using the
+  lean implement-phase checklist. Agent mode only; never creates a Cursor
+  plan. Loads plan live part, README Contract, feature memory.md, phase
+  Inputs, and LOADMAP cards. Replaces memory rows at handoff (3 KB / 4 KB).
+  Analyzer on touched files. Skips test steps. Does not commit
+  unless --commit (asks first). Use for implement-phase, next phase, or
+  continue feature delivery.
+---
+
+## Workflow Reference
+Implements: ai_toolkit/workflows/feature-delivery/implement-phase.md
+
+# Implement one phase
+
+**Follow the workflow file verbatim.** This skill does not replace it.
+
+## Args
+
+```text
+<feature|plan-path> [phase|next] [+tag -tag] [--load=a,b] [--full] [--commit]
+```
+
+`next` = first `Status: pending`. **Commit:** false unless `--commit` (then ask). `--no-commits` = default.
+
+**Must run in Agent mode.** Never create a Cursor plan.
+
+## Load (once; no INDEX.md)
+
+1. `ai_toolkit/workflows/feature-delivery/implement-phase.md`
+2. `ai_toolkit/LOADMAP.md` cards for phase `Load:` + `+tag` / `-tag` / `--load=` / `--full`
+3. Live `plan.md` for this phase; feature `memory.md` when present; README **Contract** only; phase **Inputs** (reply `#ID` slices only)
+4. `ai_docs/memory.md` when `app-memory` is loaded or a shared gotcha will be recorded
+5. `design/screens/<slug>.md` before Figma MCP (per node)
+
+Skip Tests in old plans. Ask gate = this phase’s Inputs only. Prefer uninterrupted implementation once Inputs suffice.
+
+Read-once, explore subagent for broad search, 8 KB split to `history.md`. At handoff, replace rows in feature `memory.md` (≤ 3 KB) and shared facts in `ai_docs/memory.md` (≤ 4 KB). Do not append. Autopilot child: list facts, do not write. 10-line handoff with Context used.
+
+Missing plan → `/feature-make-plan <feature>`.

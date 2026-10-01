@@ -1,45 +1,39 @@
 # <Feature Name> Plan
 
 Source spec: [`README.md`](README.md)
+History (completed phases): [`history.md`](history.md)
+Memory: [`memory.md`](memory.md)
 Status: draft | in-progress | done | superseded
 Last updated: YYYY-MM-DD
 
+<!-- Budget: keep this file at 8 KB or less. When it exceeds that, move `Status: done` phases into history.md (see feature-history.md). Do not duplicate alignment prose here — link only. -->
+
 ## Planning Inputs
 
-- User prompt summary (if created from make-plan):
-- BRD files loaded:
-- Design KB files loaded (`ai_specs/design/` when present):
-- API KB files loaded (`ai_specs/api/features/<feature>/` when present):
-- App docs loaded:
-- Figma references (prefer design screen nodes; load via MCP only when implementing UI):
+Record what make-plan used. Per-phase `Inputs` below are what implement-phase actually loads.
+
+- Prompt summary:
+- KB files: `ai_specs/brd/features/<feature>.md` | `ai_specs/design/features/<feature>.md` | `ai_specs/api/features/<feature>/`
+- Contracts register: `ai_specs/api/contracts/INDEX.md`
+- App docs: `ai_docs/`
 
 ## Ask-before-proceed decisions
 
-Record every blocker the user resolved during make-plan / implement-phase. Do not invent rows.
+Record blockers the user resolved. Do not invent rows.
 
-| # | Issue | Sources (brd / design / api) | User choice | Outcome |
-|---|-------|------------------------------|-------------|---------|
+| # | Issue | Sources (brd / design / api / contract) | User choice | Outcome |
+|---|-------|-----------------------------------------|-------------|---------|
 | 1 | | | decide-now \| TBD(owner) | |
 
-## Business Alignment
+## Alignment
 
-- BRD feature:
-- App surfaces:
-- Cross-cutting rules:
-- BRD differences: `none` | `Spec extends BRD` | `Spec conflicts with BRD` | `BRD has missing detail`
+Links only. Do not copy BRD / design / API / README alignment text into this file.
 
-## Design Alignment
-
-- Design feature file:
-- Screen slugs / navigation-graph notes:
-- Design differences: `none` | `Spec extends design` | `Spec conflicts with design` | `Design has missing detail` | `Unwired edges`
-
-## API Alignment
-
-- API feature folder:
-- Stub vs real HTTP scope:
-- Known gaps / edit-brief items affecting this plan:
-- API differences: `none` | `Spec extends API` | `Spec conflicts with API` | `API has missing detail` | `Collection gaps`
+- README: [`README.md`](README.md)
+- BRD: `ai_specs/brd/features/<feature>.md` or `none`
+- Design: `ai_specs/design/features/<feature>.md` or `none`
+- API: `ai_specs/api/features/<feature>/` or `none`
+- Contracts: `ai_specs/api/contracts/INDEX.md` (rows for this slug)
 
 ## Scope Summary
 
@@ -55,18 +49,36 @@ Record every blocker the user resolved during make-plan / implement-phase. Do no
 
 ## Phase Checklist
 
+Each phase must include `Load`, `Inputs`, `Touches`, `Effort`, and `Verification`. There is **no `Tests` field**. Do not add one. Skip leftover test steps in older plans unless the user asks.
+
+`Load:` LOADMAP tags (`ui`, `figma`, `l10n`, `state`, `data`, `domain`, `di`, `nav`, `pagination`, `stepped`, `observer`, `parts`, `enums`, `theme`, `codegen`, `flavors`). `Inputs:` KB paths and contract reply IDs (for example `ai_specs/api/contracts/<id>/reply.md#SV3`). `Touches:` files or folders this phase may edit. `Effort:` `light` | `standard` | `deep`. `Verification:` analyzer on touched files, plus manual checks — never tests.
+
 ### Phase 1 — <title>
 Status: pending | in-progress | done
+Effort: light | standard | deep
+Load: <tag, tag>
+Inputs:
+- `ai_specs/brd/features/<feature>.md`
+- `ai_specs/design/screens/<slug>.md`
+- `ai_specs/api/contracts/<id>/reply.md#SV3`
+Touches:
+- `lib/src/features/<feature>/`
 Deliverables:
 Verification:
-Rules/patterns:
+- Analyzer: touched files
+- Manual: success / empty / error
 Notes:
 
 ### Phase 2 — <title>
 Status: pending
+Effort: standard
+Load:
+Inputs:
+Touches:
 Deliverables:
 Verification:
-Rules/patterns:
+- Analyzer:
+- Manual:
 Notes:
 
 ## Risks And Dependencies
@@ -75,11 +87,11 @@ Notes:
 
 ## Decisions
 
-- (Product/engineering decisions; prefer the ask-before-proceed table above for KB conflicts.)
+- (Product/engineering decisions. Prefer the ask-before-proceed table for KB conflicts.)
 
 ## Done
 
--
+Completed phases and closed notes live in [`history.md`](history.md). This file keeps only pending and in-progress phases plus the live checklist.
 
 ## Next
 

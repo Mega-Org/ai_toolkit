@@ -1,3 +1,36 @@
+## Agent card
+
+**LOADMAP tags:** `data`
+**Read rest of this file:** no, unless changing interceptors, `DioHelper` registration, or cancel tokens.
+
+### Must
+- HTTP goes through `DioHelper` (`get`/`post`/`put`/`delete`) which wraps `mapApiException`.
+- Repositories return `Either<Failure, T>` and map exceptions via `collectFailure` / existing `Failure` types.
+- Caller-driven query/page/sort values come from domain `*Params` (`queryParameters` getters), not literals in datasources.
+- Base URL and keys live in `ApiConstants`. Inline Dio + JSON in public datasource methods.
+
+### Must not
+- Add feature-specific interceptors to core unless they are truly global.
+- Hardcode URLs in `DioHelper`. Commit secrets in public repos.
+- Put `DioHelper` calls in use cases (use cases inject repositories).
+
+### When to load the rest
+- Interceptor order, `RegisterModule` Dio/CancelToken, or error file names.
+
+### Related (cards first)
+- `remote-data-sources.md`; `+domain` for param `queryParameters`; `+di` for `RegisterModule`.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Core network (Dio)
 
 ## Purpose

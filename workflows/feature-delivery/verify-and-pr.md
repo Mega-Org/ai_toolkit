@@ -1,5 +1,7 @@
 # Verify work and open PR
 
+**Commit:** false (default). Do not commit, push, or open a remote PR unless the user asks. `--commit` → [`../git/commit-after-phase.md`](../git/commit-after-phase.md): show files + message, wait for yes. `--no-commits` = default.
+
 ## Purpose
 
 After all phases in `ai_specs/features/<feature>/plan.md` are `done` (or after a scoped fix/refactor the user wants reviewed): run verification, self-review against toolkit rules, and draft PR material. Does **not** invent missing product/API/design contracts — open blockers use the same decide-now vs TBD policy as make-plan / implement-phase.

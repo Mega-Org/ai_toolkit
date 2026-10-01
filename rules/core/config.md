@@ -48,7 +48,7 @@ These files are typically **`part of core`** or exported through **`lib/core/cor
 ### `TextStyles` and `AppFonts`
 
 - **`TextStyles`** exposes pre-built **`TextStyle`** instances (light / regular / medium / bold families at sizes 8–40+). Combine with **`.copyWith(color: AppColors.text)`** (or other **`AppColors`** fields) so color stays theme-aware — see [`theme.md`](theme.md). Full usage rules, rationale, and naming — [`text-styles.md`](text-styles.md).
-- **`AppFonts`** (in **`fonts.dart`**) holds **font family** names used by **`TextStyles`** and **`ThemeData`**; keep **`pubspec.yaml` `fonts:`** entries in sync when adding families.
+- **`AppFonts`** (in **`fonts.dart`**) holds **font family** names used by **`ThemeData`** (`AppTheme.fontFamily` → **`AppFonts.mainFont`**); keep **`pubspec.yaml` `fonts:`** entries in sync when adding families. **`TextStyles`** tokens do not set **`fontFamily`**.
 
 ### `AppColors` (getter)
 

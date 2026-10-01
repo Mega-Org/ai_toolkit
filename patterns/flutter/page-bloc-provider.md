@@ -1,3 +1,40 @@
+## Agent card
+
+**LOADMAP tags:** `ui`
+**Read rest of this file:** no, unless wiring constructor args into `create:` or a sheet/dialog-scoped provider.
+
+### Must
+- Public page (`XxxPage`) is a `StatelessWidget` that only creates `BlocProvider` (or `.value`).
+- `child` of the provider is a private `_FeatureView` (StatefulWidget when controllers/focus/tickers are needed).
+- Call `context.read` / `BlocBuilder` / `BlocConsumer` only from widgets **below** the provider.
+- Resolve cubits with `injector<XxxCubit>()` in `create:` (see `di` tag).
+- Keep local State (controllers, dispose) on `_View`, never on the same widget that wraps `BlocProvider`.
+- Pass cubit constructor args from the public page into `create:` only; give `_View` copies only if the UI needs them.
+
+### Must not
+- Call `context.read` / `BlocProvider.of` with the page’s ancestor `BuildContext` (provider not visible).
+- Mix `TextEditingController` / `FocusNode` onto the public page that also builds `BlocProvider`.
+- Put `StatefulWidget` on the route widget solely to own the provider.
+
+### When to load the rest
+- Need the `LoginPage` sample or `BlocProvider.value` / sheet variants.
+- App-wide blocs (different scope) — then also `rules/core/blocs-app-wide.md` (untagged; load only if asked).
+
+### Related (cards first)
+- `+state` for Cubit/`Async`; `+di` for `injector` / `@factoryParam`.
+- `+pagination` if the `_View` State owns `PaginationController`.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Page shell + feature-scoped Bloc/Cubit
 
 ## Purpose

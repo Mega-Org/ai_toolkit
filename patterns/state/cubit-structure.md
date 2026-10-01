@@ -1,3 +1,39 @@
+## Agent card
+
+**LOADMAP tags:** `state`
+**Read rest of this file:** yes if choosing composite `XxxState` vs `typedef XxxState = Async<T>`, form ownership, or ephemeral reset details.
+
+### Must
+- Feature/page state is Cubit-first; new Cubits use `with SafeEmitMixin` (no type argument).
+- One async op only → `typedef XxxState = Async<T>` (or `Async<void>` + `successWithoutData`).
+- Multiple fields → `XxxState extends Equatable` in `xxx_state.dart` next to the cubit.
+- Submit + page data → composite state with `Async<void> submitState` (or similar) plus other fields.
+- Pass one immutable params object (`final XxxParams params`) when several fields; named primitives OK for 2–3 stables.
+- Use Cubit methods for load/refresh/submit/save/delete/select/next-step — not Bloc events for simple actions.
+
+### Must not
+- Create Bloc events for ordinary feature actions.
+- Put simple widget-only form state in a Cubit when it adds no value.
+- Repeat `SafeEmitMixin<SomeState>` unless the analyzer cannot infer.
+
+### When to load the rest
+- Composite state / copyWith / reset-to-initial after success examples.
+- Presentation-only params colocated with the cubit.
+
+### Related (cards first)
+- `cubit-and-use-case.md` for `await`/`fold`; `rules/core/async.md` for `Async<T>` constructors.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Cubit structure
 
 ## Purpose

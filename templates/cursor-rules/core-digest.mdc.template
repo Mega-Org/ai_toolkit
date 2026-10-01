@@ -1,0 +1,42 @@
+---
+description: Always-on digest — ask/continue, AppRouter, RTL, commits, tests, edit-in-place, API source order
+alwaysApply: true
+---
+
+# Core digest
+
+Tagged leaves: `ai_toolkit/LOADMAP.md`. Shared facts: `ai_docs/memory.md` (when present). Defaults: `ai_docs/preferences.md` (when present; if missing, skip — do not create or invent it). Specs: `ai_specs/features/<feature>/` (`README.md` + `plan.md`). Analysis KBs: `ai_specs/brd/`, `design/`, `api/`. Open only the leaf the task needs — do not paste toolkit prose.
+
+## Ask vs continue
+
+Ask **one** focused question (A/B or the missing field), then wait. Do not invent response models, fields, or business rules.
+
+**Ask when:** endpoint, method, auth, shape, nullability, pagination, or errors are not in specs/contracts; product/empty/error/offline/permissions/rules are not in the brief, `ai_specs/`, or `ai_docs/`; 2+ options would change architecture, public API, navigation, or user-visible behavior; BRD/design/api conflict (user decides now or `TBD(owner)`).
+
+**Continue when:** work matches file layout, naming, shared widgets, BLoC/page patterns; polish/wiring once the contract is known; the gap is already answered (agreed contract reply, `COLLECTION_ANSWERS-*.md`, feature `gaps.md` / `edit-brief.md`, existing models).
+
+**Uninterrupted implementation** applies only inside **implement-phase** and **autopilot**, after that phase’s `Inputs` suffice. It is not a global “never ask” rule.
+
+Feature/API screen: state 2–4 **done means** bullets once, then implement. After the pass (not mid-build): assumptions (with source), done means, manual verify (success / empty / error). Mid-task blocker: stop that branch, one question — do not spray.
+
+## AppRouter
+
+Push/pop via `AppRouter` (`lib/core/configs/router/app_router.dart`), not `Navigator.of(context).push/pop`. Pass `BuildContext` when you have one. `appContext` only from cubits/services/deep-links (navigator mounted; never store it). Typed `push`/`pop` results. Route-name constants. `rootNavigator` defaults true; `false` only for nested stacks. Transitions: `animated_routes.dart` only. Raw `Navigator` only inside a nested navigator or to dismiss the same dialog route — comment why. Detail: `app-router-navigation.mdc` → `ai_toolkit/rules/core/router.md`.
+
+## RTL / Figma
+
+Arabic UI, RTL-first unless the frame is LTR. Rely on `Directionality`; Figma right is `start`. Need direction? `TextAlign.start`, `AlignmentDirectional`, `EdgeInsetsDirectional`, `PositionedDirectional`. Physical `left`/`right` only for a locale-invariant screen edge. User-visible text = l10n; Figma copy is language intent. Watch long Arabic, Latin/numeric in RTL, mirrored chevrons/back/trailing. Detail: `figma-arabic-rtl.mdc` → `ai_toolkit/rules/flutter/design-direction-and-localization.md`.
+
+## Git, tests, edits
+
+No commit, amend, push, or branch unless the user asks. If `--commit`: show files + message, wait for yes.
+Do not write, run, or scaffold tests unless asked. Skip test steps in older plans.
+**Edit, don’t rewrite.** Small diffs. Match local naming and layout. No drive-by restyle or scope growth.
+
+## API source order
+
+1. Agreed contract reply
+2. Backend reference doc
+3. Collection snapshot
+
+Within the same kind, the **newer date wins**. Register (when present): `ai_specs/api/contracts/`.

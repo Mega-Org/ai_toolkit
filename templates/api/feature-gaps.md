@@ -5,6 +5,8 @@ Copy to: `ai_specs/api/features/<feature>/gaps.md`
 Last updated:  
 Snapshot hash:
 
+Apply (`/backend-contract apply`) **appends** `answered by contract <id> <reply ID>` on matching rows. Never delete those rows. Reanalyze never reopens them.
+
 ## Blockers
 
 | ID | Type | Endpoint / topic | Finding | Suggested action |

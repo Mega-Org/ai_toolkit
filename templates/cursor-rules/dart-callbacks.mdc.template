@@ -1,0 +1,9 @@
+---
+description: Dart/Flutter callbacks—prefer explicit closures over method tear-offs
+globs: lib/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# UI callbacks: explicit closures, not tear-offs
+
+Follow `ai_toolkit/rules/dart/callbacks.md`.

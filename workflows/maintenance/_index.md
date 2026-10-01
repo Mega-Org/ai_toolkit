@@ -8,7 +8,7 @@
 
 | File | Topic |
 |------|--------|
-| [`bugfix.md`](bugfix.md) | Triage and fix defects; chat request + optional QA intake persistence |
+| [`bugfix.md`](bugfix.md) | Lean loader + LOADMAP; persist `ai_specs/fixes/`; chat / QA / resume |
 | [`refactor.md`](refactor.md) | Safe refactors with architecture context |
 | [`dependency-upgrade.md`](dependency-upgrade.md) | Upgrade packages and resolve breakage |
 | [`normalize-assets.md`](normalize-assets.md) | Rename scoped icons/images to app convention; write design `icons-catalog` / `images-catalog` |

@@ -1,3 +1,38 @@
+## Agent card
+
+**LOADMAP tags:** `di`
+**Read rest of this file:** yes if adding `@factoryParam`, scope reset, `@module`, or widget resolve rules beyond `BlocProvider`.
+
+### Must
+- Use `injector` (GetIt) + injectable; generated `di.config.dart` is never hand-edited. Run build_runner after annotation changes (`codegen` tag).
+- Implementations: `@Injectable(as: Abstract)` on `*Impl`. Use cases: `@Injectable()` on the concrete class.
+- Cubits: `@Injectable()` + constructor injection; provide via `BlocProvider(create: (_) => injector<XxxCubit>())`.
+- Screen-only args: `@factoryParam` + `injector<X>(param1: …)` — no `fromInjector()` helpers on the Cubit.
+- Manual `register*` before `pushNewScope` survives `resetDependenciesScope`; codegen registrations do not.
+- Resolve routine deps where the tree is set up (page `create:`), not inside `build` every frame.
+
+### Must not
+- Call `injector` / `GetIt.instance` inside `StatelessWidget.build` for routine deps.
+- Place locale/secure-storage singletons inside the inner scope if they must survive reset (or vice versa).
+- `@lazySingleton` cubits without a clear app-wide lifecycle reason.
+
+### When to load the rest
+- `RegisterModule`, `@PostConstruct`, widget/UI bullets after the cubit sample, logout scope reset.
+
+### Related (cards first)
+- `+codegen` stub; `+state` for cubit provision; `+flavors` if touching `main_*.dart` DI bootstrap.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Core dependency injection (rules)
 
 ## Purpose

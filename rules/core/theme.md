@@ -1,3 +1,37 @@
+## Agent card
+
+**LOADMAP tags:** `theme`
+**Read rest of this file:** yes if changing `ThemeManager`, `AppTheme` tokens, `MaterialApp` theme keys, or Radio/sheet theme.
+
+### Must
+- One persistence path: `ThemeRepository` through `ThemeManager` (`ChangeNotifier` singleton, not Bloc).
+- UI colors: `AppColors.someToken` (`ThemeManager.instance.theme`) — not hard-coded `Color(0x…)` when a token exists.
+- Light/dark `ThemeData` live in `configs/theme/values/` (`LightTheme` / `DarkTheme`). Root: `ThemeBuilder` around `MaterialApp`.
+- New/renamed colors: follow `app-theme-color-tokens.md` (untagged; load if adding tokens).
+- Typography: `text-styles.md` (untagged); spacing/assets: `config.md` (untagged).
+
+### Must not
+- Fork light/dark `ThemeData` construction outside `configs/theme/values/`.
+- Fork `AppColors` reads in feature widgets when the token exists on `AppTheme`.
+- Use a second persistence path for theme preference.
+
+### When to load the rest
+- `changeTheme` / pop-to-root, `ValueKey` locale+theme reset, RadioListTile/bottomSheet token notes.
+
+### Related (cards first)
+- `+ui` for wrappers; `+nav` is separate (`AppRouter`).
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Theme (tokens, manager, root wiring)
 
 ## Purpose

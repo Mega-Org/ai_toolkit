@@ -1,3 +1,39 @@
+## Agent card
+
+**LOADMAP tags:** `domain`
+**Read rest of this file:** yes if writing `*Params` (`toMap`, sealed variants, `queryParameters`) or `SafeEmitMixin` details.
+
+### Must
+- `IUseCase<Output, Params>`: `call` takes **one** Params; returns `DomainServiceType<Output>` (`Future<Either<Failure, T>>`).
+- One immutable `*Params extends NoParams` per use case (same file as the use case unless shared). `props` lists every equality field.
+- No inputs → `const NoParams()`. Do not duplicate empty params classes.
+- Query/filter/page values from the caller live on params (`queryParameters`), not hardcoded in datasources.
+- Repositories and use cases use `DomainServiceType<T>`. Success with no payload: `DomainServiceType<void>` (do not mix `Unit` in the same feature without reason).
+- Use cases `@Injectable()`, inject the repository — **no Dio**.
+- `Async<T>` is presentation only. New Cubits: `with SafeEmitMixin` without repeating the state type.
+
+### Must not
+- Swap `IUseCase` type parameters. Pass multiple `call` arguments.
+- Use `Async<T>` as a repository return. Duplicate `if (isClosed) return` before `emit` on new Cubits.
+- Duplicate imports inside `part of core` files unless the analyzer requires it.
+
+### When to load the rest
+- Sealed param variants, `toMap`/`queryParameters` rules, or mixin inference notes.
+
+### Related (cards first)
+- `patterns/data/use-case-and-domain-service-type.md` for step-by-step examples.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Core foundation
 
 ## Purpose

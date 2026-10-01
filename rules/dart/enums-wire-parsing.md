@@ -1,3 +1,36 @@
+## Agent card
+
+**LOADMAP tags:** `enums`
+**Read rest of this file:** no — this file is the full rule. Open the pattern only for extra samples.
+
+### Must
+- Map wire strings with a named `factory` (e.g. `fromApi`) on the enum — not a freestanding static helper.
+- Preferred: `values.firstWhere` with a **block-bodied** predicate and `orElse` → `unknown` (or equivalent).
+- Multi-wire aliases: `List<String> apiValues`; trim + case-insensitive match in the predicate.
+
+### Must not
+- Imperative `for` + `continue` over `values` to skip `unknown`.
+- Strict `firstWhere` without `orElse` unless invalid wire is a programmer error and there is no fallback.
+- Mix l10n getters into this rule — labels are `enums-l10n`.
+
+### When to load the rest
+- References only.
+
+### Related (cards first)
+- Untagged: `patterns/dart/enums-wire-parsing.md` for samples.
+- `rules/dart/enums-l10n.md` for UI strings.
+
+### Card protocol
+- Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.
+- Read the rest of **this** file only when **Read rest** is yes, or **When to load the rest** matches.
+- Do not open `INDEX.md`, `rules/_index.md`, or `patterns/_index.md` to rediscover this leaf.
+- Related files: open their **Agent cards** first; skip them if the other tag was not requested.
+- No `tests` tag. Do not write or run tests. Do not commit unless the user asks.
+- Edit in place; do not rewrite the whole leaf to “clean it up.”
+- If the body is a stub (`Fill in later`), stop after this card; do not invent policy.
+- Indexes, templates, and untagged leaves are not part of this tag.
+- Spec templates, skills, and backend-contract work belong to later plan todos — not this card.
+
 # Enum wire parsing
 
 ## Rule

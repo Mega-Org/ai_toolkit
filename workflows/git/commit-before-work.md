@@ -1,10 +1,10 @@
-# Commit before plan or phase work
+# Commit before work (opt-in)
+
+**Commit:** false (default). Do **not** run this playbook at the start of make-plan, implement-phase, bugfix, backend-contract, verify-and-pr, or autopilot Direct. `--no-commits` means the same as the default (skip).
 
 ## Purpose
 
-Before **making a feature plan** (`make-plan`) or **starting a phase** (`implement-phase`), ensure the repo has a **clear baseline**: either a **clean working tree** or an **explicit decision** to continue with uncommitted changes. Default behavior for agents is **commit first** (with an AI-generated message), then proceed.
-
-This workflow is **tool-neutral**: users invoke it by natural language or by the shorthand flags below—not by a required shell script.
+Optional baseline commit of an **already-dirty** tree, only when the user passed `--commit` **before** starting, or asked in words to commit current WIP first.
 
 ## Fill when
 
@@ -14,78 +14,39 @@ This workflow is **tool-neutral**: users invoke it by natural language or by the
 
 - After-phase commits: [`commit-after-phase.md`](commit-after-phase.md)
 - Git rules: [`../../rules/git/_index.md`](../../rules/git/_index.md)
-- Feature planning: [`../feature-delivery/make-plan.md`](../feature-delivery/make-plan.md)
-- Implement phase: [`../feature-delivery/implement-phase.md`](../feature-delivery/implement-phase.md)
 
 ---
 
 ## How to use it (for humans)
 
-### Default (recommended)
-
-When you ask the AI to **plan a feature** or **implement a phase**, you say nothing extra. The agent should:
-
-1. Check **`git status`** (read-only first).
-2. If there are **uncommitted changes**, propose a **short conventional commit message**, then ask whether to **commit now** before continuing.
-3. **Prefer committing** so planning or coding starts from a known state.
-
-### Skip commits for this run
-
-If you **do not** want any commit-before-work step (e.g. local experiments, dirty tree on purpose), say so **up front** using **any** of these:
+Default: the agent **does not** commit and **does not** ask you to commit first.
 
 | What you say | Meaning |
 |--------------|---------|
-| `make-plan --no-commits` | Run planning workflow **without** requiring a clean tree or a commit. |
-| `implement-phase --no-commits` | Run one phase **without** commit-before-work. |
-| “Plan without committing first” / “Skip git before plan” | Same as `--no-commits` for planning. |
-| “Don’t commit before starting” | Same for whichever workflow you are starting. |
-
-Shorthand **`--no-commits`** is inspired by CLI flags; in Cursor/chat there is no real binary—treat it as a **clear opt-out** the agent must honor.
-
-### After planning or after a phase
-
-Commit cadence **after** work still follows [`commit-after-phase.md`](commit-after-phase.md) when you want phase-sized commits. **Commit-before-work** only addresses **dirty tree before you begin** the next chunk of plan or implementation.
+| `--commit` (on the skill) | After the work (see [`commit-after-phase.md`](commit-after-phase.md)). Not a silent pre-commit. |
+| “Commit this dirty tree first” | Run **this** playbook: show files + message, wait for yes, then start the task. |
+| `--no-commits` | Same as default: skip. |
 
 ---
 
-## Agent steps (make-plan or implement-phase)
+## Agent steps
 
-Run these **before** the first substantive step of `make-plan.md` or `implement-phase.md`, **unless** the user opted out with **`--no-commits`** or equivalent natural language.
+Run **only** if the user asked to commit existing uncommitted files **before** the task. `--commit` on make-plan / implement-phase / bugfix / verify-and-pr is **after** work, not this file.
 
-1. **Detect opt-out** — If the user message includes `--no-commits` or an explicit “do not commit / skip git before starting” instruction, **skip** this entire workflow (optional: one-line reminder that the tree may be dirty).
+1. **Detect skip** — No explicit “commit first” request → **stop**. Leave the tree as it is. Do not recommend a pre-commit.
+2. **Inspect git** — `git status` (read-only). Clean tree → continue the task.
+3. **If dirty** — List files (high level). Propose **one** conventional message.
+4. **Ask** — Commit with that message / Continue without committing / Stop. Do **not** treat commit as the recommended default.
+5. **Commit only after an explicit yes.** Stage only the files the user accepted. No secrets. Hooks run. Do not push. Do not amend unless git safety allows (user asked; local; agent-authored; unpushed).
 
-2. **Inspect git** — Run `git status` (read-only). If working tree is **clean**, continue to planning or implementation.
-
-3. **If dirty** — Summarize what changed (high level). Propose **one** conventional commit message (or split only if clearly separate concerns). Examples:
-   - `chore: save WIP before feature planning`
-   - `docs(ai_specs): draft checkout feature spec`
-   - `refactor: extract helper before login phase`
-
-4. **Ask the user** — Present options clearly, with **default recommendation = commit**:
-   - **Commit** — Stage and commit with the proposed message (adjust if the user edits the message).
-   - **Continue without committing** — Proceed with uncommitted changes; note that the plan/phase may mix with unrelated edits.
-   - **Stop** — User handles git manually; resume when ready.
-
-5. **After a successful commit** — Confirm clean or acceptable state, then proceed to `make-plan` or `implement-phase` content.
-
-If git is unavailable or the sandbox blocks writes, describe what the user should run locally and wait for confirmation before continuing.
+If git is unavailable, describe the commands and wait.
 
 ---
 
 ## Defaults summary
 
-| Situation | Default agent behavior |
-|-----------|-------------------------|
-| Clean tree | Proceed. |
-| Dirty tree, no `--no-commits` | Propose message → **recommend commit** → ask → then proceed. |
-| User passed `--no-commits` | Do not commit; proceed (with optional warning). |
-
----
-
-## Relationship to other workflows
-
-| Workflow | Role |
-|----------|------|
-| **This file** | **Before** plan/phase: optional commit so context is clean. |
-| [`commit-after-phase.md`](commit-after-phase.md) | **After** completing a phase: conventional commit of that phase’s work. |
-| [`../feature-delivery/verify-and-pr.md`](../feature-delivery/verify-and-pr.md) | After feature: verify and PR. |
+| Situation | Agent behavior |
+|-----------|----------------|
+| Default / `--no-commits` | Do not commit. Proceed. |
+| User asked to commit first | Show files + message → wait for yes → then proceed. |
+| `--commit` on a skill | After the task: [`commit-after-phase.md`](commit-after-phase.md). |
