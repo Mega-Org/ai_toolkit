@@ -4,6 +4,8 @@ Parent loads this file only. Do not open links from here.
 
 ## Purpose
 
+The parent chat holds only status lines and phase reports.
+
 Implement every pending phase on the branch that is already checked out. Do not commit. This is the behavior of this repo's current live autopilot skill, and it is the default git policy when a mode must match that skill.
 
 Commit strategy: **Manual**. See [../features/commit-strategies.md](../features/commit-strategies.md).

@@ -1,0 +1,33 @@
+---
+name: feature-verify-pr
+description: >-
+  Runs verify-and-pr for a feature after phases are done — analyzer via
+  conventions.md, Manual verify checklist, contract links, GitLab MR draft
+  with glab only when the user asks. Does not commit or push by default.
+---
+
+## Workflow Reference
+Implements: ai_toolkit/workflows/feature-delivery/verify-and-pr.md
+
+# Verify and draft MR/PR
+
+**Follow the workflow file verbatim.**
+
+## Args
+
+```text
+<feature|plan-path> [--commit]
+```
+
+**Commit:** false unless `--commit` (then ask). Do not run tests unless the user asked.
+
+## Load (once)
+
+1. `ai_toolkit/workflows/feature-delivery/verify-and-pr.md`
+2. Feature `plan.md`, `README.md` (Contract section), `memory.md` if present
+3. `ai_docs/conventions.md` — verify command
+4. `ai_specs/api/contracts/INDEX.md` — rows cited by the feature
+
+## Handoff
+
+≤10 lines: analyzer result, manual verify checklist, draft title/body, open TBDs, exact next command if blocked.

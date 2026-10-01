@@ -26,4 +26,4 @@ These guides cover every template. `no-request-prints` sits with Dart because it
 | [`no-request-prints`](dart-rules.md#no-request-prints) | Dart | HTTP logs stay on `PrettyDioLogger` |
 | [`app-router-navigation`](core-rules.md#app-router) | Core | Push and pop through `AppRouter` |
 | [`agent-decision-gates`](core-rules.md#decision-gates) | Core | Ask when the contract or the product is missing |
-| [`ai-toolkit-seed`](core-rules.md#toolkit-seed) | Core | Sessions start at `ai_toolkit/INDEX.md` |
+| [`core-digest`](core-rules.md#core-digest-always-on) | Core | Always-on digest + LOADMAP; not full INDEX during phases |

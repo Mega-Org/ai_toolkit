@@ -115,7 +115,7 @@ Full guide: [`setup/per-app-integration.md`](setup/per-app-integration.md). Play
 git submodule add -b main https://github.com/Mega-Org/ai_toolkit.git ai_toolkit
 cp ai_toolkit/templates/app-seed/CLAUDE.md .
 cp ai_toolkit/templates/app-seed/AGENTS.md .
-mkdir -p .cursor/rules && cp ai_toolkit/templates/app-seed/cursor-rules/ai-toolkit-seed.mdc .cursor/rules/
+Run `bash ai_toolkit/setup/install.sh` to install rules (includes `core-digest.mdc`).
 # Merge Makefile targets from ai_toolkit/templates/app-seed/Makefile.snippet
 git add .gitmodules ai_toolkit CLAUDE.md AGENTS.md .cursor/rules
 git commit -m "Add ai_toolkit submodule and AI seed files"

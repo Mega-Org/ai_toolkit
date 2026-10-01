@@ -1,13 +1,19 @@
-# Melos monorepo setup
+# Melos monorepo
 
 ## Purpose
-Optional guidance for structuring and maintaining a Melos-managed Flutter/Dart monorepo alongside this toolkit.
+
+Document when Melos applies — a single Flutter app is not a Melos workspace.
 
 ## Fill when
-- When you adopt Melos or change workspace scripts and versioning.
+
+This org adds a Melos monorepo that shares `ai_toolkit/`.
 
 ## References
-- Optional paths in **your app repos** (not copied here).
+
+- [`per-app-integration.md`](per-app-integration.md)
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+- **Single app:** one `pubspec.yaml` at repo root and no `melos.yaml`. Skip Melos. Confirm in `ai_docs/conventions.md` when the app differs.
+- **Future monorepo:** pin one `ai_toolkit/` at repo root; run `install.sh` from each app package or centralize `.cursor/` at root per team policy.
+- Submodule `toolkit` CLI still manages `ai_toolkit/` pointer from the app that owns the submodule.

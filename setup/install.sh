@@ -30,5 +30,11 @@ bash "$TOOLKIT_DIR/setup/install-ignore.sh"
 echo "🔍 Verifying..."
 bash "$TOOLKIT_DIR/setup/verify-setup.sh"
 
+VERSION="$(cat "$TOOLKIT_DIR/VERSION" 2>/dev/null | tr -d '[:space:]')"
+if [ -n "$VERSION" ]; then
+  echo "$VERSION" > .cursor/.ai_toolkit_version
+  echo "📌 Wrote .cursor/.ai_toolkit_version ($VERSION)"
+fi
+
 echo ""
 echo "🎉 Installation complete!"

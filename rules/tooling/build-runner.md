@@ -1,7 +1,7 @@
 ## Agent card
 
 **LOADMAP tags:** `codegen`
-**This file is a stub** (`<!-- Fill in later. -->`). There is no enforceable codegen workflow here yet.
+**Read rest of this file:** yes when changing injectable/json_serializable setup or CI codegen steps.
 
 ### Must
 - Treat this card as the load target for `+codegen`. Do not invent a build_runner policy.
@@ -9,11 +9,11 @@
 - Do not hand-edit `*.config.dart` / `*.g.dart`.
 
 ### Must not
-- Fill this stub as part of Round 1 (Round 3 fills stubs).
+- Hand-edit `*.config.dart` / `*.g.dart`.
 - Load testing or extra tooling indexes for codegen.
 
 ### When to load the rest
-- The rest is empty. Stop after this card.
+- Changing injectable / json_serializable setup, CI codegen steps, the generate command, or which generated files to commit.
 
 ### Related (cards first)
 - `+di` for injectable registration; app `ai_docs` if it documents the generate command.
@@ -41,4 +41,17 @@ Rules for running build_runner, checking in generated files, and safe regenerati
 - Optional paths in **your app repos** (not copied here): e.g. `build.yaml`, `pubspec.yaml`
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+### This app
+
+Run after new/changed `@injectable` registrations, `@JsonSerializable` models (when used), or other `build_runner` targets:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Packages: `build_runner`, `injectable_generator` in `pubspec.yaml`. Commit generated `*.config.dart` / `*.g.dart` with the hand-written change. **Do not** hand-edit generated files.
+
+### Verify
+
+Run the app's command from `ai_docs/conventions.md` (for example `make analyze`) on touched `lib/` paths after codegen.

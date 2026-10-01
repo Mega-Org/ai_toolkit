@@ -13,3 +13,10 @@ rm -f "$RULES_DIR/ai-toolkit-seed.mdc" "$RULES_DIR/agent-decision-gates.mdc"
 
 rule_count=$(ls -1 "$RULES_DIR"/*.mdc 2>/dev/null | wc -l)
 echo "✅ $rule_count rules installed"
+
+VERSION="$(cat "ai_toolkit/VERSION" 2>/dev/null | tr -d '[:space:]')"
+if [ -n "$VERSION" ]; then
+  mkdir -p .cursor
+  echo "$VERSION" > .cursor/.ai_toolkit_version
+  echo "✅ .cursor/.ai_toolkit_version ($VERSION)"
+fi

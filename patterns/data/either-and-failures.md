@@ -74,7 +74,7 @@ DomainServiceType<OrderEntity> getOrderDetails(
 }
 ```
 
-**Reference:** [`orders_repository_impl.dart`](../../../lib/src/features/orders/data/repository/orders_repository_impl.dart), [`common_repository_imp.dart`](../../../lib/src/features/_common/data/repository/common_repository_imp.dart).
+**Reference:** `lib/src/features/orders/data/repository/orders_repository_impl.dart` (example app), `lib/src/features/_common/data/repository/common_repository_imp.dart` (example app).
 
 ### What `collectFailure` does
 
@@ -115,8 +115,8 @@ Use **`failure is SomeSpecificFailure`** in Cubits or page listeners when the pr
 
 **Examples:**
 
-- Login page → `UnVerifiedUserFailure` → push verify OTP ([`login_page.dart`](../../../lib/src/features/authentication/presentation/login/login_page.dart)).
-- Verify OTP cubit → `WaitingApproveFailure` → emit success without navigation ([`verify_otp_cubit.dart`](../../../lib/src/features/authentication/presentation/verify_otp/verify_otp_cubit.dart)).
+- Login page → `UnVerifiedUserFailure` → push verify OTP (`lib/src/features/authentication/presentation/login/login_page.dart` (example app)).
+- Verify OTP cubit → `WaitingApproveFailure` → emit success without navigation (`lib/src/features/authentication/presentation/verify_otp/verify_otp_cubit.dart` (example app)).
 
 ---
 
@@ -155,7 +155,7 @@ result.fold(
 - **`Async.successWithoutData()`** when `Output` is `void` and the operation succeeded.
 - Many auth/list cubits emit **`Async.initial()`** again after the terminal fold so listeners do not keep stale success/failure flags — see [`cubit-and-use-case.md`](../state/cubit-and-use-case.md).
 
-**Reference:** [`client_wallet_cubit.dart`](../../../lib/src/features/client/wallet/presentation/wallet/client_wallet_cubit.dart), [`login_cubit.dart`](../../../lib/src/features/authentication/presentation/login/login_cubit.dart).
+**Reference:** `lib/src/features/client/wallet/presentation/wallet/client_wallet_cubit.dart` (example app), `lib/src/features/authentication/presentation/login/login_cubit.dart` (example app).
 
 ### Paginated lists
 
@@ -170,7 +170,7 @@ result.fold(
 
 See [`../flutter/pagination-paginated-list-view.md`](../flutter/pagination-paginated-list-view.md).
 
-Legacy/alternate: Cubit emits **`Async<PaginatedData<T>>`** and a **`BlocListener`** calls `addItems` / `setError` ([`orders_list_cubit.dart`](../../../lib/src/features/orders/presentation/orders_list/orders_list_cubit.dart)).
+Legacy/alternate: Cubit emits **`Async<PaginatedData<T>>`** and a **`BlocListener`** calls `addItems` / `setError` (`lib/src/features/orders/presentation/orders_list/orders_list_cubit.dart` (example app)).
 
 ---
 
@@ -181,7 +181,7 @@ Realtime uses **`Either`** on **streams**, not only futures:
 - `RealtimeRepository.watch` → `Stream<Either<Failure, RealtimeEnvelope>>`
 - Gate failures with **`Left`** on the first event; successful events map with **`Right`**
 
-**Reference:** [`realtime_repository_impl.dart`](../../../lib/src/_app_realtime/domain/realtime_repository_impl.dart).
+**Reference:** `lib/src/_app_realtime/domain/realtime_repository_impl.dart` (example app).
 
 For **`Future`** connectivity checks in the same module, repositories may return **`Left`/`Right` directly** without `collectFailure` when errors are local (Pusher/socket), still using the same **`Failure`** types.
 

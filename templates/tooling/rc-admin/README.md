@@ -21,7 +21,7 @@ The vendored template ships with **`single_app`** defaults:
 - Four example RC keys (2 features × 2 platforms)
 - Flavor selector hidden in UI when `FLAVORS.length === 1`
 
-Replace key names and expand `KEY_MAP` for **`multi_flavor`** per [`../../patterns/tooling/rc-admin-panel.md`](../../patterns/tooling/rc-admin-panel.md).
+Replace key names and expand `KEY_MAP` for **`multi_flavor`** per [`../../../patterns/tooling/rc-admin-panel.md`](../../../patterns/tooling/rc-admin-panel.md).
 
 ## Copy into app
 
@@ -50,6 +50,6 @@ When the reference app's `tool/firebase/rc-admin/` gains UX or group fixes, re-v
 
 ## References
 
-- Workflow: [`../../workflows/integration/remote-config-store-ops.md`](../../workflows/integration/remote-config-store-ops.md)
-- Setup: [`../../setup/remote-config-store-ops.md`](../../setup/remote-config-store-ops.md)
-- Pattern: [`../../patterns/tooling/rc-admin-panel.md`](../../patterns/tooling/rc-admin-panel.md)
+- Workflow: [`../../../workflows/integration/remote-config-store-ops.md`](../../../workflows/integration/remote-config-store-ops.md)
+- Setup: [`../../../setup/remote-config-store-ops.md`](../../../setup/remote-config-store-ops.md)
+- Pattern: [`../../../patterns/tooling/rc-admin-panel.md`](../../../patterns/tooling/rc-admin-panel.md)

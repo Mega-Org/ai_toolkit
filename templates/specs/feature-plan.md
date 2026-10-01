@@ -51,7 +51,7 @@ Links only. Do not copy BRD / design / API / README alignment text into this fil
 
 Each phase must include `Load`, `Inputs`, `Touches`, `Effort`, and `Verification`. There is **no `Tests` field**. Do not add one. Skip leftover test steps in older plans unless the user asks.
 
-`Load:` LOADMAP tags (`ui`, `figma`, `l10n`, `state`, `data`, `domain`, `di`, `nav`, `pagination`, `stepped`, `observer`, `parts`, `enums`, `theme`, `codegen`, `flavors`). `Inputs:` KB paths and contract reply IDs (for example `ai_specs/api/contracts/<id>/reply.md#SV3`). `Touches:` files or folders this phase may edit. `Effort:` `light` | `standard` | `deep`. `Verification:` analyzer on touched files, plus manual checks — never tests.
+`Load:` LOADMAP tags (`ui`, `figma`, `l10n`, `state`, `data`, `domain`, `di`, `nav`, `pagination`, `stepped`, `observer`, `parts`, `enums`, `theme`, `codegen`, `flavors`). `Inputs:` KB paths and contract reply IDs (for example `ai_specs/api/contracts/<id>/reply.md#SV3`). Legacy replies without IDs: cite a heading anchor (`file.md#heading-slug`); `toolkit context` reports unknown anchors. `Touches:` files or folders this phase may edit. `Effort:` `light` | `standard` | `deep`. `Verification:` analyzer on touched files, plus manual checks — never tests.
 
 ### Phase 1 — <title>
 Status: pending | in-progress | done

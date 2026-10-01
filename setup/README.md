@@ -1,17 +1,35 @@
-# Setup vs patterns vs workflows
+# Setup index
 
 ## Purpose
-Clarifies what belongs under `setup/`, `patterns/`, and `workflows/` so agents load the right layer for bootstrapping versus examples versus ordered playbooks.
+
+How to attach `ai_toolkit/` to an app and refresh Cursor skills/rules.
 
 ## Fill when
-- When you add new setup guides or change how apps onboard to this toolkit.
-- When folder boundaries confuse contributors.
+
+Install scripts or submodule workflow change.
 
 ## References
-- `ai_toolkit/setup/_index.md` (Setup folder overview)
-- `ai_toolkit/README.md`
-- `ai_toolkit/INDEX.md`
-- `ai_toolkit/workflows/README.md`
+
+- [`install.sh`](install.sh) — primary entry
+- [`per-app-integration.md`](per-app-integration.md) — submodule vs vendored
+- [`verify-setup.sh`](verify-setup.sh) — post-install checks
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+### Vendored toolkit
+
+From repo root:
+
+```bash
+bash ai_toolkit/setup/install.sh
+```
+
+Installs five Cursor skills, cursor rules from templates, ignore files, writes `.cursor/.ai_toolkit_version`, runs verify.
+
+### Submodule apps
+
+Use `./ai_toolkit/bin/toolkit add|sync|pull|push` — see [`per-app-integration.md`](per-app-integration.md).
+
+### After upgrade
+
+Review diff under `.cursor/`, run the app's command from `ai_docs/conventions.md` (for example `make analyze`) on app code if Dart changed, read [`../docs/migration/upgrading-ai-toolkit.md`](../docs/migration/upgrading-ai-toolkit.md).

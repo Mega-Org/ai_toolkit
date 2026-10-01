@@ -7,6 +7,8 @@ alwaysApply: true
 
 Tagged leaves: `ai_toolkit/LOADMAP.md`. Shared facts: `ai_docs/memory.md` (when present). Defaults: `ai_docs/preferences.md` (when present; if missing, skip — do not create or invent it). Specs: `ai_specs/features/<feature>/` (`README.md` + `plan.md`). Analysis KBs: `ai_specs/brd/`, `design/`, `api/`. Open only the leaf the task needs — do not paste toolkit prose.
 
+**Preferences (when `ai_docs/preferences.md` exists):** no commits/tests by default; specs-only make-plan; Direct autopilot; lean LOADMAP loading; one l10n preview; backend contract register; verify command and git host: `ai_docs/conventions.md`.
+
 ## Ask vs continue
 
 Ask **one** focused question (A/B or the missing field), then wait. Do not invent response models, fields, or business rules.

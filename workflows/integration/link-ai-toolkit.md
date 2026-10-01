@@ -14,7 +14,7 @@ Ordered checklist to attach this toolkit to a Flutter app as a **pinned git subm
    - Missing folder: `git submodule add -b main https://github.com/Mega-Org/ai_toolkit.git ai_toolkit`
    - Nested clone: `./ai_toolkit/bin/toolkit migrate` (after toolkit is present) or backup → remove → submodule add
 2. **Init**: `git submodule update --init --recursive`
-3. **Seed** (skip if already present): copy from `ai_toolkit/templates/app-seed/` — `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/ai-toolkit-seed.mdc`, optional `ai_docs/` stubs
+3. **Seed** (skip if already present): copy from `ai_toolkit/templates/app-seed/` — `CLAUDE.md`, `AGENTS.md`, optional `ai_docs/` stubs; run `bash ai_toolkit/setup/install.sh` for skills/rules (`core-digest.mdc`)
 4. **Makefile**: merge `templates/app-seed/Makefile.snippet` (`toolkit-add`, `toolkit-sync`, `toolkit-pull`, `toolkit-push`, `toolkit-status`)
 5. **Optional hook**: install `templates/app-seed/githooks/post-merge` via `core.hooksPath`
 6. **Commit** in the app: `.gitmodules`, `ai_toolkit` pointer, seed files

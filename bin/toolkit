@@ -239,6 +239,14 @@ cmd_status() {
   fi
 }
 
+cmd_context() {
+  local app_root
+  app_root="$(find_app_root)"
+  local ctx="$TOOLKIT_ROOT/bin/toolkit-context"
+  [[ -x "$ctx" ]] || die "missing or not executable: $ctx"
+  (cd "$app_root" && exec "$ctx" "$@")
+}
+
 cmd_help() {
   cat <<'EOF'
 toolkit — manage ai_toolkit as a git submodule (repo-local; no global install)
@@ -250,6 +258,8 @@ Usage:
   toolkit pull                Fast-forward toolkit to origin/main; stage app pointer
   toolkit push "message"      Commit+push inside ai_toolkit/; stage app pointer
   toolkit status              Show branch, dirty, ahead/behind
+  toolkit context <feature> [phase|next] [+tag -tag] [--full]
+                              Resolved implement-phase load sizes (~tokens)
   toolkit help                This help
 
 Defaults:
@@ -275,6 +285,7 @@ main() {
     pull)    cmd_pull "$@" ;;
     push)    cmd_push "$@" ;;
     status)  cmd_status "$@" ;;
+    context) cmd_context "$@" ;;
     help|-h|--help) cmd_help ;;
     *) die "unknown command: $cmd (try: toolkit help)" ;;
   esac

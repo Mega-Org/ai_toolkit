@@ -1,14 +1,28 @@
-# Imports and analysis options
+# Imports and analyzer policy
 
 ## Purpose
-Analyzer and lint policy for Dart code: imports, ignores for generated files, and consistency with `patterns/dart/absolute-imports.md`.
+
+How Dart imports and analyzer expectations work in apps using this toolkit.
 
 ## Fill when
-- After you lock analyzer rules.
-- When generated file paths or lint sets change.
+
+`analysis_options.yaml`, barrel files, or import style changes.
 
 ## References
-- Optional paths in **your app repos** (not copied here): e.g. `analysis_options.yaml`
+
+- Part files: [`part-part-of.md`](part-part-of.md), [`../../patterns/dart/part-part-of-library.md`](../../patterns/dart/part-part-of-library.md)
+- App exceptions: `ai_docs/conventions.md`
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+### Imports
+
+- Prefer **package imports** (`package:<package_name>/...`) for cross-library references under `lib/`.
+- Use **`part` / `part of`** only for large presentation splits; **`part of` paths are relative**, library file uses package imports elsewhere.
+- Do not add barrel re-exports unless the app already uses that pattern for the feature.
+
+### Analyzer
+
+- Default verify command: the app's command from `ai_docs/conventions.md` (for example `make analyze`).
+- Fix new diagnostics on **touched files** before handoff; do not drive-by clean unrelated warnings unless asked.
+- Generated files (`*.g.dart`, `*.config.dart`, `app_localizations*.dart`) are excluded from agent edits and often from Cursor index (`.cursorignore`).

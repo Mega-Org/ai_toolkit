@@ -1,15 +1,22 @@
-# Git rules index
+# Git conventions (toolkit)
 
 ## Purpose
-Entry point for branch, commit message, and review conventions aligned with `workflows/git/`.
+
+Default git behavior for agents working in app repos that use this toolkit.
 
 ## Fill when
-- When Git workflow or commit standards change.
+
+Remote host (GitHub vs GitLab), branch naming, or MR/PR workflow changes.
 
 ## References
-- `rules/_index.md` (all rule areas)
-- `workflows/git/commit-before-work.md` — opt-in; commit dirty tree before work only if asked; show files + message; wait for yes
-- `workflows/git/commit-after-phase.md` — opt-in after a phase; `--commit` asks first; `--no-commits` = default (skip)
+
+- Commit opt-in: [`../../workflows/git/commit-after-phase.md`](../../workflows/git/commit-after-phase.md)
+- Verify handoff: [`../../workflows/feature-delivery/verify-and-pr.md`](../../workflows/feature-delivery/verify-and-pr.md)
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+- **No commit** unless the user asks or approves `--commit` (show files + message first).
+- **No push**, force-push, amend, or hook skips unless explicitly requested.
+- Git host: `ai_docs/conventions.md`. When the host is GitLab, draft merge requests with `glab mr create` only when the user asks after verification.
+- Feature branches: user-owned naming; autopilot Direct mode stays on the current branch with a dirty tree.
+- Submodule `ai_toolkit/`: bump pointer in the app repo after `toolkit push` inside the submodule.

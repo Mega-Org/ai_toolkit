@@ -28,7 +28,7 @@ ai_specs/api/COLLECTION_HANDOFF.md
 Three lines, for example:
 
 ```markdown
-Latest collection handoff: [`handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md`](handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md)
+Latest collection handoff: `ai_specs/api/handoff/COLLECTION_HANDOFF-YYYY-MM-DD.md` (replace date when packing).
 Generated: YYYY-MM-DD
 Collection: <name> (<id>)
 ```

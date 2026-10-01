@@ -1,0 +1,489 @@
+#!/usr/bin/env python3
+"""Resolve implement-phase load list with byte sizes (~tokens = bytes/4)."""
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+
+def app_root() -> Path:
+    out = subprocess.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if out.returncode != 0:
+        sys.stderr.write("error: not inside a git repository\n")
+        sys.exit(1)
+    return Path(out.stdout.strip())
+
+
+# Implement-phase startup: 15 KB plus about 6 KB per Load tag.
+STARTUP_BASE_BYTES = 15 * 1024
+STARTUP_PER_TAG_BYTES = 6 * 1024
+
+
+def startup_budget(tag_count: int) -> int:
+    return STARTUP_BASE_BYTES + STARTUP_PER_TAG_BYTES * max(tag_count, 0)
+
+
+def file_bytes(path: Path) -> int:
+    if not path.is_file():
+        return 0
+    return path.stat().st_size
+
+
+def first_n_lines_bytes(path: Path, n: int) -> int:
+    if not path.is_file():
+        return 0
+    total = 0
+    with path.open("rb") as fh:
+        for i, line in enumerate(fh):
+            if i >= n:
+                break
+            total += len(line)
+    return total
+
+
+def extract_contract_section(readme: Path) -> int:
+    if not readme.is_file():
+        return 0
+    text = readme.read_text(encoding="utf-8", errors="replace")
+    m = re.search(r"^## Contract\b.*?(?=^## |\Z)", text, re.M | re.S)
+    if not m:
+        return 0
+    return len(m.group(0).encode("utf-8"))
+
+
+_HEADING_RE = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$")
+_FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})")
+
+
+def heading_slug(title: str) -> str:
+    """GitHub-style anchor: lowercase, drop punctuation, spaces to hyphens."""
+    text = title.strip().lower()
+    text = re.sub(r"[^\w\s-]", "", text, flags=re.UNICODE)
+    text = re.sub(r"\s+", "-", text.strip())
+    text = re.sub(r"-{2,}", "-", text)
+    return text.strip("-")
+
+
+def heading_section_bytes(path: Path, anchor: str) -> tuple[int, str]:
+    """Bytes of the ATX section whose slug matches anchor (through the next same-or-higher heading)."""
+    if not path.is_file():
+        return 0, "missing file"
+    want = heading_slug(anchor.lstrip("#").strip())
+    label = want or anchor.strip()
+    if not want:
+        return file_bytes(path), ""
+    text = path.read_text(encoding="utf-8", errors="replace")
+    lines = text.splitlines(keepends=True)
+    headings: list[tuple[int, int, str]] = []
+    in_fence = False
+    fence_char = ""
+    fence_len = 0
+    for i, line in enumerate(lines):
+        fence_m = _FENCE_RE.match(line)
+        if fence_m:
+            marker = fence_m.group(1)
+            if not in_fence:
+                in_fence = True
+                fence_char = marker[0]
+                fence_len = len(marker)
+            elif marker[0] == fence_char and len(marker) >= fence_len:
+                in_fence = False
+                fence_char = ""
+                fence_len = 0
+            continue
+        if in_fence:
+            continue
+        heading_m = _HEADING_RE.match(line.rstrip("\r\n"))
+        if not heading_m:
+            continue
+        headings.append(
+            (i, len(heading_m.group(1)), heading_slug(heading_m.group(2)))
+        )
+    start: int | None = None
+    level = 0
+    next_idx = 0
+    for idx, (line_i, lvl, slug) in enumerate(headings):
+        if slug == want:
+            start = line_i
+            level = lvl
+            next_idx = idx + 1
+            break
+    if start is None:
+        return 0, f"heading #{label} not found"
+    end = len(lines)
+    for line_i, lvl, _slug in headings[next_idx:]:
+        if lvl <= level:
+            end = line_i
+            break
+    chunk = "".join(lines[start:end])
+    return len(chunk.encode("utf-8")), f"heading #{label}"
+
+
+def parse_loadmap(toolkit: Path) -> dict[str, list[str]]:
+    loadmap = toolkit / "LOADMAP.md"
+    tags: dict[str, list[str]] = {}
+    if not loadmap.is_file():
+        return tags
+    for line in loadmap.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("| `"):
+            continue
+        parts = [p.strip() for p in line.split("|")]
+        if len(parts) < 3:
+            continue
+        tag_cell = parts[1]
+        leaf_cell = parts[2]
+        m = re.match(r"`([^`]+)`", tag_cell)
+        if not m:
+            continue
+        tag = m.group(1)
+        paths = re.findall(r"`([^`]+)`", leaf_cell)
+        tags[tag] = paths
+    return tags
+
+
+@dataclass
+class PhaseInfo:
+    number: int
+    title: str
+    status: str
+    load_tags: list[str]
+    inputs: list[str]
+    touches: list[str]
+    block: str
+
+
+def parse_phases(plan_text: str) -> list[PhaseInfo]:
+    phases: list[PhaseInfo] = []
+    header = re.compile(r"^### Phase (\d+)\s*[—\-]\s*(.+)$", re.M)
+    matches = list(header.finditer(plan_text))
+    for i, m in enumerate(matches):
+        num = int(m.group(1))
+        title = m.group(2).strip()
+        start = m.end()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(plan_text)
+        block = plan_text[start:end]
+        status_m = re.search(r"^Status:\s*(.+)$", block, re.M)
+        status = status_m.group(1).strip() if status_m else "unknown"
+        load_m = re.search(r"^Load:\s*(.+)$", block, re.M)
+        load_raw = load_m.group(1).strip() if load_m else ""
+        load_tags = [
+            t.strip()
+            for t in re.split(r"[,|\s]+", load_raw)
+            if t.strip() and t.strip() not in {"-", "—"}
+        ]
+        inputs: list[str] = []
+        in_inputs = False
+        for line in block.splitlines():
+            if re.match(r"^Inputs:\s*$", line):
+                in_inputs = True
+                continue
+            if in_inputs and re.match(r"^(Touches|Deliverables|Verification|Load|Effort|Notes):", line):
+                in_inputs = False
+            if in_inputs and line.strip().startswith("-"):
+                for p in re.findall(r"`([^`]+)`", line):
+                    inputs.append(p)
+        touches: list[str] = []
+        in_touches = False
+        for line in block.splitlines():
+            if re.match(r"^Touches:\s*$", line):
+                in_touches = True
+                continue
+            if in_touches and re.match(r"^(Deliverables|Verification|Inputs|Load|Effort|Notes):", line):
+                in_touches = False
+            if in_touches and line.strip().startswith("-"):
+                for p in re.findall(r"`([^`]+)`", line):
+                    touches.append(p)
+        phases.append(
+            PhaseInfo(num, title, status, load_tags, inputs, touches, block)
+        )
+    return phases
+
+
+def active_load_tags(
+    phase: PhaseInfo | None,
+    extra_tags: list[str],
+    minus_tags: list[str],
+) -> list[str]:
+    tags = set(extra_tags)
+    if phase:
+        tags.update(phase.load_tags)
+    for tag in minus_tags:
+        tags.discard(tag)
+    return sorted(tags)
+
+
+def pick_phase(phases: list[PhaseInfo], selector: str | None) -> PhaseInfo | None:
+    if not phases:
+        return None
+    if selector is None or selector == "next":
+        for p in phases:
+            st = p.status.lower()
+            if "pending" in st or "in-progress" in st or "in_progress" in st:
+                return p
+        return None
+    if selector.isdigit():
+        n = int(selector)
+        for p in phases:
+            if p.number == n:
+                return p
+        return None
+    return None
+
+
+def always_on_paths(root: Path) -> list[tuple[str, Path, int]]:
+    rows: list[tuple[str, Path, int]] = []
+    for name in ("AGENTS.md", "CLAUDE.md"):
+        p = root / name
+        if p.is_file():
+            rows.append((name, p, file_bytes(p)))
+    rules = root / ".cursor" / "rules"
+    if rules.is_dir():
+        for mdc in sorted(rules.glob("*.mdc")):
+            text = mdc.read_text(encoding="utf-8", errors="replace")
+            if re.search(r"alwaysApply:\s*true", text):
+                rows.append((f".cursor/rules/{mdc.name}", mdc, file_bytes(mdc)))
+    return rows
+
+
+def resolve_input_path(root: Path, spec: str) -> Path | None:
+    spec = spec.split("#", 1)[0].strip()
+    if not spec:
+        return None
+    p = root / spec
+    return p if p.exists() else None
+
+
+@dataclass
+class LoadRow:
+    label: str
+    path: Path | None
+    bytes: int
+    note: str = ""
+
+
+def build_implement_load(
+    root: Path,
+    toolkit: Path,
+    feature: str,
+    phase: PhaseInfo | None,
+    extra_tags: list[str],
+    minus_tags: list[str],
+    full_loadmap: bool,
+) -> list[LoadRow]:
+    rows: list[LoadRow] = []
+    feat_dir = root / "ai_specs" / "features" / feature
+    plan = feat_dir / "plan.md"
+    readme = feat_dir / "README.md"
+    memory = feat_dir / "memory.md"
+
+    rows.append(
+        LoadRow(
+            "workflow",
+            toolkit / "workflows/feature-delivery/implement-phase.md",
+            file_bytes(toolkit / "workflows/feature-delivery/implement-phase.md"),
+        )
+    )
+    lm = toolkit / "LOADMAP.md"
+    rows.append(
+        LoadRow(
+            "LOADMAP",
+            lm,
+            file_bytes(lm) if full_loadmap else min(file_bytes(lm), 4096),
+            note="full table" if full_loadmap else "index only (~4 KB cap for estimate)",
+        )
+    )
+    rows.append(LoadRow("plan.md", plan, file_bytes(plan)))
+    if memory.is_file():
+        rows.append(LoadRow("memory.md", memory, file_bytes(memory)))
+    contract_bytes = extract_contract_section(readme)
+    if contract_bytes:
+        rows.append(
+            LoadRow(
+                "README Contract",
+                readme,
+                contract_bytes,
+                note="section only",
+            )
+        )
+    elif readme.is_file():
+        rows.append(
+            LoadRow(
+                "README (no ## Contract)",
+                readme,
+                0,
+                note="missing Contract section",
+            )
+        )
+
+    tags = active_load_tags(phase, extra_tags, minus_tags)
+
+    loadmap = parse_loadmap(toolkit)
+    seen_leaves: set[str] = set()
+    for tag in sorted(tags):
+        for rel in loadmap.get(tag, []):
+            if rel.startswith("ai_docs/"):
+                leaf = root / rel
+            else:
+                leaf = toolkit / rel
+            key = str(leaf)
+            if key in seen_leaves:
+                continue
+            seen_leaves.add(key)
+            if tag == "app-memory":
+                b = file_bytes(leaf)
+            else:
+                b = first_n_lines_bytes(leaf, 60)
+            rows.append(
+                LoadRow(
+                    f"card:{tag}",
+                    leaf,
+                    b,
+                    note="first 60 lines" if tag != "app-memory" else "full (≤4 KB budget)",
+                )
+            )
+
+    if phase:
+        for inp in phase.inputs:
+            p = resolve_input_path(root, inp)
+            if p:
+                if "#" in inp:
+                    anchor = inp.split("#", 1)[1]
+                    size, note = heading_section_bytes(p, anchor)
+                    rows.append(LoadRow(f"input:{inp}", p, size, note=note))
+                else:
+                    rows.append(LoadRow(f"input:{inp}", p, file_bytes(p)))
+            else:
+                rows.append(
+                    LoadRow(f"input:{inp}", None, 0, note="missing file")
+                )
+
+    skill = root / ".cursor/skills/feature-implement-phase/SKILL.md"
+    rows.append(LoadRow("skill", skill, file_bytes(skill)))
+    return rows
+
+
+def print_section(
+    title: str,
+    rows: list[tuple[str, int]],
+    budget: int | None = None,
+    budget_detail: str | None = None,
+) -> None:
+    print(f"\n{title}")
+    print(f"{'path':<72} {'bytes':>8} {'~tok':>8}")
+    print("-" * 90)
+    total = 0
+    for label, size in rows:
+        total += size
+        tok = size // 4
+        print(f"{label:<72} {size:>8} {tok:>8}")
+    print("-" * 90)
+    print(f"{'TOTAL':<72} {total:>8} {total // 4:>8}")
+    if budget is not None:
+        flag = "OK" if total <= budget else "OVER"
+        detail = f" ({budget_detail})" if budget_detail else ""
+        print(f"budget {budget} B ({budget // 4} ~tok){detail}: {flag}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Print resolved implement-phase context sizes for a feature plan."
+    )
+    parser.add_argument("feature", help="Feature slug (ai_specs/features/<feature>/)")
+    parser.add_argument(
+        "phase",
+        nargs="?",
+        default="next",
+        help="Phase number or 'next' (default: first pending/in-progress)",
+    )
+    parser.add_argument(
+        "tags",
+        nargs="*",
+        help="+tag or -tag extras (e.g. +pagination -figma)",
+    )
+    parser.add_argument(
+        "--full",
+        action="store_true",
+        help="Count full LOADMAP.md instead of capped estimate",
+    )
+    args = parser.parse_args()
+
+    root = app_root()
+    toolkit = root / "ai_toolkit"
+    if not toolkit.is_dir():
+        sys.stderr.write("error: ai_toolkit/ missing\n")
+        sys.exit(1)
+
+    phase_selector = args.phase
+    extra: list[str] = []
+    minus: list[str] = []
+    tag_args = list(args.tags)
+    if phase_selector.startswith(("+", "-")):
+        tag_args.insert(0, phase_selector)
+        phase_selector = "next"
+    for t in tag_args:
+        if t.startswith("+"):
+            extra.append(t[1:])
+        elif t.startswith("-"):
+            minus.append(t[1:])
+        else:
+            extra.append(t)
+
+    plan_path = root / "ai_specs/features" / args.feature / "plan.md"
+    phase_info: PhaseInfo | None = None
+    if plan_path.is_file():
+        phases = parse_phases(plan_path.read_text(encoding="utf-8"))
+        phase_info = pick_phase(phases, phase_selector)
+    else:
+        sys.stderr.write(f"warning: {plan_path} missing\n")
+
+    ao_rows = always_on_paths(root)
+    ao_print = [(label, size) for label, _, size in ao_rows]
+    print_section("Always-on (AGENTS + alwaysApply rules)", ao_print, budget=4096)
+
+    if phase_info:
+        print(
+            f"\nPhase: {phase_info.number} — {phase_info.title}  Status: {phase_info.status}"
+        )
+        if phase_info.load_tags:
+            print(f"Load tags: {', '.join(phase_info.load_tags)}")
+        else:
+            print("Load tags: (none in plan — legacy plan or missing Load:)")
+    else:
+        print(f"\nPhase: (no pending/in-progress phase; selector was {phase_selector!r})")
+
+    load_rows = build_implement_load(
+        root, toolkit, args.feature, phase_info, extra, minus, args.full
+    )
+    impl_print: list[tuple[str, int]] = []
+    for row in load_rows:
+        path_label = str(row.path.relative_to(root)) if row.path else row.label
+        if row.note:
+            path_label = f"{path_label}  [{row.note}]"
+        impl_print.append((path_label, row.bytes))
+    tags = active_load_tags(phase_info, extra, minus)
+    tag_count = len(tags)
+    noun = "tag" if tag_count == 1 else "tags"
+    print_section(
+        f"Implement-phase startup (feature={args.feature})",
+        impl_print,
+        budget=startup_budget(tag_count),
+        budget_detail=f"15 KB + about 6 KB × {tag_count} {noun}",
+    )
+
+    combined = sum(s for _, s in ao_print) + sum(r.bytes for r in load_rows)
+    print(
+        f"\nCombined estimate (always-on + implement-phase): {combined} B (~{combined // 4} tok)"
+    )
+
+
+if __name__ == "__main__":
+    main()

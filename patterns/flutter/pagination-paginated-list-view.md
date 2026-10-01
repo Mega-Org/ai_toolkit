@@ -68,9 +68,9 @@ This matches [`page-bloc-provider.md`](page-bloc-provider.md): the public page p
 
 | Screen | Controller owner | Fetch wiring |
 |--------|------------------|--------------|
-| [`orders_list.dart`](../../../lib/src/features/orders/presentation/orders_list/orders_list.dart) | `_OrderListBodyState` | `BlocListener` + `Async<PaginatedData<T>>` (see [Optional: `BlocListener` + `Async`](#optional-bloclistener--async)) |
-| [`client_all_complaints_page.dart`](../../../lib/src/features/client/complaints/presentation/all/client_all_complaints_page.dart) | `_ClientAllComplaintsViewState` | Page listener `await`s `loadComplaintsPage` → `fold` → `addItems` / `setError` (**preferred**) |
-| [`client_my_address_cubit.dart`](../../../lib/src/features/client/my_address/presentation/my_addresses/client_my_address_cubit.dart) | Cubit | Exception: observer + pull-to-refresh owned with fetch in Cubit |
+| `lib/src/features/orders/presentation/orders_list/orders_list.dart` (example app) | `_OrderListBodyState` | `BlocListener` + `Async<PaginatedData<T>>` (see [Optional: `BlocListener` + `Async`](#optional-bloclistener--async)) |
+| `lib/src/features/client/complaints/presentation/all/client_all_complaints_page.dart` (example app) | `_ClientAllComplaintsViewState` | Page listener `await`s `loadComplaintsPage` → `fold` → `addItems` / `setError` (**preferred**) |
+| `lib/src/features/client/my_address/presentation/my_addresses/client_my_address_cubit.dart` (example app) | Cubit | Exception: observer + pull-to-refresh owned with fetch in Cubit |
 
 ## `PaginationController<int, T>` helpers (`addItems`)
 

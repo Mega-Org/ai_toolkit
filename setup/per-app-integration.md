@@ -16,7 +16,7 @@ git submodule update --init --recursive
 cp ai_toolkit/templates/app-seed/CLAUDE.md .
 cp ai_toolkit/templates/app-seed/AGENTS.md .
 mkdir -p .cursor/rules ai_docs
-cp ai_toolkit/templates/app-seed/cursor-rules/ai-toolkit-seed.mdc .cursor/rules/
+Run `bash ai_toolkit/setup/install.sh` from the app root to install Cursor skills and rules (`core-digest.mdc`, not the retired `ai-toolkit-seed`).
 # Only if stubs missing:
 # cp ai_toolkit/templates/app-seed/ai_docs/*.md ai_docs/
 

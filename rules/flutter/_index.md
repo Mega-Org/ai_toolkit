@@ -12,9 +12,9 @@ Entry point for Flutter UI and framework enforceable rules.
 
 ## Content
 
-- Remote data sources — inline Dio + response parsing, no single-use private unwrap helpers: [`remote-data-sources.md`](remote-data-sources.md); examples: [`../patterns/data/remote-data-source-inline.md`](../patterns/data/remote-data-source-inline.md).
-- Widget composition and provider/`context` ordering: [`widgets-and-performance.md`](widgets-and-performance.md) (page + `BlocProvider`: [`../patterns/flutter/page-bloc-provider.md`](../patterns/flutter/page-bloc-provider.md)).
-- Shared UI wrappers (images, SVG, buttons), `Row`/`Column` **`spacing`**, `SizedBox` vs `Container`: [`ui-composition.md`](ui-composition.md); examples: [`../patterns/flutter/shared-media-and-buttons.md`](../patterns/flutter/shared-media-and-buttons.md).
-- Widget-local controllers and similar fields: [`../patterns/flutter/presentation-field-naming.md`](../patterns/flutter/presentation-field-naming.md).
-- Paged lists — **default:** `PaginationController` on the page `_View` `State`, not the Cubit; see [`../patterns/flutter/pagination-paginated-list-view.md`](../patterns/flutter/pagination-paginated-list-view.md).
+- Remote data sources — inline Dio + response parsing, no single-use private unwrap helpers: [`remote-data-sources.md`](remote-data-sources.md); examples: [`../../patterns/data/remote-data-source-inline.md`](../../patterns/data/remote-data-source-inline.md).
+- Widget composition and provider/`context` ordering: [`widgets-and-performance.md`](widgets-and-performance.md) (page + `BlocProvider`: [`../../patterns/flutter/page-bloc-provider.md`](../../patterns/flutter/page-bloc-provider.md)).
+- Shared UI wrappers (images, SVG, buttons), `Row`/`Column` **`spacing`**, `SizedBox` vs `Container`: [`ui-composition.md`](ui-composition.md); examples: [`../../patterns/flutter/shared-media-and-buttons.md`](../../patterns/flutter/shared-media-and-buttons.md).
+- Widget-local controllers and similar fields: [`../../patterns/flutter/presentation-field-naming.md`](../../patterns/flutter/presentation-field-naming.md).
+- Paged lists — **default:** `PaginationController` on the page `_View` `State`, not the Cubit; see [`../../patterns/flutter/pagination-paginated-list-view.md`](../../patterns/flutter/pagination-paginated-list-view.md).
 - Figma → Flutter direction, defaults vs explicit alignment, l10n copy: [`design-direction-and-localization.md`](design-direction-and-localization.md).

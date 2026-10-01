@@ -1,17 +1,26 @@
-# New Flutter app setup
+# New Flutter app bootstrap
 
 ## Purpose
-Checklist for creating a new Flutter app and aligning it with shared analyzer, DI, and optional flavors conventions.
+
+Checklist when creating a **new** app repo that will consume this toolkit.
 
 ## Fill when
-- After you lock analyzer rules and default packages for greenfield apps.
-- When injectable, flavors, or Melos conventions change.
+
+App-seed templates or flavor scaffolding change.
 
 ## References
-- Optional paths in **your app repos** (not copied here): e.g. `pubspec.yaml`, `analysis_options.yaml`
-- This repo’s **implemented** multi-flavor contract (client + provider, Android + iOS): [`flavors.md`](flavors.md) and `.cursor/rules/flutter-flavors.mdc`.
+
+- Seed files: [`../templates/app-seed/`](../templates/app-seed/)
+- Flavors: [`flavors.md`](flavors.md)
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
 
-For a second product flavor on top of `AppEnvironmentEnum`, follow the matrix and checklist in [`flavors.md`](flavors.md) instead of re-deriving Gradle/Xcode steps from scratch.
+1. Add `ai_toolkit/` (submodule or vendored copy).
+2. Copy [`../templates/app-seed/`](../templates/app-seed/) → app root (`AGENTS.md`, `CLAUDE.md`, `ai_docs/` stubs, `cursor-rules/core-digest.mdc` via install).
+3. Run `bash ai_toolkit/setup/install.sh`.
+4. Create `ai_specs/` from toolkit spec templates; wire Makefile snippet from app-seed.
+5. Configure flavors (`lib/main_*.dart`, `lib/apps/`) per [`flavors.md`](flavors.md) and product matrix.
+6. Set `ai_docs/conventions.md` shared widgets + verify command.
+7. Run `bash ai_toolkit/setup/verify-setup.sh`.
+
+When layout is unclear, follow `ai_docs/conventions.md` and mirror the existing `lib/core`, DI, and feature folder layout.

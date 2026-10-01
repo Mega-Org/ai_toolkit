@@ -30,7 +30,7 @@ Implements: ai_toolkit/workflows/feature-delivery/autopilot-phases.md
 /autopilot-plan <feature|plan-path> [direct|safe|cloud]
 ```
 
-Primary plans: `ai_specs/features/<feature>/plan.md`. Example: `/autopilot-plan ai_specs/features/orders/plan.md direct`. A Cursor plan is secondary. Missing path → stop and ask.
+Autopilot is for `ai_specs` feature plans only: `ai_specs/features/<feature>/plan.md`. Example: `/autopilot-plan ai_specs/features/orders/plan.md direct`. Given a `~/.cursor/plans/*.plan.md`, stop and point to Cursor's Build button. Missing path → stop and ask.
 
 Named mode skips the menu. Otherwise show this and wait. Do not assume Safe or Cloud.
 
@@ -61,6 +61,10 @@ deep → strongest reasoning model in this session
 The user may replace the three names. Write the approved line on the plan. `default` → session default for every phase. Do not ask again on this plan.
 
 ## Phases
+
+The parent never edits `lib/`, specs, or toolkit files. It only updates plan Status lines, `autopilot_*` lines, and `memory.md`.
+
+Each phase or light batch must be run with the Task tool (`subagent_type` generalPurpose, model from `autopilot_models`). If Task is not loaded, discover it first. Never implement a phase inline.
 
 Up to 3 consecutive `Effort: light` phases share one subagent (Direct and Safe). `standard`, `deep`, and every Cloud phase are one subagent each. Fresh subagent after each return. Pass the approved model for that `Effort`.
 

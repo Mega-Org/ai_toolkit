@@ -20,7 +20,7 @@
 - `RegisterModule`, `@PostConstruct`, widget/UI bullets after the cubit sample, logout scope reset.
 
 ### Related (cards first)
-- `+codegen` stub; `+state` for cubit provision; `+flavors` if touching `main_*.dart` DI bootstrap.
+- `+codegen` for the generate command and committed outputs; `+state` for cubit provision; `+flavors` if touching `main_*.dart` DI bootstrap.
 
 ### Card protocol
 - Default: this card is enough. Use `limit: 60` so you do not ingest the full leaf.

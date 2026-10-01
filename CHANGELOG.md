@@ -4,6 +4,8 @@
 
 ### Added
 
+- **Review fixes.** `toolkit context` uses a per-tag startup budget and slices plan anchors (an unknown anchor is reported as not found). `verify-setup` checks links that point outside the toolkit, and legacy plan warnings are one summary line per plan. Autopilot requires a Task subagent for each phase or light batch; the parent chat only updates plan Status lines, `autopilot_*` lines, and `memory.md`.
+- **Lean loading (Round 3).** Filled toolkit stubs (git, tooling, testing, imports, json models, iOS, checklists, setup, maintenance workflows). **`toolkit context`**, **`verify-setup`** link/stub guards, **`feature-verify-pr`** skill, **`preferences.md`** template + capture workflow, GitLab-aware **`verify-and-pr`**, **`.cursor/.ai_toolkit_version`** on install, design **Layout digest** pattern.
 - **Cursor ignore templates.** [`templates/cursor-ignore/`](templates/cursor-ignore/) plus [`setup/install-ignore.sh`](setup/install-ignore.sh), called from [`setup/install.sh`](setup/install.sh). `.cursorignore` skips generated Dart and build trees; `.cursorindexingignore` skips `ai_specs/api/source/snapshot.json` and `ai_specs/brd/source/*.pdf` (handoff MD stays indexed).
 - **`l10n-add`.** [`bin/l10n-add`](bin/l10n-add) inserts keys at the end of a mirrored `@-SECTION-`. Dry-run by default; `--apply` writes both ARBs and runs `flutter gen-l10n`. Docs: [`docs/tooling/l10n-add.md`](docs/tooling/l10n-add.md).
 - **Plugin checklist.** [`docs/tooling/cursor-plugins.md`](docs/tooling/cursor-plugins.md) — disable unused MCP plugins and the duplicate Figma copy under `~/.claude` (manual Cursor Settings step).

@@ -22,7 +22,7 @@ Maps sections of the app core (barrel, foundation, network, DI, etc.) to enforce
 | Barrel | `lib/core/core.dart` |
 | Foundation-style types | `lib/core/foundation/` (`Async`, `SafeEmitMixin`, `IUseCase`, typedefs) |
 | Router module | `lib/core/configs/router/` (see [`router.md`](router.md)) |
-| Values, dimensions, fonts, generated assets, constants | `lib/core/configs/values/`, `lib/core/constants/` (see [`config.md`](config.md)); responsive breakpoints / scaled tiers: [`responsive_constants.dart`](../../../lib/core/constants/responsive_constants.dart) (`AppResponsiveLayout`) |
+| Values, dimensions, fonts, generated assets, constants | `lib/core/configs/values/`, `lib/core/constants/` (see [`config.md`](config.md)); responsive breakpoints / scaled tiers: `lib/core/constants/responsive_constants.dart` (example app) (`AppResponsiveLayout`) |
 | Theme `ThemeData` classes | `lib/core/configs/theme/values/` (`app_theme.dart`, `light_theme.dart`, `dark_theme.dart`) |
 | Theme runtime | `lib/core/configs/theme/manager/theme_manager.dart` (see [`theme.md`](theme.md)); typography tokens: [`text-styles.md`](text-styles.md); UI bridge: `configs/theme/widgets/theme_builder.dart` |
 | Network helper | `lib/core/network/helper/dio_helper.dart` |

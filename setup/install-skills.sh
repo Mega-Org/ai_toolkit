@@ -16,5 +16,6 @@ install_skill "feature-implement-phase"
 install_skill "bugfix"
 install_skill "autopilot-plan"
 install_skill "backend-contract"
+install_skill "feature-verify-pr"
 
-echo "✅ 5 skills installed"
+echo "✅ 6 skills installed"

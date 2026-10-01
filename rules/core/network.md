@@ -76,7 +76,7 @@ Do **not** add feature-specific interceptors in core unless they are truly globa
 
 ### Query strings vs domain params
 
-- HTTP **query** maps for filters, page/limit, sort, etc. should be built from **domain param objects** (getters on `*Params` or sealed variants), not hardcoded inside datasources for caller-driven values — see **`queryParameters`** / param getter rules in [`foundation.md`](foundation.md) and [`../patterns/data/use-case-and-domain-service-type.md`](../patterns/data/use-case-and-domain-service-type.md).
+- HTTP **query** maps for filters, page/limit, sort, etc. should be built from **domain param objects** (getters on `*Params` or sealed variants), not hardcoded inside datasources for caller-driven values — see **`queryParameters`** / param getter rules in [`foundation.md`](foundation.md) and [`../../patterns/data/use-case-and-domain-service-type.md`](../../patterns/data/use-case-and-domain-service-type.md).
 
 ### Constants
 

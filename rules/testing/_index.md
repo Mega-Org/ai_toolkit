@@ -1,14 +1,20 @@
 # Testing rules index
 
 ## Purpose
-Entry point for test conventions: unit, widget, integration, and golden policies.
+
+Where tests live and when agents should run or author them.
 
 ## Fill when
-- When you add or rename testing rule topics under `rules/testing/`.
+
+Test layout or CI test gates change.
 
 ## References
-- `rules/_index.md` (all rule areas)
-- Optional paths in **your app repos** (not copied here): e.g. `test/`
+
+- App policy: `ai_docs/preferences.md` (when present) — **tests off by default** for agents unless the user asks.
 
 ## Content
-<!-- Fill in later. Leave empty if unknown. -->
+
+- **Out of scope by default:** agents do not write, run, or scaffold tests unless the user explicitly asks.
+- **Existing tests:** leave `test/` untouched during feature delivery unless the phase or user requests coverage.
+- **When asked:** mirror feature layout under `test/features/…`; use project test conventions and `flutter test <path>`.
+- LOADMAP has **no `tests` tag** — do not load this file during implement-phase unless the user invokes testing work.

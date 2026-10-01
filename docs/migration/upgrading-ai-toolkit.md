@@ -55,6 +55,8 @@ Autopilot is new. Install adds `.cursor/skills/autopilot-plan/` when that skill 
 
 ## 5. After upgrade
 
-1. Confirm verify output lists the five skills (including `backend-contract`).
-2. Open [`../workflows/overview.md`](../workflows/overview.md) if you need the autopilot command.
-3. Share [`../../templates/cursor-skills/autopilot-plan/TEAM_GUIDE.md.template`](../../templates/cursor-skills/autopilot-plan/TEAM_GUIDE.md.template) (or the installed `.cursor/skills/autopilot-plan/TEAM_GUIDE.md` after install) with the team.
+1. Confirm verify output lists the six skills (including `backend-contract` and `feature-verify-pr`).
+2. Check `.cursor/.ai_toolkit_version` matches [`../../VERSION`](../../VERSION).
+3. Open [`../workflows/overview.md`](../workflows/overview.md) for autopilot and verify-pr commands.
+4. Optional: copy [`../../templates/app-seed/preferences.md`](../../templates/app-seed/preferences.md) → `ai_docs/preferences.md`.
+5. Share [`../../templates/cursor-skills/autopilot-plan/TEAM_GUIDE.md.template`](../../templates/cursor-skills/autopilot-plan/TEAM_GUIDE.md.template) with the team.

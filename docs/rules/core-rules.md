@@ -34,12 +34,12 @@ When a feature or API screen has an unclear finish line, state a short **done me
 
 **When it applies.** `alwaysApply: true`. Every implementation turn.
 
-## Toolkit seed
+## Core digest (always-on)
 
-**Template:** [`ai-toolkit-seed.mdc.template`](../../templates/cursor-rules/ai-toolkit-seed.mdc.template)
+**Template:** [`core-digest.mdc.template`](../../templates/cursor-rules/core-digest.mdc.template)
 
-**Toolkit:** the rule loads [`INDEX.md`](../../INDEX.md) and [`bootstrap-session.md`](../../workflows/session/bootstrap-session.md).
+**Toolkit:** [`LOADMAP.md`](../../LOADMAP.md), optional `ai_docs/memory.md` and `ai_docs/preferences.md`.
 
-**What it requires.** A session starts at `ai_toolkit/INDEX.md`. Large or ambiguous work uses the full path in `bootstrap-session.md`. A small, scoped edit uses lite loading, as the index describes. When `ai_docs/` and `ai_specs/` exist, they bound the app next to the toolkit. Prefer `ai_specs/README.md` and `ai_specs/INDEX.md`. Build specs live in `ai_specs/features/<feature>/` (`README.md` and `plan.md`). Analysis knowledge bases are `brd/`, `design/`, and `api/`. `make-plan` and `implement-phase` ask before proceeding when information is missing or when BRD, design, and API conflict. The user decides now or records `TBD(owner)`. Long toolkit text stays in the files under `ai_toolkit/`. Chat points at those paths and loads the leaf files the task needs.
+**What it requires.** Agents load tagged leaves only (not `INDEX.md` during phases). Ask/continue gate, AppRouter and RTL summaries, no commits/tests unless asked, API source order, edit-in-place. Retired always-on rules: `ai-toolkit-seed`, `agent-decision-gates` (content folded into digest + agent-requested rules).
 
-**When it applies.** `alwaysApply: true`. The start of a session, and any later load of toolkit or app-spec files.
+**When it applies.** `alwaysApply: true`.
