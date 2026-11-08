@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 /**
  * Remote Config key resolver — keep in sync with:
  * - lib/src/_store_review/src/constants/constants.dart (or app path)

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 /**
  * Browser copy — keep in sync with tool/firebase/rc-admin/version-validate.js
  */

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 import { readPubspecVersion } from './pubspec-version.js';
 import { assertReviewVersion } from './version-validate.js';
 

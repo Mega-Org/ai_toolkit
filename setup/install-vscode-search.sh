@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
 # Merge templates/vscode/search-exclude.json into .vscode/settings.json.
 # Missing keys are inserted as text. Keys already present are never changed,
 # so app choices such as TODOS.md: false stay as they are, and comments survive.

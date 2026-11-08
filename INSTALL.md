@@ -124,6 +124,19 @@ chmod +x ai_toolkit/setup/install.sh ai_toolkit/setup/install-skills.sh ai_toolk
 
 `install.sh` invokes the other setup scripts through `bash`, so they do not need the execute bit when you start from `install.sh`.
 
+## License
+
+Apache License, Version 2.0 — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
+Copyright 2026 Magdy Ebrahim.
+
+`install.sh` copies `LICENSE` and `NOTICE` into the project root if they are
+missing, and writes `.cursor/.ai_toolkit_license` recording the SPDX identifier
+and version. Those files are part of the Apache-2.0 attribution requirement:
+keep them in your repository and do not relicense installed `.cursor/` copies.
+
+Reasoning and the relicensing policy: [`docs/licensing.md`](docs/licensing.md).
+Name and branding: [`TRADEMARK.md`](TRADEMARK.md).
+
 ## Related docs
 
 - Toolkit overview: [`README.md`](README.md)

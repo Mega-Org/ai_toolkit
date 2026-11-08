@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
+#
+# License gate: every pull request must keep Apache-2.0 attribution intact.
+name: License check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  license:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: LICENSE and NOTICE exist
+        run: |
+          status=0
+          for f in LICENSE NOTICE; do
+            if [ ! -f "$f" ]; then
+              echo "::error file=$f::missing required attribution file"
+              status=1
+            fi
+          done
+          exit $status
+
+      - name: LICENSE is Apache-2.0
+        run: |
+          grep -q "Apache License" LICENSE \
+            && grep -q "Version 2.0, January 2004" LICENSE \
+            || { echo "::error file=LICENSE::LICENSE is not Apache-2.0"; exit 1; }
+
+      - name: Code files carry an SPDX header
+        run: |
+          missing=0
+          while IFS= read -r f; do
+            head -3 "$f" | grep -q "SPDX-License-Identifier: Apache-2.0" || {
+              echo "::error file=$f::missing SPDX-License-Identifier header"
+              missing=1
+            }
+          done < <(find . -type f \( -name '*.sh' -o -name '*.js' \) \
+                     -not -path './.git/*' -not -path '*/node_modules/*')
+          exit $missing
+
+      - name: VERSION matches CHANGELOG
+        run: |
+          version="$(tr -d '[:space:]' < VERSION)"
+          # Highest released heading in CHANGELOG.md, e.g. "## [2.2.0] - 2026-11-08"
+          changelog_version="$(
+            grep -oE '^## \[[0-9]+\.[0-9]+\.[0-9]+' CHANGELOG.md \
+              | head -1 | tr -d '#[] '
+          )"
+          if [ -z "$changelog_version" ]; then
+            echo "::warning file=CHANGELOG.md::no released version heading found"
+            exit 0
+          fi
+          if [ "$version" != "$changelog_version" ]; then
+            echo "::error::VERSION ($version) != newest CHANGELOG release ($changelog_version)"
+            echo "VERSION and the newest CHANGELOG.md release heading must agree."
+            exit 1
+          fi
+          echo "VERSION and CHANGELOG agree: $version"
+
+      - name: Commits are DCO signed off
+        if: github.event_name == 'pull_request'
+        run: |
+          base="origin/${{ github.base_ref }}"
+          git fetch --no-tags --depth=50 origin "${{ github.base_ref }}"
+          failed=0
+          for sha in $(git rev-list "$base"..HEAD); do
+            if ! git log -1 --format=%B "$sha" | grep -q '^Signed-off-by: .\+ <.\+@.\+>'; then
+              echo "::error::commit $sha is missing a DCO sign-off (use git commit -s)"
+              failed=1
+            fi
+          done
+          exit $failed

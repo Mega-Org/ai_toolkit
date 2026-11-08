@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 /**
  * Firebase Remote Config parameter groups (Console organization only).
  * Keys still resolve by flat name in Dart — groups do not affect runtime.

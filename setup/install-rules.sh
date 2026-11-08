@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
 RULES_DIR=".cursor/rules"
 TEMPLATES_DIR="ai_toolkit/templates/cursor-rules"
 

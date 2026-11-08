@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 /**
  * Semver version name validation — keep in sync with:
  * lib/src/_store_review/README.md (Version format)

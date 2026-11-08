@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

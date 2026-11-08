@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
 # Bootstrap local Firebase RC admin panel (store review + store updater).
 # Usage: ./ai_toolkit/setup/scripts/bootstrap-rc-admin.sh [--copy-template]
 #

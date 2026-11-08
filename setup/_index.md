@@ -16,8 +16,15 @@
 | [`remote-config-store-ops.md`](remote-config-store-ops.md) | Store review, force update, local RC admin panel |
 | [`per-app-integration.md`](per-app-integration.md) | Add/sync/pull/push this toolkit as a git submodule (Mac + Windows) |
 | [`scripts/bootstrap-rc-admin.sh`](scripts/bootstrap-rc-admin.sh) | Copy rc-admin template, npm install, print URL |
-| [`install.sh`](install.sh) | Skills + rules + ignore files + verify |
+| [`install.sh`](install.sh) | Skills + rules + ignore files + license marker + verify |
 | [`install-ignore.sh`](install-ignore.sh) | Merge `.cursorignore` / `.cursorindexingignore` into the app root |
+
+## License
+
+This toolkit is Apache-2.0. `install.sh` copies [`LICENSE`](../LICENSE) and
+[`NOTICE`](../NOTICE) into the project root and writes
+`.cursor/.ai_toolkit_license`; `verify-setup.sh` checks all three. Rationale:
+[`docs/licensing.md`](../docs/licensing.md).
 
 ## References
 

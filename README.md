@@ -144,3 +144,15 @@ Each app should keep its own product-specific docs outside this toolkit:
 - **Cursor Agent Skills** (optional): portable templates under [`reference/agent-skills/`](reference/agent-skills/) — copy into `.agents/skills/<name>/` in each app repo so Cursor can discover them. Keep long-form guidance in `ai_toolkit/patterns/` and `ai_toolkit/rules/`; skills should stay short and link there.
 
 The toolkit should not contain secrets, environment URLs, client IDs, or product-only architecture prose.
+
+## License
+
+Licensed under the **Apache License, Version 2.0** ([`LICENSE`](LICENSE)).
+Copyright 2026 Magdy Ebrahim. See [`NOTICE`](NOTICE) for attribution and
+third-party details, [`TRADEMARK.md`](TRADEMARK.md) for the project name, and
+[`docs/licensing.md`](docs/licensing.md) for the full rationale and the
+relicensing policy.
+
+Copies must retain `LICENSE` and `NOTICE`. `setup/install.sh` copies both into
+the consuming project and writes `.cursor/.ai_toolkit_license`; do not delete
+them from an app repository.

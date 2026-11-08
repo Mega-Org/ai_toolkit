@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 export const REVIEW_FIELDS = {
   isEnabled: 'review-is-enabled',
   version: 'review-version',

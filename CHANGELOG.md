@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+_No unreleased changes yet._
+
+## [2.2.0] - 2026-11-08
+
+### Added
+
+- **License.** The toolkit is Apache-2.0. Added [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), [`TRADEMARK.md`](TRADEMARK.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) (DCO), and [`docs/licensing.md`](docs/licensing.md). SPDX headers on the seven `setup/` scripts and twelve `templates/tooling/rc-admin/` JavaScript files. `setup/install.sh` copies `LICENSE`/`NOTICE` into the consuming project and writes `.cursor/.ai_toolkit_license`; `verify-setup.sh` checks both. CI runs `license-check.yml` on pull requests. Published versions keep the license they shipped with — changes are never retroactive.
+- **`rc-admin` credentials from env.** `templates/tooling/rc-admin/credentials.js` reads `FIREBASE_CLI_CLIENT_ID` / `FIREBASE_CLI_CLIENT_SECRET` from the environment, falling back to the public `firebase-tools` client. Both keys documented in `.env.example`.
+- **Toolkit `.gitignore`.** Ignores `.DS_Store`, `templates/tooling/rc-admin/.env`, and `node_modules/`.
+
+## [2.1.0] - 2026-09-27
+
+Version bump for lean loading. This release was tagged without a separate
+changelog section; the entries below shipped under it.
+
 ### Added
 
 - **Cursor plan autopilot.** `/autopilot-plan` accepts a Cursor plan (`~/.cursor/plans/*.plan.md` or `.cursor/plans/*.plan.md`, YAML `todos:`). Only those plans load [`features/cursor-plans.md`](templates/cursor-skills/autopilot-plan/features/cursor-plans.md); feature plans keep Status, the context pack, and memory. Optional to-do tags: `[light]` / `[standard]` / `[deep]` (no tag is `standard`; up to 3 consecutive `[light]` share one subagent), `[load: ui, nav]`, `[see: ## heading]`, and `[skip]`. Example: `content: "[deep] [load: data] [see: ## 2. New apps and reinstalls] Create setup/install-vscode-search.sh ..."`. Guide: [`docs/workflows/autopilot-guide.md`](docs/workflows/autopilot-guide.md).

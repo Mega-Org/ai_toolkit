@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
 # Copy Cursor ignore templates into the app root. Existing files are merged:
 # template lines that are not already present are appended (custom lines stay).
 

@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# rc-admin template: local env and installed dependencies
+templates/tooling/rc-admin/.env
+templates/tooling/rc-admin/node_modules/

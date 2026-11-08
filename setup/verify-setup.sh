@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
 # Verify Cursor skill install and lean-loading budgets (warnings unless noted).
 set -euo pipefail
 
@@ -37,6 +39,33 @@ if [ -f ".cursorindexingignore" ]; then
   echo "✅ .cursorindexingignore"
 else
   warn ".cursorindexingignore missing (run ai_toolkit/setup/install-ignore.sh)"
+fi
+
+# --- Apache-2.0 attribution (License, Section 4) ---
+# Missing = installer not run in this app yet (warn, like the ignore files).
+# Present but wrong = attribution is broken (fail).
+if [ -f ".cursor/.ai_toolkit_license" ]; then
+  if grep -q "SPDX-License-Identifier: Apache-2.0" ".cursor/.ai_toolkit_license"; then
+    echo "✅ .cursor/.ai_toolkit_license"
+  else
+    fail ".cursor/.ai_toolkit_license does not name Apache-2.0"
+  fi
+else
+  warn ".cursor/.ai_toolkit_license missing (run ai_toolkit/setup/install.sh)"
+fi
+
+for legal in LICENSE NOTICE; do
+  if [ -f "$legal" ]; then
+    echo "✅ $legal"
+  elif [ -f "ai_toolkit/$legal" ]; then
+    warn "$legal missing at project root (run ai_toolkit/setup/install.sh)"
+  else
+    warn "$legal missing from ai_toolkit"
+  fi
+done
+
+if [ -f "LICENSE" ] && ! grep -q "Apache License" "LICENSE"; then
+  fail "LICENSE does not look like Apache-2.0 (expected 'Apache License')"
 fi
 
 # --- search.exclude keys from templates/vscode/search-exclude.json ---

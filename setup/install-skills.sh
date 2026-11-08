@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Magdy Ebrahim
 SKILLS_DIR=".cursor/skills"
 TEMPLATES_DIR="ai_toolkit/templates/cursor-skills"
 

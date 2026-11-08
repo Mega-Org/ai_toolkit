@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 /** @typedef {'storeReview' | 'storeUpdater'} Feature */
 /** @typedef {string} Flavor */
 /** @typedef {'android' | 'ios' | 'both'} Platform */

@@ -1,13 +1,23 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Magdy Ebrahim
 import { readFileSync, existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { OAuth2Client } from 'google-auth-library';
 import admin from 'firebase-admin';
 
-/** Public OAuth client used by Firebase CLI (firebase-tools/lib/api.js). */
+/**
+ * Public OAuth client used by Firebase CLI (firebase-tools/lib/api.js).
+ * These are not secrets — they ship inside the public `firebase-tools` npm
+ * package, which is why they are used here instead of requiring your own
+ * OAuth app. Override with FIREBASE_CLI_CLIENT_ID / FIREBASE_CLI_CLIENT_SECRET
+ * when your org provides its own client.
+ */
 const FIREBASE_CLI_CLIENT_ID =
+  process.env.FIREBASE_CLI_CLIENT_ID ??
   '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com';
-const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi';
+const FIREBASE_CLI_CLIENT_SECRET =
+  process.env.FIREBASE_CLI_CLIENT_SECRET ?? 'j9iVZfS8kkCEFUPaAeJV0sAi';
 
 function readFirebaseCliRefreshToken() {
   const configPath = join(homedir(), '.config/configstore/firebase-tools.json');
