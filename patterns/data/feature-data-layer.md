@@ -61,6 +61,8 @@ For each datasource module, prefer:
 
 This matches core patterns (e.g. `SecureStorageDataSource` / `SecureStorageDataSourceImpl`) and keeps swap-friendly stubs or real HTTP implementations next to the contract. Regenerate DI after adding or renaming `@injectable` bindings.
 
+**Exception — fake vs real remotes:** When a feature needs a debug fake until a contract exists, keep abstract + HTTP `*Impl` in the usual file with `env: [ApiSource.realValue]`, add a sibling `*_fake_remote_data_source.dart` with `env: [ApiSource.fakeValue]` and `FakeApi.run`, and leave the repository `@Injectable(as: Repo)` with **no env** and **no fake branches**. If there is no fake yet, omit `env` on the real impl so it registers in both. See `lib/core/network/fake_api.dart`.
+
 ### Formal parameters: `final` where applicable
 
 In datasource (and similar IO) method signatures, prefer **`final`** on formal parameters when the binding is not reassigned in the body. Apply the same in private helpers (`_stub`, `_fetch`, …).
